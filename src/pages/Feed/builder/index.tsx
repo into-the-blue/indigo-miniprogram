@@ -1,7 +1,6 @@
 import React from 'react';
-import { Config } from '@tarojs/taro';
-import { View } from '@tarojs/components';
-import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
+import {} from '@tarojs/taro';
+import { IProps, IInteractor } from '../types';
 import ViewModel from '../viewModel/viewModel';
 import { FeedPresenter } from '../presenter';
 import { FeedInteractor } from '../interactor';
@@ -9,9 +8,6 @@ import { FeedInteractor } from '../interactor';
 class Builder extends React.Component<IProps> {
   presenter: FeedPresenter;
   VM: JSX.Element;
-  config: Config = {
-    navigationBarTitleText: '首页',
-  };
   constructor(props: IProps) {
     super(props);
     const interactor = this.buildInteractor();

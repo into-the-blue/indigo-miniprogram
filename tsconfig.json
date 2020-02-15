@@ -24,6 +24,7 @@
       "global.d.ts"
     ],
     "paths": {
+      "@/utils":["./src/utils"],
       "@/*": ["./src/*"],
     }
   },

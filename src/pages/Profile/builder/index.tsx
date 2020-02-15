@@ -1,11 +1,12 @@
 import React from 'react';
 import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel/viewModel';
-import { TemplatePresenter } from '../presenter';
-import { TemplateInteractor } from '../interactor';
+import { ProfilePresenter } from '../presenter';
+import { ProfileInteractor } from '../interactor';
 
 class Builder extends React.Component<IProps> {
-  presenter: TemplatePresenter;
+
+  presenter: ProfilePresenter;
   VM: JSX.Element;
 
   constructor(props: IProps) {
@@ -16,12 +17,12 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    return new TemplateInteractor();
+    return new ProfileInteractor();
   };
   buildPresenter = (interactor: IInteractor) => {
-    return new TemplatePresenter(interactor);
+    return new ProfilePresenter(interactor);
   };
-  buildViewModel = (presenter: TemplatePresenter) => {
+  buildViewModel = (presenter: ProfilePresenter) => {
     return <ViewModel presenter={presenter} />;
   };
   render() {

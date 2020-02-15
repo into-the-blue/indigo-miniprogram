@@ -11,5 +11,9 @@ class GlobalStore {
   @action setState = (nextState: IStore) => {
     Object.assign(this, nextState);
   };
+
+  @action onPressTab = (tabIndex: number) => {
+    this.currentTabIndex = tabIndex;
+  };
 }
 export { GlobalStore };

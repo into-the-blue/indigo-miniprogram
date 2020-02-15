@@ -26,9 +26,6 @@
     "dev:qq": "npm run build:qq -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch"
   },
-  "_moduleAliases": {
-    "@": "./src"
-  },
   "browserslist": [
     "last 3 versions",
     "Android >= 4.1",

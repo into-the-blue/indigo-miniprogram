@@ -4,5 +4,6 @@ module.exports = {
     'react/jsx-curly-brace-presence': 'off',
     'import/no-commonjs': 'off',
     'react/sort-comp': 'off',
+    'import/first': 'off',
   },
 };

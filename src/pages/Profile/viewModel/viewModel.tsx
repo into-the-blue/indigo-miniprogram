@@ -1,21 +1,26 @@
 import React from 'react';
+import { Config } from '@tarojs/taro';
 import { observer, inject } from 'mobx-react';
 import { View, ScrollView, Text } from '@tarojs/components';
 // import {} from 'taro-ui';
 import { IViewModel } from '../types';
-import { TemplatePresenter } from '../presenter';
+import { ProfilePresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
+// import Tabbar from '@/components/Tabbar';
 
 interface IProps {
-  presenter: TemplatePresenter;
+  presenter: ProfilePresenter;
 }
 
 @inject('global')
 @observer
-class TemplateViewModel extends React.Component<IProps> implements IViewModel {
-  presenter: TemplatePresenter;
+class ProfileViewModel extends React.Component<IProps> implements IViewModel {
+  presenter: ProfilePresenter;
 
+  config: Config = {
+    navigationBarTitleText: 'aa',
+  };
   constructor(props: IProps) {
     super(props);
 
@@ -31,9 +36,10 @@ class TemplateViewModel extends React.Component<IProps> implements IViewModel {
         <ScrollView>
           <Text>{'feed'}</Text>
         </ScrollView>
+        {/* <Tabbar /> */}
       </View>
     );
   }
 }
 
-export default TemplateViewModel;
+export default ProfileViewModel;
