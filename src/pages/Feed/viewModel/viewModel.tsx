@@ -1,8 +1,8 @@
-import React from 'react';
-import {} from '@tarojs/taro';
+import React, { Component } from 'react';
+import Taro from '@tarojs/taro';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text } from '@tarojs/components';
-import {} from 'taro-ui';
+import { View, ScrollView, Text, Map } from '@tarojs/components';
+// import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
 import {} from '../interactor';
@@ -14,33 +14,36 @@ interface IProps {
   feed?: FeedStore;
 }
 
-@inject('global')
+@inject('global', 'feed')
 @observer
-class FeedViewModel extends React.Component<IProps, any> implements IViewModel {
+class FeedViewModel extends Component<IProps> implements IViewModel {
   presenter: FeedPresenter;
 
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      count: 1,
-    };
     this.presenter = this.props.presenter;
     this.presenter.setViewModal(this);
   }
-  componentWillMount() {}
-  componentDidMount() {}
+
+  componentDidMount() {
+    this.presenter.componentDidMount();
+  }
+
+  componentWillUnmount() {
+    this.presenter.componentWillUnmount();
+  }
+
   render() {
-    // const { count } = this.props.feed!;
+    const { coordinate } = this.props.feed!;
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView>
-          <Text>{'feed'}</Text>
-          <Text>{this.state.count}</Text>
-        </ScrollView>
-        <View className={'row-center'}>
-          <Text>{'aa'}</Text>
-          <Text>{'add\nbfsdaf'}</Text>
-        </View>
+        {coordinate && <Text>{'asdasd'}</Text>}
+        <Map
+          style={{ flex: 1, width: '100%', height: '100%' }}
+          longitude={coordinate!.lng}
+          latitude={coordinate!.lat}
+        />
+
         {/* <Tabbar /> */}
       </View>
     );

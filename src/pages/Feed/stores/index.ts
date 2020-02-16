@@ -5,10 +5,19 @@ import { observable, action, configure } from 'mobx';
 // });
 
 interface IStore {
-  count?: number;
+  coordinate?: {
+    lat: number;
+    lng: number;
+  };
 }
 class FeedStore {
-  @observable public count: number = 0;
+  @observable public coordinate?: {
+    lat: number;
+    lng: number;
+  } = {
+    lat: 31.2494,
+    lng: 121.397,
+  };
   @action setState = (nextState: IStore) => {
     Object.assign(this, nextState);
   };

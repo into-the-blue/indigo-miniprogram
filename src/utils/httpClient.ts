@@ -1,12 +1,16 @@
 import Axios from 'axios';
-import {} from '@tarojs/taro'
+import Taro from '@tarojs/taro';
 import ApolloClient from 'apollo-boost';
 import { API_ENDPOINT, GRAPHQL_ENDPOINT } from './constants';
 
 const errorHanlder = (err: any) => {
   // let res = err.response;
   // console.warn('errorHanlder', err.message, err.status, err.statusCode);
-//   notification.error({ message: err.message });
+  //   notification.error({ message: err.message });
+  Taro.showToast({
+    title: err.message,
+    icon: 'none',
+  });
   return Promise.reject(err);
 };
 Axios.interceptors.response.use(undefined, errorHanlder);

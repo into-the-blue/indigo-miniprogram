@@ -4,6 +4,7 @@ import { IProps, IInteractor } from '../types';
 import ViewModel from '../viewModel/viewModel';
 import { FeedPresenter } from '../presenter';
 import { FeedInteractor } from '../interactor';
+import { useStores } from '@/store';
 
 class Builder extends React.Component<IProps> {
   presenter: FeedPresenter;
@@ -16,9 +17,10 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    return new FeedInteractor();
+    const { feed } = useStores('feed');
+    return new FeedInteractor(feed);
   };
-  buildPresenter = (interactor: IInteractor) => {
+  buildPresenter = (interactor: FeedInteractor) => {
     return new FeedPresenter(interactor);
   };
   buildViewModel = (presenter: FeedPresenter) => {

@@ -1,5 +1,5 @@
 import React, { Component, ComponentType } from 'react';
-import { View, Button, Text } from '@tarojs/components';
+import { View, Button, Text, Map } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
 import { GlobalStore } from '@/store';
 // import './index.scss';
@@ -45,12 +45,18 @@ class Index extends Component<IProps> {
       count,
       // counterStore: { counter },
     } = this.props.global;
+    const coordinate = { lat: 31.2494, lng: 121.397 };
     return (
       <View className={'index'}>
         <Button onClick={this.increment}>+</Button>
         <Button onClick={this.decrement}>-</Button>
         <Button onClick={this.incrementAsync}>Add Async</Button>
         <Text>{count}</Text>
+        <Map
+          style={{ flex: 1, width: '100%', height: '100%' }}
+          longitude={coordinate!.lng}
+          latitude={coordinate!.lat}
+        />
       </View>
     );
   }
