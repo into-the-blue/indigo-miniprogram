@@ -41,21 +41,35 @@ class Index extends Component<IProps> {
   };
 
   render() {
-    const {
-      count,
-      // counterStore: { counter },
-    } = this.props.global;
+    const { count } = this.props.global;
     const coordinate = { lat: 31.2494, lng: 121.397 };
+    const setting = {
+      skew: 0,
+      rotate: 0,
+      showLocation: false,
+      showScale: false,
+      subKey: '',
+      layerStyle: -1,
+      enableZoom: true,
+      enableScroll: true,
+      enableRotate: false,
+      showCompass: false,
+      enable3D: false,
+      enableOverlooking: false,
+      enableSatellite: false,
+      enableTraffic: false,
+    };
     return (
       <View className={'index'}>
         <Button onClick={this.increment}>+</Button>
         <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
+        {/* <Button onClick={this.incrementAsync}>Add Async</Button> */}
         <Text>{count}</Text>
         <Map
-          style={{ flex: 1, width: '100%', height: '100%' }}
+          style={{ width: 400, height: 400 }}
           longitude={coordinate!.lng}
           latitude={coordinate!.lat}
+          setting={setting}
         />
       </View>
     );

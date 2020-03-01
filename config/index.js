@@ -1,4 +1,14 @@
 const path = require('path');
+const fs = require('fs');
+const SRC_DIR = path.join(__dirname, '..', 'src');
+
+const dirs = fs.readdirSync(SRC_DIR);
+const _alias = {};
+
+dirs.forEach(dirname => {
+  _alias['@/' + dirname] = path.resolve(__dirname, '..', 'src', dirname);
+});
+
 const config = {
   projectName: 'indigo-mp',
   date: '2020-2-13',
@@ -14,7 +24,7 @@ const config = {
   defineConstants: {},
   alias: {
     '@/': path.resolve(__dirname, '..', 'src'),
-    '@/store': path.resolve(__dirname, '..', 'src/store'),
+    ..._alias,
   },
   copy: {
     patterns: [],

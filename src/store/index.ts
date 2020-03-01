@@ -1,13 +1,16 @@
 import {} from 'mobx';
 import { FeedStore } from '../pages/Feed/stores';
 import { GlobalStore } from './global';
+import { MapStore } from './map';
 
 class RootStore {
   feed: FeedStore;
   global: GlobalStore;
+  mMap: MapStore;
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
+    this.mMap = new MapStore();
   }
 }
 const store = new RootStore();
@@ -23,4 +26,4 @@ export const useStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootSt
   }
   return res;
 };
-export { GlobalStore };
+export { GlobalStore, FeedStore, MapStore };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {} from '@tarojs/taro';
-import { IProps, IInteractor } from '../types';
+import { IProps, IViewModel } from '../types';
 import ViewModel from '../viewModel/viewModel';
 import { FeedPresenter } from '../presenter';
 import { FeedInteractor } from '../interactor';
@@ -12,19 +12,20 @@ class Builder extends React.Component<IProps> {
   constructor(props: IProps) {
     super(props);
     const interactor = this.buildInteractor();
-    this.presenter = this.buildPresenter(interactor);
-    this.VM = this.buildViewModel(this.presenter);
+    const buildPresenter = this.buildPresenter(interactor);
+    this.VM = this.buildViewModel(buildPresenter);
   }
   componentDidMount() {}
   buildInteractor = () => {
-    const { feed } = useStores('feed');
-    return new FeedInteractor(feed);
+    const { feed, mMap } = useStores('feed', 'mMap');
+    return new FeedInteractor(feed, mMap);
   };
-  buildPresenter = (interactor: FeedInteractor) => {
-    return new FeedPresenter(interactor);
+  buildPresenter = (interactor: FeedInteractor) => (viewModel: IViewModel) => {
+    return new FeedPresenter(interactor, viewModel);
   };
-  buildViewModel = (presenter: FeedPresenter) => {
-    return <ViewModel presenter={presenter} />;
+  buildViewModel = (buildPresenter: (viewModel: IViewModel) => FeedPresenter) => {
+    // @ts-ignore
+    return <ViewModel buildPresenter={buildPresenter} />;
   };
   render() {
     return this.VM;

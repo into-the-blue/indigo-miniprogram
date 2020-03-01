@@ -1,24 +1,8 @@
-import { observable, action, configure } from 'mobx';
+import { observable, action } from 'mobx';
+import { IStore } from '@/types';
 
-// configure({
-//   enforceActions: 'always',
-// });
-
-interface IStore {
-  coordinate?: {
-    lat: number;
-    lng: number;
-  };
-}
-class FeedStore {
-  @observable public coordinate?: {
-    lat: number;
-    lng: number;
-  } = {
-    lat: 31.2494,
-    lng: 121.397,
-  };
-  @action setState = (nextState: IStore) => {
+class FeedStore implements IStore<FeedStore> {
+  @action setState = nextState => {
     Object.assign(this, nextState);
   };
 }
