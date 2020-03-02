@@ -11,18 +11,19 @@ class Builder extends React.Component<IProps> {
   constructor(props: IProps) {
     super(props);
     const interactor = this.buildInteractor();
-    this.presenter = this.buildPresenter(interactor);
-    this.VM = this.buildViewModel(this.presenter);
+    const presenterBuilder = this.buildPresenter(interactor);
+    this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
   buildInteractor = () => {
     return new TemplateInteractor();
   };
-  buildPresenter = (interactor: IInteractor) => {
-    return new TemplatePresenter(interactor);
+  buildPresenter = (interactor: TemplateInteractor) => (viewModel: IViewModel) => {
+    return new TemplatePresenter(interactor, viewModel);
   };
-  buildViewModel = (presenter: TemplatePresenter) => {
-    return <ViewModel presenter={presenter} />;
+  buildViewModel = (buildPresenter: (viewModel: IViewModel) => TemplatePresenter) => {
+    // @ts-ignore
+    return <ViewModel buildPresenter={buildPresenter} />;
   };
   render() {
     return this.VM;

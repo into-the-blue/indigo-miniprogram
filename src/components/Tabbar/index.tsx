@@ -17,16 +17,17 @@ const Tabbar = ({ global }: IProps) => {
     switch (index) {
       case 0:
         Taro.redirectTo({
-          url: '/pages/Feed/builder',
+          url: '/pages/Feed/builder/index',
         });
       case 1:
         Taro.redirectTo({
-          url: '/pages/Profile/builder',
+          url: '/pages/Profile/builder/index',
         });
     }
   };
   return (
     <AtTabBar
+      fixed
       current={currentTabIndex}
       tabList={[
         {

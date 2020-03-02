@@ -7571,9 +7571,9 @@ tar@^2.0.0:
     inherits "2"
 
 taro-ui@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/taro-ui/-/taro-ui-2.2.4.tgz#96a486432e86d6d0d1eda70383c47c3284f5e8e6"
-  integrity sha512-EkVxp6eWnz5QLqf89Z3OVrVBZK5bvr1RgrP5ABFNizA+sMYdjHqJRV0O07Ulmj+whGLckCF5ACeE1Q4+E7iMCg==
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/taro-ui/-/taro-ui-2.3.0.tgz#1094cd0c9e4c50c6ac08ca19409c55408f46e32a"
+  integrity sha512-cbpnjACW4M5pLUGMl3EB+/AyNnckDpN2oMzvE6a6yjnyc9lpEHS0xBfiYlYaWgqsBp24OFVM4MsY7OBQMSDC2A==
   dependencies:
     "@types/react" "^16.7.3"
     bind-decorator "^1.0.11"

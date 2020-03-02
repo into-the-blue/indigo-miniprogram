@@ -1,11 +1,8 @@
 import { IPresenter, IInteractor, IViewModel } from '../types';
 
 class TemplatePresenter implements IPresenter {
-  viewModel: IViewModel;
-  constructor(public interactor: IInteractor) {}
-  setViewModal = (viewModel: IViewModel) => {
-    this.viewModel = viewModel;
-  };
+  
+  constructor(public interactor: IInteractor, public viewModel: IViewModel) {}
 
   componentDidMount() {}
   componentWillUnmount() {}

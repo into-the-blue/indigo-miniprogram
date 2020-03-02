@@ -7,10 +7,10 @@ import { observable, action, configure } from 'mobx';
 interface IStore {
   count?: number;
 }
-class ProfileStore {
+class TemplateStore {
   @observable public count: number = 0;
   @action setState = (nextState: IStore) => {
     Object.assign(this, nextState);
   };
 }
-export { ProfileStore };
+export { TemplateStore };

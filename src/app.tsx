@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import store from './store';
-import 'taro-ui/dist/style/index.scss';
+import 'taro-ui/style/index.scss';
 import './app.scss';
 
 class App extends Component {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Config } from '@tarojs/taro';
 import { observer, inject } from 'mobx-react';
 import { View, ScrollView, Text } from '@tarojs/components';
 // import {} from 'taro-ui';
@@ -7,10 +6,10 @@ import { IViewModel } from '../types';
 import { ProfilePresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
-// import Tabbar from '@/components/Tabbar';
+import Tabbar from '@/components/Tabbar';
 
 interface IProps {
-  presenter: ProfilePresenter;
+  buildPresenter: (viewModel: IViewModel) => ProfilePresenter;
 }
 
 @inject('global')
@@ -18,14 +17,10 @@ interface IProps {
 class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   presenter: ProfilePresenter;
 
-  config: Config = {
-    navigationBarTitleText: 'aa',
-  };
   constructor(props: IProps) {
     super(props);
 
-    this.presenter = this.props.presenter;
-    this.presenter.setViewModal(this);
+    this.presenter = this.props.buildPresenter(this);
   }
   componentWillMount() {}
   componentDidMount() {}
@@ -36,7 +31,7 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
         <ScrollView>
           <Text>{'feed'}</Text>
         </ScrollView>
-        {/* <Tabbar /> */}
+        <Tabbar />
       </View>
     );
   }

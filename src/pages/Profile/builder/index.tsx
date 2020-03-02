@@ -5,25 +5,25 @@ import { ProfilePresenter } from '../presenter';
 import { ProfileInteractor } from '../interactor';
 
 class Builder extends React.Component<IProps> {
-
   presenter: ProfilePresenter;
   VM: JSX.Element;
 
   constructor(props: IProps) {
     super(props);
     const interactor = this.buildInteractor();
-    this.presenter = this.buildPresenter(interactor);
-    this.VM = this.buildViewModel(this.presenter);
+    const presenterBuilder = this.buildPresenter(interactor);
+    this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
   buildInteractor = () => {
     return new ProfileInteractor();
   };
-  buildPresenter = (interactor: IInteractor) => {
-    return new ProfilePresenter(interactor);
+  buildPresenter = (interactor: ProfileInteractor) => (viewModel: IViewModel) => {
+    return new ProfilePresenter(interactor, viewModel);
   };
-  buildViewModel = (presenter: ProfilePresenter) => {
-    return <ViewModel presenter={presenter} />;
+  buildViewModel = (buildPresenter: (viewModel: IViewModel) => ProfilePresenter) => {
+    // @ts-ignore
+    return <ViewModel buildPresenter={buildPresenter} />;
   };
   render() {
     return this.VM;

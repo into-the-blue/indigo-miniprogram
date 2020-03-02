@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map } from '@tarojs/components';
+import { Map, View } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
 import { MapStore } from '@/store';
 
@@ -11,12 +11,14 @@ const IMap = ({ mMap, style }: IProps) => {
   const { currentCoordinate, setting, setState } = mMap!;
   if (!currentCoordinate) return null;
   return (
-    <Map
-      style={style}
-      longitude={currentCoordinate.lng}
-      latitude={currentCoordinate.lat}
-      setting={setting}
-    />
+    <View style={style}>
+      <Map
+        style={{ width: '100%', height: '100%' }}
+        longitude={currentCoordinate.lng}
+        latitude={currentCoordinate.lat}
+        setting={setting}
+      />
+    </View>
   );
 };
 

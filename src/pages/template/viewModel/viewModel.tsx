@@ -8,7 +8,7 @@ import {} from '../interactor';
 import {} from '../stores';
 
 interface IProps {
-  presenter: TemplatePresenter;
+  buildPresenter: (viewModel: IViewModel) => TemplatePresenter;
 }
 
 @inject('global')
@@ -19,8 +19,7 @@ class TemplateViewModel extends React.Component<IProps> implements IViewModel {
   constructor(props: IProps) {
     super(props);
 
-    this.presenter = this.props.presenter;
-    this.presenter.setViewModal(this);
+    this.presenter = this.props.buildPresenter(this);
   }
   componentWillMount() {}
   componentDidMount() {}

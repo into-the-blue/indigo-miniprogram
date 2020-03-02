@@ -9,6 +9,11 @@ dirs.forEach(dirname => {
   _alias['@/' + dirname] = path.resolve(__dirname, '..', 'src', dirname);
 });
 
+const TEMP_FIX_TARO_UI = {
+  'taro-ui': path.resolve(__dirname, '../src/taro-ui'),
+  nervjs: path.resolve(__dirname, '../node_modules/react'),
+};
+
 const config = {
   projectName: 'indigo-mp',
   date: '2020-2-13',
@@ -25,6 +30,7 @@ const config = {
   alias: {
     '@/': path.resolve(__dirname, '..', 'src'),
     ..._alias,
+    ...TEMP_FIX_TARO_UI,
   },
   copy: {
     patterns: [],

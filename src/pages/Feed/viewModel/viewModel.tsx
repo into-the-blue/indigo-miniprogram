@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import Taro from '@tarojs/taro';
 import { observer, inject } from 'mobx-react';
-import { View, Text, Button } from '@tarojs/components';
+import { View, Text, Button, Map } from '@tarojs/components';
 // import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
 import {} from '../interactor';
 import { FeedStore } from '../stores';
-import { GlobalStore } from '@/store';
-import Map from '@/components/Map';
-// import Tabbar from '@/components/Tabbar';
+import { GlobalStore, MapStore } from '@/store';
+import Tabbar from '@/components/Tabbar';
 
 interface IProps {
   feed: FeedStore;
   global: GlobalStore;
   buildPresenter: (viewModel: IViewModel) => FeedPresenter;
+  mMap: MapStore;
 }
 
 @inject('global', 'feed', 'mMap')
@@ -26,6 +26,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
     super(props);
     this.presenter = this.props.buildPresenter(this);
   }
+  
 
   componentDidMount() {
     this.presenter.componentDidMount();
@@ -49,11 +50,24 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
   };
   render() {
     const {} = this.props.feed!;
-    const { count } = this.props.global;
+    const { currentCoordinate, setting } = this.props.mMap;
     return (
-      <View style={{ width: '100%', height: '100%', backgroundColor: 'red' }}>
-        <Map style={{ display: 'flex', flex: 1 }} />
-        {/* <Tabbar /> */}
+      <View className={'page-container'}>
+        <View style={{ display: 'flex', flex: 1 }}>
+          {currentCoordinate && (
+            <Map
+              style={{ width: '100%', height: '100%' }}
+              longitude={currentCoordinate.lng}
+              latitude={currentCoordinate.lat}
+              setting={setting}
+              onRegionChange={e => console.warn(e)}
+              onTouchMove={e => {
+                console.warn('on move: ', e);
+              }}
+            />
+          )}
+        </View>
+        <Tabbar />
       </View>
     );
   }
