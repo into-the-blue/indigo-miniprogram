@@ -10,6 +10,7 @@ class FeedPresenter implements IPresenter {
   // };
 
   componentDidMount() {
+    Taro.hideHomeButton();
     this.interactor.getUserCurrentLocation();
   }
   componentWillUnmount() {}

@@ -26,7 +26,6 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
     super(props);
     this.presenter = this.props.buildPresenter(this);
   }
-  
 
   componentDidMount() {
     this.presenter.componentDidMount();

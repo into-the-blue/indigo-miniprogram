@@ -21,8 +21,11 @@ class TemplateViewModel extends React.Component<IProps> implements IViewModel {
 
     this.presenter = this.props.buildPresenter(this);
   }
-  componentWillMount() {}
+
   componentDidMount() {}
+
+  componentWillUnmount() {}
+  
   render() {
     // const { count } = this.props.feed!;
     return (

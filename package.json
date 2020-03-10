@@ -41,6 +41,7 @@
     "@tarojs/taro": "3.0.0-alpha.5",
     "apollo-boost": "^0.4.7",
     "axios": "^0.19.2",
+    "classnames": "^2.2.6",
     "graphql": "^14.6.0",
     "mobx": "^4.8.0",
     "mobx-react": "^6.1.4",

@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text } from '@tarojs/components';
-// import {} from 'taro-ui';
+import { View, ScrollView, Text, Button } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { ProfilePresenter } from '../presenter';
 import {} from '../interactor';
@@ -22,14 +23,46 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
 
     this.presenter = this.props.buildPresenter(this);
   }
-  componentWillMount() {}
-  componentDidMount() {}
+
+  componentDidMount() {
+    console.warn('mnound');
+    this.presenter.componentDidMount();
+  }
+
+  componentWillUnmount() {
+    console.warn('unmount');
+  }
   render() {
     // const { count } = this.props.feed!;
     return (
       <View style={{ flex: 1 }}>
         <ScrollView>
           <Text>{'feed'}</Text>
+          <Button
+            onClick={async () => {
+              const res = await Taro.login();
+              console.warn(res.code);
+            }}
+          >
+            {'Login'}
+          </Button>
+          <Button
+            openType={'getUserInfo'}
+            onGetUserInfo={({ detail: { userInfo, encryptedData } }) => {
+              console.warn(userInfo);
+            }}
+          >
+            {'Get user info'}
+          </Button>
+
+          <Button
+            openType={'getPhoneNumber'}
+            onGetPhoneNumber={({ detail }) => {
+              console.warn(detail);
+            }}
+          >
+            {'Get phone number'}
+          </Button>
         </ScrollView>
         <Tabbar />
       </View>
