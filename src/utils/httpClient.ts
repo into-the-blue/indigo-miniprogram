@@ -1,9 +1,17 @@
 import Axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
 import mpAdapter from 'axios-miniprogram-adapter';
 import Taro from '@tarojs/taro';
-import ApolloClient from 'apollo-boost';
+import { createHttpLink } from 'apollo-link-http';
+import WXApolloFetcher from 'wx-apollo-fetcher';
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { API_ENDPOINT, GRAPHQL_ENDPOINT } from './constants';
 import { Cache } from './Cache';
+
+const link = createHttpLink({
+  fetch: WXApolloFetcher,
+  uri: GRAPHQL_ENDPOINT,
+});
 
 Axios.defaults.adapter = mpAdapter;
 
@@ -71,8 +79,9 @@ const apiClient = Axios.create({
   instance.interceptors.response.use(undefined, errorHanlder);
 });
 
-// const gqlClient = new ApolloClient({
-//   uri: GRAPHQL_ENDPOINT,
-// });
+const gqlClient = new ApolloClient({
+  link,
+  cache: new InMemoryCache(),
+});
 
-export { apiClient };
+export { apiClient, gqlClient };

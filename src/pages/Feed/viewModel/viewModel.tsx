@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Taro from '@tarojs/taro';
 import { observer, inject } from 'mobx-react';
-import { View, Text, Button, Map } from '@tarojs/components';
+import { View, Map } from '@tarojs/components';
 // import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
@@ -49,7 +48,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
   };
   render() {
     const {} = this.props.feed!;
-    const { currentCoordinate, setting } = this.props.mMap;
+    const { currentCoordinate, setting, markers } = this.props.mMap;
     return (
       <View className={'page-container'}>
         <View style={{ display: 'flex', flex: 1 }}>
@@ -59,7 +58,11 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
               longitude={currentCoordinate.lng}
               latitude={currentCoordinate.lat}
               setting={setting}
+              scale={14}
+              // @ts-ignore
+              markers={markers}
               onRegionChange={e => console.warn(e)}
+              onMarkerTap={this.presenter.onPressMarker}
               onTouchMove={e => {
                 console.warn('on move: ', e);
               }}
