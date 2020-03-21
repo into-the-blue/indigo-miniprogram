@@ -3,6 +3,7 @@ import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel/viewModel';
 import { ProfilePresenter } from '../presenter';
 import { ProfileInteractor } from '../interactor';
+import { getStores } from '@/store';
 
 class Builder extends React.Component<IProps> {
   presenter: ProfilePresenter;
@@ -16,7 +17,8 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    return new ProfileInteractor();
+    const { userStore } = getStores('userStore');
+    return new ProfileInteractor(userStore);
   };
   buildPresenter = (interactor: ProfileInteractor) => (viewModel: IViewModel) => {
     return new ProfilePresenter(interactor, viewModel);

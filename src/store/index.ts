@@ -2,21 +2,24 @@ import {} from 'mobx';
 import { FeedStore } from '../pages/Feed/stores';
 import { GlobalStore } from './global';
 import { MapStore } from './map';
+import { UserStore } from './user';
 
 class RootStore {
   feed: FeedStore;
   global: GlobalStore;
   mMap: MapStore;
+  userStore: UserStore;
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
     this.mMap = new MapStore();
+    this.userStore = new UserStore();
   }
 }
 const store = new RootStore();
 export default store;
 
-export const useStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootStore, K> = (
+export const getStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootStore, K> = (
   ...stores
 ) => {
   const res: any = {};
@@ -26,4 +29,4 @@ export const useStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootSt
   }
   return res;
 };
-export { GlobalStore, FeedStore, MapStore };
+export { GlobalStore, FeedStore, MapStore, UserStore };

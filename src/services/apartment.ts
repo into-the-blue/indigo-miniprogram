@@ -1,1 +1,1 @@
-import { gqlClient } from '@/utils';
+import {} from '@/utils';

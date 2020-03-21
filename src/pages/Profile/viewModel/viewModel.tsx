@@ -1,19 +1,23 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text, Button } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import { View, ScrollView } from '@tarojs/components';
 import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { ProfilePresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
+import {} from '@/services/user';
+import { Button } from '@/components';
 import Tabbar from '@/components/Tabbar';
+import { UserInfo } from './components/UserInfoCard';
+import { UserStore } from '@/store';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => ProfilePresenter;
+  userStore?: UserStore;
 }
 
-@inject('global')
+@inject('global', 'userStore')
 @observer
 class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   presenter: ProfilePresenter;
@@ -25,44 +29,26 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   }
 
   componentDidMount() {
-    console.warn('mnound');
     this.presenter.componentDidMount();
   }
 
-  componentWillUnmount() {
-    console.warn('unmount');
-  }
+  componentWillUnmount() {}
   render() {
-    // const { count } = this.props.feed!;
+    const { userInfo, isLoggedIn } = this.props.userStore!;
     return (
       <View style={{ flex: 1 }}>
         <ScrollView>
-          <Text>{'feed'}</Text>
-          <Button
-            onClick={async () => {
-              const res = await Taro.login();
-              console.warn(res.code);
-            }}
-          >
-            {'Login'}
-          </Button>
-          <Button
-            openType={'getUserInfo'}
-            onGetUserInfo={({ detail: { userInfo, encryptedData } }) => {
-              console.warn(userInfo);
-            }}
-          >
-            {'Get user info'}
-          </Button>
-
-          <Button
-            openType={'getPhoneNumber'}
-            onGetPhoneNumber={({ detail }) => {
-              console.warn(detail);
-            }}
-          >
-            {'Get phone number'}
-          </Button>
+          {isLoggedIn ? (
+            <UserInfo userInfo={userInfo!} />
+          ) : (
+            <Button
+              openType={'getUserInfo'}
+              type={'primary'}
+              onGetUserInfo={this.presenter.onGetUserInfo}
+            >
+              {'Get user info'}
+            </Button>
+          )}
         </ScrollView>
         <Tabbar />
       </View>

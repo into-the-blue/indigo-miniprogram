@@ -1,39 +1,78 @@
-import Axios from 'axios';
+import Axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
+import mpAdapter from 'axios-miniprogram-adapter';
 import Taro from '@tarojs/taro';
 import ApolloClient from 'apollo-boost';
 import { API_ENDPOINT, GRAPHQL_ENDPOINT } from './constants';
+import { Cache } from './Cache';
 
-const errorHanlder = (err: any) => {
-  Taro.showToast({
-    title: err.message,
-    icon: 'none',
+Axios.defaults.adapter = mpAdapter;
+
+const getNewToken = async (refreshToken: string) => {
+  const { data } = await apiClient.post('/auth/refresh', {
+    refreshToken,
   });
+  return data;
+};
+
+const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
+  const config = err.config;
+
+  if (err.response.status === 401) {
+    // not authorized
+    const authData = await Cache.get('authData').catch(error => {
+      console.warn('httpClient -> errorHanlder', error);
+      return null;
+    });
+    if (authData && authData.refreshToken) {
+      const { success, message, accessToken, refreshToken } = await getNewToken(
+        authData.refreshToken,
+      );
+      if (!success) {
+        return Promise.reject(new Error(message));
+      }
+      Cache.set('authData', {
+        accessToken,
+        refreshToken,
+      });
+      return instance(config);
+    }
+  }
+  // Taro.showToast({
+  //   title: 'Network error',
+  //   icon: 'none',
+  // });
   return Promise.reject(err);
 };
+
+const beforeRequest = async (value: AxiosRequestConfig) => {
+  const authData = await Cache.get('authData').catch(err => {
+    console.warn('httpClient -> beforeRequest', err);
+    return null;
+  });
+  if (authData && authData.accessToken) {
+    value.headers['Authorization'] = 'Bearer ' + authData.accessToken;
+  }
+  return value;
+};
 Axios.interceptors.response.use(undefined, errorHanlder);
+
 const headers = {
   'timvel-project': 'indigo',
-  'timvel-app': 'indigo-dashboard',
-  'timvel-platform': 'web',
+  'timvel-app': 'indigo-mp',
+  'timvel-platform': 'miniprogram',
 };
 const apiClient = Axios.create({
   baseURL: API_ENDPOINT,
-  timeout: 20000,
   headers,
 });
 
 [apiClient].forEach(instance => {
+  instance.interceptors.request.use(beforeRequest);
   instance.interceptors.response.use(undefined, errorHanlder);
 });
 
-// data -> queryApartmentsWithoutLabel:Data
+// const gqlClient = new ApolloClient({
+//   uri: GRAPHQL_ENDPOINT,
+// });
 
-// loading: false
-
-// networkStatus: 7
-
-// stale: false
-const gqlClient = new ApolloClient({
-  uri: GRAPHQL_ENDPOINT,
-});
-export { apiClient, gqlClient };
+export { apiClient };
