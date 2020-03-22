@@ -5,6 +5,7 @@ export const apartmentDefaultSchemas = `
             communityName
             communityUrl
             houseType
+            houseId
             price
             pricePerSquareMeter
             tags
@@ -13,4 +14,20 @@ export const apartmentDefaultSchemas = `
             createdAt
             createdTime
             distance
+            computed {
+                rankingOfPPSM
+                rankingOfPrice
+                rankingOfArea
+                averagePPSM
+                averagePrice
+                averageArea
+                medianPPSM
+                medianPrice
+                medianArea
+                lowestPPSM
+                lowestPrice
+                total
+                updatedAt
+                range
+            }
 `;

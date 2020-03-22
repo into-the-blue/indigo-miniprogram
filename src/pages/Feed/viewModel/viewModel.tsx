@@ -8,6 +8,8 @@ import {} from '../interactor';
 import { FeedStore } from '../stores';
 import { GlobalStore, MapStore } from '@/store';
 import Tabbar from '@/components/Tabbar';
+import classNames from 'classnames';
+import ApartmentInfoModal from './components/ApartmentInfo';
 
 interface IProps {
   feed: FeedStore;
@@ -47,27 +49,35 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
     });
   };
   render() {
-    const {} = this.props.feed!;
-    const { currentCoordinate, setting, markers } = this.props.mMap;
+    const { showDetailModal } = this.props.feed!;
+    const { currentCoordinate, setting, markers, scale } = this.props.mMap;
     return (
       <View className={'page-container'}>
         <View style={{ display: 'flex', flex: 1 }}>
           {currentCoordinate && (
-            <Map
-              style={{ width: '100%', height: '100%' }}
-              longitude={currentCoordinate.lng}
-              latitude={currentCoordinate.lat}
-              setting={setting}
-              scale={14}
-              // @ts-ignore
-              markers={markers}
-              onRegionChange={e => console.warn(e)}
-              onMarkerTap={this.presenter.onPressMarker}
-              onTouchMove={e => {
-                console.warn('on move: ', e);
-              }}
-            />
+            <View
+              className={classNames('flex', {
+                'map-container': showDetailModal,
+              })}
+              style={{ flex: 1 }}
+            >
+              <Map
+                style={{ width: '100%', height: '100%' }}
+                longitude={currentCoordinate.lng}
+                latitude={currentCoordinate.lat}
+                setting={setting}
+                scale={scale}
+                // @ts-ignore
+                markers={markers}
+                onRegionChange={e => console.warn(e)}
+                onMarkerTap={this.presenter.onPressMarker}
+                onTouchMove={e => {
+                  console.warn('on move: ', e);
+                }}
+              />
+            </View>
           )}
+          <ApartmentInfoModal />
         </View>
         <Tabbar />
       </View>

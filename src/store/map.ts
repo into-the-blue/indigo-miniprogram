@@ -1,21 +1,39 @@
 import { observable, action } from 'mobx';
 import { IStore, nextState, IMarker, IMetroStationClient, IApartment } from '@/types';
+import { get } from 'lodash';
 
 const USER_MARKER_URL = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/marker.png';
 const METRO_STATION_MARKER_URL =
   'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/shanghai_metro.png';
 const APARTMENT_MARKER_URL = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/apartment.png';
+
+type FocusedMetroStation = {
+  type: 'metroStation';
+  stationId: string;
+};
+
+type FocusedCustomAddr = {
+  type: 'address';
+  address: string;
+  coordinates: [number, number];
+};
+type TFocusedPosition = FocusedMetroStation | FocusedCustomAddr;
+
 class MapStore implements IStore<MapStore> {
   @observable currentCoordinate?: {
     lng: number;
     lat: number;
   };
 
+  @observable scale: number = 14;
+
   @observable markers: IMarker[] = [];
 
   currentMetroStations: IMetroStationClient[] = [];
 
   currentApartments: IApartment[] = [];
+
+  focusedPosition?: TFocusedPosition;
 
   setting: any = {
     skew: 0,
@@ -93,6 +111,15 @@ class MapStore implements IStore<MapStore> {
     }));
     this.currentApartments = apartments;
     this.markers = this.markers.concat(markers);
+  };
+
+  isStationFocused = (stationId: string) => {
+    if (get(this.focusedPosition, 'stationId') === stationId) return true;
+    this.focusedPosition = {
+      type: 'metroStation',
+      stationId,
+    };
+    return false;
   };
 }
 export { MapStore };

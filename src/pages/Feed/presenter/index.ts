@@ -25,12 +25,15 @@ class FeedPresenter implements IPresenter {
   onPressMarker = (evt: any) => {
     const { markerId } = evt;
     const type = markerId.split(' ')[0];
+    const id = markerId.split(' ')[1];
     switch (type) {
       case 'user':
         break;
       case 'station':
-        this.interactor.onPressMetroStation(markerId.split(' ')[1]);
+        this.interactor.onPressMetroStation(id);
+        break;
       case 'apartment':
+        this.interactor.onPressApartment(id);
         break;
     }
   };

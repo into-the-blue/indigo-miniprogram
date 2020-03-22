@@ -1,0 +1,21 @@
+.detail-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .computed-info-container {
+    background-color: rgb(207, 227, 177);
+    color: white;
+  }
+
+  .mask-container {
+    background-color: transparent;
+    flex: 1;
+  }
+}
+
+.map-container {
+  filter: blur(20px);
+}

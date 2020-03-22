@@ -3,6 +3,7 @@ import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/store';
 import { ApartmentClient } from '@/services/apartment';
+import { get } from 'lodash';
 
 class FeedInteractor implements IInteractor {
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
@@ -40,7 +41,6 @@ class FeedInteractor implements IInteractor {
         this.mMap.currentCoordinate!.lat,
         1000,
       );
-      console.warn('stations', stationsNearby);
       this.mMap.setMetroStations(stationsNearby);
     } catch (err) {
       console.warn(err.message);
@@ -49,6 +49,8 @@ class FeedInteractor implements IInteractor {
 
   onPressMetroStation = async (stationId: string) => {
     // const station = this.mMap.currentMetroStations.find(o => o.stationId === stationId)!;
+    if (this.mMap.isStationFocused(stationId)) return;
+
     Taro.showLoading({
       mask: true,
       title: 'Loading ...',
@@ -70,6 +72,13 @@ class FeedInteractor implements IInteractor {
     } finally {
       Taro.hideLoading();
     }
+  };
+
+  onPressApartment = (houseId: string) => {
+    const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
+    console.warn(apartment);
+    if (!apartment) return;
+    this.feed.showApartmentDetail(apartment);
   };
 }
 
