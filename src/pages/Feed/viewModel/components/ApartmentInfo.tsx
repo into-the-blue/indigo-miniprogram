@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, CoverView, CoverImage, Text } from '@tarojs/components';
+import { View, CoverView, CoverImage, Text, Swiper } from '@tarojs/components';
 import {} from '@/types';
 import { FeedStore } from '../../stores';
 import { ComputedInfo } from './functional';
-import {} from 'taro-ui'
+import {} from 'taro-ui';
 import '../index.scss';
 
 const CLOSE_CIRCLE_URL = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/close_circle.png';

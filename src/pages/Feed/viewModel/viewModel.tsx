@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, Map } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 // import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
@@ -62,6 +63,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
               style={{ flex: 1 }}
             >
               <Map
+                id={'map'}
                 style={{ width: '100%', height: '100%' }}
                 longitude={currentCoordinate.lng}
                 latitude={currentCoordinate.lat}
@@ -69,10 +71,12 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
                 scale={scale}
                 // @ts-ignore
                 markers={markers}
-                onRegionChange={e => console.warn(e)}
                 onMarkerTap={this.presenter.onPressMarker}
-                onTouchMove={e => {
-                  console.warn('on move: ', e);
+                onBegin={e => console.warn('onbegin', e)}
+                onEnd={async e => {
+                  const mapCtx = Taro.createMapContext('map');
+                  const res = await mapCtx.getCenterLocation({});
+                  console.warn('onEnd ', res);
                 }}
               />
             </View>

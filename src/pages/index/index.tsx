@@ -70,6 +70,10 @@ class Index extends Component<IProps> {
           longitude={coordinate!.lng}
           latitude={coordinate!.lat}
           setting={setting}
+          onRegionChange={e => console.warn('sss', e)}
+          onTouchMove={e => {
+            console.warn('on move: ', e);
+          }}
         />
       </View>
     );

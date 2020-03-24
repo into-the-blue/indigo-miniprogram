@@ -2,7 +2,7 @@ export default {
   pages: [
     'pages/Feed/builder/index',
     'pages/Profile/builder/index',
-    // 'pages/index/index'
+    'pages/index/index'
   ],
   window: {
     backgroundTextStyle: 'light',

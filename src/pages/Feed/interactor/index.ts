@@ -3,7 +3,7 @@ import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/store';
 import { ApartmentClient } from '@/services/apartment';
-import { get } from 'lodash';
+import {} from 'lodash';
 
 class FeedInteractor implements IInteractor {
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
