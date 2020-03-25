@@ -51,7 +51,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
   };
   render() {
     const { showDetailModal } = this.props.feed!;
-    const { currentCoordinate, setting, markers, scale } = this.props.mMap;
+    const { currentCoordinate, setting, markers, scale, mapDragged } = this.props.mMap;
     return (
       <View className={'page-container'}>
         <View style={{ display: 'flex', flex: 1 }}>
@@ -77,7 +77,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
               />
             </View>
           )}
-          <CoverImage className={'map-pin'} src={IMAGE_MAP_PIN} />
+          {mapDragged && <CoverImage className={'map-pin'} src={IMAGE_MAP_PIN} />}
           <ApartmentInfoModal />
         </View>
         <Tabbar />

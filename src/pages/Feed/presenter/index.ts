@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
-import { IMetroStationClient } from '@/types';
+import {} from '@/types';
 
 class FeedPresenter implements IPresenter {
   beginTimeStamp: number = Date.now();
@@ -51,6 +51,7 @@ class FeedPresenter implements IPresenter {
   onBeginDrag = (e: any) => {
     if (e.causedBy !== 'gesture') return;
     console.warn('on begin', e);
+    this.interactor.onDragMap();
     this.beginTimeStamp = e.timeStamp;
   };
 
@@ -65,6 +66,7 @@ class FeedPresenter implements IPresenter {
     this.interactor.cancelQueryStations();
     const mapCtx = Taro.createMapContext('map');
     const { longitude, latitude } = await mapCtx.getCenterLocation({});
+    this.interactor.setCurrentCoordinate(longitude, latitude);
     this.interactor.queryStationsNearby(longitude, latitude);
   };
 }

@@ -20,10 +20,16 @@ type FocusedCustomAddr = {
 type TFocusedPosition = FocusedMetroStation | FocusedCustomAddr;
 
 class MapStore implements IStore<MapStore> {
+  initialCoordinate?: {
+    lng: number;
+    lat: number;
+  };
   @observable currentCoordinate?: {
     lng: number;
     lat: number;
   };
+
+  @observable mapDragged: boolean = false;
 
   @observable scale: number = 14;
 

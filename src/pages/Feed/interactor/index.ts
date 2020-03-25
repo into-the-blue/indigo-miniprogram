@@ -24,6 +24,12 @@ class FeedInteractor implements IInteractor {
       const res = await Taro.getLocation({
         type: 'gcj02',
       });
+      this.mMap.setState({
+        initialCoordinate: {
+          lng: res.longitude,
+          lat: res.latitude,
+        },
+      });
       this.mMap.setUserCurrentPosition(121.44045, 31.22524);
       // console.warn(res);
       // this.mMap.setState({
@@ -56,6 +62,23 @@ class FeedInteractor implements IInteractor {
   };
 
   cancelQueryStations = () => this.$queryStationsSub && this.$queryStationsSub.unsubscribe();
+
+  setCurrentCoordinate = (lng: number, lat: number) => {
+    this.mMap.setState({
+      currentCoordinate: {
+        lng,
+        lat,
+      },
+    });
+  };
+
+  onDragMap = () => {
+    if (!this.mMap.mapDragged) {
+      this.mMap.setState({
+        mapDragged: true,
+      });
+    }
+  };
 
   onPressMetroStation = async (stationId: string) => {
     // const station = this.mMap.currentMetroStations.find(o => o.stationId === stationId)!;
