@@ -4,13 +4,18 @@ import { FeedInteractor } from '../interactor';
 import { IMetroStationClient } from '@/types';
 
 class FeedPresenter implements IPresenter {
+  beginTimeStamp: number = Date.now();
+
   constructor(public interactor: FeedInteractor, public viewModel: IViewModel) {}
 
   componentDidMount() {
+    console.warn('did mount');
     Taro.hideHomeButton();
     this.init();
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    console.warn('unmount');
+  }
 
   init = async () => {
     this.interactor.queryLastestUserInfo();
@@ -36,6 +41,31 @@ class FeedPresenter implements IPresenter {
         this.interactor.onPressApartment(id);
         break;
     }
+  };
+
+  /**
+   * causedBy: update: (map init, pinch ) | "gesture" (drag) |
+   *
+   * @memberof FeedPresenter
+   */
+  onBeginDrag = (e: any) => {
+    if (e.causedBy !== 'gesture') return;
+    console.warn('on begin', e);
+    this.beginTimeStamp = e.timeStamp;
+  };
+
+  /**
+   * causedBy: scale (map init, pinch) | "drag"
+   *
+   * @memberof FeedPresenter
+   */
+  onEndDrag = async (e: any) => {
+    if (e.causedBy !== 'drag') return;
+    console.warn('on end', e.timeStamp - this.beginTimeStamp, e);
+    this.interactor.cancelQueryStations();
+    const mapCtx = Taro.createMapContext('map');
+    const { longitude, latitude } = await mapCtx.getCenterLocation({});
+    this.interactor.queryStationsNearby(longitude, latitude);
   };
 }
 export { FeedPresenter };

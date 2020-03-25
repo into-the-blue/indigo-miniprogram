@@ -59,7 +59,7 @@ class MapStore implements IStore<MapStore> {
   @action
   setMetroStations = (stations: IMetroStationClient[]) => {
     if (!stations.length) return;
-    this.markers = this.markers.filter(o => o.type !== 'station');
+    this.cleanMarkersByType('station');
     const markers: IMarker[] = stations.map(s => ({
       id: 'station ' + s.stationId,
       longitude: s.coordinates[0],
@@ -71,6 +71,22 @@ class MapStore implements IStore<MapStore> {
     }));
     this.currentMetroStations = stations;
     this.markers = this.markers.concat(markers);
+    this.cleanFocusedStation();
+  };
+
+  /**
+   * if focused station not exists in currentMetroStations, clean apartment markers
+   *
+   * @memberof MapStore
+   */
+  @action
+  cleanFocusedStation = () => {
+    if (
+      !this.currentMetroStations.some(o => o.stationId === get(this.focusedPosition, 'stationId'))
+    ) {
+      this.cleanMarkersByType('apartment');
+      this.focusedPosition = undefined;
+    }
   };
 
   @action
@@ -96,9 +112,13 @@ class MapStore implements IStore<MapStore> {
     }
   };
 
+  @action cleanMarkersByType = (type: 'user' | 'station' | 'apartment') => {
+    this.markers = this.markers.filter(o => o.type !== type);
+  };
+
   @action
   setApartments = (apartments: IApartment[]) => {
-    this.markers = this.markers.filter(o => o.type !== 'apartment');
+    this.cleanMarkersByType('apartment');
     const markers: IMarker[] = apartments.map(apt => ({
       id: 'apartment ' + apt.houseId,
       longitude: apt.coordinates[0],

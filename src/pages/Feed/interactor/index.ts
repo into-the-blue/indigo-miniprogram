@@ -3,9 +3,12 @@ import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/store';
 import { ApartmentClient } from '@/services/apartment';
+import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
 
 class FeedInteractor implements IInteractor {
+  $queryStationsSub?: Subscription;
+
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
 
   queryLastestUserInfo = async () => {
@@ -33,19 +36,26 @@ class FeedInteractor implements IInteractor {
       console.warn(err);
     }
   };
-  queryStationsNearby = async () => {
-    try {
-      if (!this.mMap.currentCoordinate) return;
-      const stationsNearby = await ApartmentClient.queryStationsNearby(
-        this.mMap.currentCoordinate!.lng,
-        this.mMap.currentCoordinate!.lat,
-        1000,
-      );
-      this.mMap.setMetroStations(stationsNearby);
-    } catch (err) {
-      console.warn(err.message);
+  queryStationsNearby = async (lng?: number, lat?: number) => {
+    if (!this.mMap.currentCoordinate) return;
+    const args: [number, number, number] = [
+      this.mMap.currentCoordinate!.lng,
+      this.mMap.currentCoordinate!.lat,
+      1000,
+    ];
+    if (lng && lat) {
+      args[0] = lng;
+      args[1] = lat;
     }
+    this.$queryStationsSub = from(ApartmentClient.queryStationsNearby(...args)).subscribe({
+      next: stationsNearby => this.mMap.setMetroStations(stationsNearby),
+      error: err => {
+        console.warn(err.message);
+      },
+    });
   };
+
+  cancelQueryStations = () => this.$queryStationsSub && this.$queryStationsSub.unsubscribe();
 
   onPressMetroStation = async (stationId: string) => {
     // const station = this.mMap.currentMetroStations.find(o => o.stationId === stationId)!;
@@ -64,6 +74,7 @@ class FeedInteractor implements IInteractor {
       this.mMap.setApartments(apartments);
     } catch (err) {
       console.warn(err.message);
+      this.mMap.focusedPosition = undefined;
       Taro.showToast({
         title: '出错啦...',
         icon: 'none',

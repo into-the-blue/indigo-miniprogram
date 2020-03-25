@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, Map } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import { View, Map, Image, CoverImage } from '@tarojs/components';
 // import {} from 'taro-ui';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
@@ -12,6 +11,7 @@ import Tabbar from '@/components/Tabbar';
 import classNames from 'classnames';
 import ApartmentInfoModal from './components/ApartmentInfo';
 
+const IMAGE_MAP_PIN = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/map_pin.png';
 interface IProps {
   feed: FeedStore;
   global: GlobalStore;
@@ -72,15 +72,12 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
                 // @ts-ignore
                 markers={markers}
                 onMarkerTap={this.presenter.onPressMarker}
-                onBegin={e => console.warn('onbegin', e)}
-                onEnd={async e => {
-                  const mapCtx = Taro.createMapContext('map');
-                  const res = await mapCtx.getCenterLocation({});
-                  console.warn('onEnd ', res);
-                }}
+                onBegin={this.presenter.onBeginDrag}
+                onEnd={this.presenter.onEndDrag}
               />
             </View>
           )}
+          <CoverImage className={'map-pin'} src={IMAGE_MAP_PIN} />
           <ApartmentInfoModal />
         </View>
         <Tabbar />
