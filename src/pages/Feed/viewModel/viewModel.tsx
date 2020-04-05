@@ -77,7 +77,9 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
               />
             </View>
           )}
-          {mapDragged && <CoverImage className={'map-pin'} src={IMAGE_MAP_PIN} />}
+          {mapDragged && !showDetailModal && (
+            <CoverImage className={'map-pin'} src={IMAGE_MAP_PIN} />
+          )}
           <ApartmentInfoModal />
         </View>
         <Tabbar />

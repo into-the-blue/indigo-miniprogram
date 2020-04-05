@@ -12,6 +12,12 @@
   position: relative;
 }
 
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
 .page-container {
   width: 100vw;
   height: 100vh;

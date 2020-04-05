@@ -11,6 +11,7 @@ import { Button } from '@/components';
 import Tabbar from '@/components/Tabbar';
 import { UserInfo } from './components/UserInfoCard';
 import { UserStore } from '@/store';
+import { ConfigureConditions } from '@/components/ConfigureConditions';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => ProfilePresenter;
@@ -49,6 +50,7 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
               {'Get user info'}
             </Button>
           )}
+          <ConfigureConditions />
         </ScrollView>
         <Tabbar />
       </View>

@@ -1221,7 +1221,7 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.1.tgz#937fab3194766256ee09fcd40b781740758617e7"
   integrity sha512-lhbQXx9HKZAPgBkISrBcmAcMpZsmpe/Cd/hY7LGZS5OfkySUBItnPZHgQPssWYUET8elF+yCFBbP1Q0RZPTdaw==
 
-"@types/react@^16.0.0", "@types/react@^16.7.3":
+"@types/react@^16.0.0":
   version "16.9.19"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.19.tgz#c842aa83ea490007d29938146ff2e4d9e4360c40"
   integrity sha512-LJV97//H+zqKWMms0kvxaKYJDG05U2TtQB3chRLF8MPNs+MQh/H1aGlyDUxjaHvu08EAGerdX2z4LTBc7ns77A==
@@ -2113,11 +2113,6 @@ binary-extensions@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.0.0.tgz#23c0df14f6a88077f5f986c0d167ec03c3d5537c"
   integrity sha512-Phlt0plgpIIBOGTT/ehfFnbNlfsDEiqmzE2KRXoX1bLIlir4X/MR+zSyBEkL05ffWgnRSf/DXv+WrUAVr93/ow==
-
-bind-decorator@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/bind-decorator/-/bind-decorator-1.0.11.tgz#e41bc06a1f65dd9cec476c91c5daf3978488252f"
-  integrity sha1-5BvAah9l3ZzsR2yRxdrzl4SIJS8=
 
 bindings@^1.5.0:
   version "1.5.0"
@@ -9190,17 +9185,15 @@ tar@^2.0.0:
     fstream "^1.0.12"
     inherits "2"
 
-taro-ui@^2.2.4:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/taro-ui/-/taro-ui-2.3.0.tgz#1094cd0c9e4c50c6ac08ca19409c55408f46e32a"
-  integrity sha512-cbpnjACW4M5pLUGMl3EB+/AyNnckDpN2oMzvE6a6yjnyc9lpEHS0xBfiYlYaWgqsBp24OFVM4MsY7OBQMSDC2A==
+taro-ui@3.0.0-alpha.1:
+  version "3.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/taro-ui/-/taro-ui-3.0.0-alpha.1.tgz#e5c4d6a4c40bcf8cf178e4da557d55e21c75ae15"
+  integrity sha512-YpFaX3NNHOPaR2fa6HoxPXD1onEbfh03FE2G1x7mPwINx2TraeoO0AC/VUV2tTsqaejaHVZ6qCd48BQm50xzHQ==
   dependencies:
-    "@types/react" "^16.7.3"
-    bind-decorator "^1.0.11"
     classnames "^2.2.6"
     dayjs "^1.7.7"
     lodash "^4.17.10"
-    prop-types "^15.6.2"
+    prop-types "^15.7.2"
 
 terser-webpack-plugin@2.3.5:
   version "2.3.5"
