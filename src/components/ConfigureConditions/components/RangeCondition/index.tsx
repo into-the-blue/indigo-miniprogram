@@ -6,6 +6,7 @@ import addContainer from '../conditionContainer';
 import './styles.scss';
 import Assets from '@/assets';
 import classNames from 'classnames';
+import Collapsable from '@/components/Collapsable';
 
 interface IProps {
   condition: TSubCondition & {
@@ -13,6 +14,7 @@ interface IProps {
     condition: [number | -1, number | -1];
   };
   detail: TConfigRange;
+  onEdit: () => void;
 }
 
 export const EditRange = ({
@@ -38,7 +40,7 @@ export const EditRange = ({
         type={'number'}
         onChange={onChangeThreshold('min')}
       />
-      <AtRange value={range} min={0} max={100} onChange={onChange} />
+      <AtRange value={range} onChange={onChange} />
       <AtInput
         maxLength={5}
         className={'range-condition__threshold-input'}
@@ -51,7 +53,7 @@ export const EditRange = ({
   );
 };
 
-const RangeCondition = ({ condition, detail: { title } }: IProps) => {
+const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   const [collapse, setCollapse] = useState<boolean>(true);
 
   const [rangeValue, setRangeValue] = useState<[number, number]>([0, 100]);
@@ -75,8 +77,14 @@ const RangeCondition = ({ condition, detail: { title } }: IProps) => {
     if (type === 'max') {
       nextThreshold[1] = _value;
     }
+    onEdit();
     setRangeThreshold(nextThreshold);
     return _value.toString();
+  };
+
+  const onChangeRange = (v: [number, number]) => {
+    onEdit();
+    setRangeValue(v);
   };
 
   const currentRange: [number, number] = useMemo(() => {
@@ -88,28 +96,18 @@ const RangeCondition = ({ condition, detail: { title } }: IProps) => {
       return Math.round(rangeThreshold![0] + v * per);
     }) as [number, number];
   }, [rangeValue, rangeThreshold]);
-
   return (
-    <View>
-      <View onClick={openCloseEditor} className={'range-condition__brief-container'}>
-        <Text>{title + currentRange.join(' - ')}</Text>
-        <Image
-          className={classNames('range-condition__arrow-icon', {
-            'range-condition__arrow-icon-open': !collapse,
-          })}
-          src={Assets.ArrowRight}
-        />
-      </View>
-      {!collapse && rangeValue && rangeThreshold && (
+    <Collapsable title={title + currentRange.join(' - ')}>
+      {rangeValue && rangeThreshold && (
         <EditRange
           range={rangeValue}
-          onChange={setRangeValue}
+          onChange={onChangeRange}
           max={rangeThreshold![1]}
           min={rangeThreshold![0]}
           onChangeThreshold={onChangeRangeThreshold}
         />
       )}
-    </View>
+    </Collapsable>
   );
 };
 

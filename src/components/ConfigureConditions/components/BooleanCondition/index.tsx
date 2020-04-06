@@ -3,6 +3,7 @@ import { View, Switch, Text } from '@tarojs/components';
 import { TSubCondition, TConfigBoolean } from '@/types';
 import {} from 'taro-ui';
 import addWrapper from '../conditionContainer';
+import Collapsable from '@/components/Collapsable';
 
 interface IProps {
   condition: TSubCondition & {
@@ -10,6 +11,7 @@ interface IProps {
     condition: boolean;
   };
   detail: TConfigBoolean;
+  onEdit: () => void;
 }
 
 export const EditBoolean = ({
@@ -34,15 +36,23 @@ export const EditBoolean = ({
   );
 };
 
-const Comp = ({ condition, detail: { value, title } }: IProps) => {
+const Comp = ({ condition, detail: { value, title }, onEdit }: IProps) => {
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(() => {
     setChecked(condition.condition);
   }, [condition.condition]);
+
+  const onChange = (bool: boolean) => {
+    onEdit();
+    setChecked(bool);
+  };
+
   return (
-    <View>
-      <EditBoolean valueTitles={value} onChange={setChecked} value={checked} />
-    </View>
+    <Collapsable title={title + ':' + value[+checked]}>
+      <View style={{ padding: '10px 20px' }}>
+        <EditBoolean valueTitles={value} onChange={onChange} value={checked} />
+      </View>
+    </Collapsable>
   );
 };
 

@@ -1,0 +1,22 @@
+@import '@/styles/theme.scss';
+
+.collapse__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 30px 20px;
+  border-bottom-width: 2px;
+  border-color: $light-grey-bk;
+  border-style: solid;
+}
+
+.collapse__arrow-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+
+  &-open {
+    transition: 0.5s;
+    rotate: 90deg;
+  }
+}
