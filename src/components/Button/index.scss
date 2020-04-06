@@ -1,11 +1,27 @@
 @import '@/styles/theme.scss';
 
-.mbutton-default {
+.mbutton {
   height: 70px;
   margin: 0;
-  border-radius: $border-radius;
-  background: $primary-color;
-  border: 0;
   line-height: 70px;
   font-size: 28px;
+
+  &-default {
+    border-radius: $border-radius;
+    border-color: $primary-color;
+    border-width: 2px;
+    border-style: solid;
+    color: $primary-color;
+    background-color: white;
+  }
+
+  &-primary {
+    background-color: $primary-color;
+    color: white;
+  }
+
+  &-danger {
+    background-color: $danger-color;
+    color: white;
+  }
 }
