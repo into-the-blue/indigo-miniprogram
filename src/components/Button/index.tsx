@@ -8,7 +8,11 @@ interface IProps extends ButtonProps {
   children: React.ReactChild;
 }
 const MButton = (props: IProps) => {
-  return <Button className={classNames('mbutton-default')} {...props} />;
+  let _className = props.className;
+  if (typeof _className === 'string') {
+    _className = classNames(_className);
+  }
+  return <Button {...props} className={classNames('mbutton-default', _className)} />;
 };
 
 export default MButton;

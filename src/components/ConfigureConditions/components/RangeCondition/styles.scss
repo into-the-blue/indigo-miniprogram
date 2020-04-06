@@ -1,0 +1,32 @@
+@import '@/styles/theme.scss';
+
+.range-condition__threshold-input {
+  border: none;
+  width: 200px;
+  text-align: center;
+  border-width: 0;
+  line-height: 60px;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+}
+
+.range-condition__brief-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 30px 20px;
+  border-bottom-width: 2px;
+  border-color: $light-grey-bk;
+  border-style: solid;
+}
+.range-condition__arrow-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+
+  &-open {
+    transition: 0.5s;
+    rotate: 90deg;
+  }
+}

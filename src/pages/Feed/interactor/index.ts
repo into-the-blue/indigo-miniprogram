@@ -15,6 +15,7 @@ class FeedInteractor implements IInteractor {
     try {
       await this.userStore.initUserInfo();
     } catch (err) {
+      console.warn('queryLastestUserInfo', err);
       //
     }
   };
@@ -54,8 +55,8 @@ class FeedInteractor implements IInteractor {
       args[1] = lat;
     }
     this.$queryStationsSub = from(ApartmentClient.queryStationsNearby(...args)).subscribe({
-      next: stationsNearby => this.mMap.setMetroStations(stationsNearby),
-      error: err => {
+      next: (stationsNearby) => this.mMap.setMetroStations(stationsNearby),
+      error: (err) => {
         console.warn(err.message);
       },
     });
@@ -109,7 +110,7 @@ class FeedInteractor implements IInteractor {
   };
 
   onPressApartment = (houseId: string) => {
-    const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
+    const apartment = this.mMap.currentApartments.find((o) => o.houseId === houseId);
     console.warn(apartment);
     if (!apartment) return;
     this.feed.showApartmentDetail(apartment);

@@ -24,13 +24,14 @@ const getNewToken = async (refreshToken: string) => {
 
 const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
   const config = err.config;
-
+  console.log('errrrr', err.response.status);
   if (err.response.status === 401) {
     // not authorized
-    const authData = await Cache.get('authData').catch(error => {
-      console.warn('httpClient -> errorHanlder', error);
+    const authData = await Cache.get('authData').catch((error) => {
+      console.log('httpClient -> errorHanlder', error);
       return null;
     });
+    console.log({ authData });
     if (authData && authData.refreshToken) {
       const { success, message, accessToken, refreshToken } = await getNewToken(
         authData.refreshToken,
@@ -53,8 +54,8 @@ const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
 };
 
 const beforeRequest = async (value: AxiosRequestConfig) => {
-  const authData = await Cache.get('authData').catch(err => {
-    console.warn('httpClient -> beforeRequest', err);
+  const authData = await Cache.get('authData').catch((err) => {
+    console.log('httpClient -> beforeRequest', err);
     return null;
   });
   if (authData && authData.accessToken) {
@@ -74,7 +75,7 @@ const apiClient = Axios.create({
   headers,
 });
 
-[apiClient].forEach(instance => {
+[apiClient].forEach((instance) => {
   instance.interceptors.request.use(beforeRequest);
   instance.interceptors.response.use(undefined, errorHanlder);
 });

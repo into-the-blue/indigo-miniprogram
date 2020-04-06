@@ -1,11 +1,7 @@
 import { observable, action } from 'mobx';
 import { IStore, nextState, IMarker, IMetroStationClient, IApartment } from '@/types';
 import { get } from 'lodash';
-
-const USER_MARKER_URL = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/marker.png';
-const METRO_STATION_MARKER_URL =
-  'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/shanghai_metro.png';
-const APARTMENT_MARKER_URL = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/apartment.png';
+import Assets from '@/assets';
 
 type FocusedMetroStation = {
   type: 'metroStation';
@@ -58,7 +54,7 @@ class MapStore implements IStore<MapStore> {
     enableTraffic: false,
   };
 
-  @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = next => {
+  @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = (next) => {
     Object.assign(this, next);
   };
 
@@ -66,11 +62,11 @@ class MapStore implements IStore<MapStore> {
   setMetroStations = (stations: IMetroStationClient[]) => {
     if (!stations.length) return;
     this.cleanMarkersByType('station');
-    const markers: IMarker[] = stations.map(s => ({
+    const markers: IMarker[] = stations.map((s) => ({
       id: 'station ' + s.stationId,
       longitude: s.coordinates[0],
       latitude: s.coordinates[1],
-      iconPath: METRO_STATION_MARKER_URL,
+      iconPath: Assets.MetroSH,
       type: 'station',
       width: 40,
       height: 40,
@@ -88,7 +84,7 @@ class MapStore implements IStore<MapStore> {
   @action
   cleanFocusedStation = () => {
     if (
-      !this.currentMetroStations.some(o => o.stationId === get(this.focusedPosition, 'stationId'))
+      !this.currentMetroStations.some((o) => o.stationId === get(this.focusedPosition, 'stationId'))
     ) {
       this.cleanMarkersByType('apartment');
       this.focusedPosition = undefined;
@@ -97,7 +93,7 @@ class MapStore implements IStore<MapStore> {
 
   @action
   setUserCurrentPosition = (lng: number, lat: number) => {
-    const found = this.markers.findIndex(o => o.type === 'user');
+    const found = this.markers.findIndex((o) => o.type === 'user');
     this.currentCoordinate = {
       lng,
       lat,
@@ -106,7 +102,7 @@ class MapStore implements IStore<MapStore> {
       id: 'user -1',
       longitude: lng,
       latitude: lat,
-      iconPath: USER_MARKER_URL,
+      iconPath: Assets.UserLocationMarker,
       type: 'user',
       width: 30,
       height: 30,
@@ -119,17 +115,17 @@ class MapStore implements IStore<MapStore> {
   };
 
   @action cleanMarkersByType = (type: 'user' | 'station' | 'apartment') => {
-    this.markers = this.markers.filter(o => o.type !== type);
+    this.markers = this.markers.filter((o) => o.type !== type);
   };
 
   @action
   setApartments = (apartments: IApartment[]) => {
     this.cleanMarkersByType('apartment');
-    const markers: IMarker[] = apartments.map(apt => ({
+    const markers: IMarker[] = apartments.map((apt) => ({
       id: 'apartment ' + apt.houseId,
       longitude: apt.coordinates[0],
       latitude: apt.coordinates[1],
-      iconPath: APARTMENT_MARKER_URL,
+      iconPath: Assets.ApartmentMarker,
       type: 'apartment',
       width: 30,
       height: 30,

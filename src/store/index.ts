@@ -3,17 +3,20 @@ import { FeedStore } from '../pages/Feed/stores';
 import { GlobalStore } from './global';
 import { MapStore } from './map';
 import { UserStore } from './user';
+import { SubscriptionStore } from './subscription/subscription.store';
 
 class RootStore {
   feed: FeedStore;
   global: GlobalStore;
   mMap: MapStore;
   userStore: UserStore;
+  subscriptionStore: SubscriptionStore;
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
     this.mMap = new MapStore();
     this.userStore = new UserStore();
+    this.subscriptionStore = new SubscriptionStore();
   }
 }
 const store = new RootStore();
@@ -29,4 +32,4 @@ export const getStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootSt
   }
   return res;
 };
-export { GlobalStore, FeedStore, MapStore, UserStore };
+export { GlobalStore, FeedStore, MapStore, UserStore, SubscriptionStore };

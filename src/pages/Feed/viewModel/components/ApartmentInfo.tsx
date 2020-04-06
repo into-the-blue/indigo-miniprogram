@@ -6,8 +6,7 @@ import { FeedStore } from '../../stores';
 import { ComputedInfo } from './functional';
 import {} from 'taro-ui';
 import '../index.scss';
-
-const CLOSE_CIRCLE_URL = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/close_circle.png';
+import Assets from '@/assets';
 
 interface IProps {
   feed?: FeedStore;
@@ -34,7 +33,7 @@ const ApartmentInfo = ({ feed }: IProps) => {
 
       <CoverView className={'flex mask-container'} onClick={closeApartmentDetail}>
         <CoverImage
-          src={CLOSE_CIRCLE_URL}
+          src={Assets.CloseCircle}
           style={{ width: 30, height: 30, marginTop: 20, alignSelf: 'center' }}
           onClick={closeApartmentDetail}
         />

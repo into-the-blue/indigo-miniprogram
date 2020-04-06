@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, Switch, Text } from '@tarojs/components';
-import { TSubCondition } from '@/types';
+import { TSubCondition, TConfigBoolean } from '@/types';
 import {} from 'taro-ui';
-import addWrapper from './conditionContainer';
+import addWrapper from '../conditionContainer';
 
 interface IProps {
   condition: TSubCondition & {
     type: 'boolean';
     condition: boolean;
   };
-  value: [string, string];
+  detail: TConfigBoolean;
 }
 
 export const EditBoolean = ({
@@ -22,15 +22,19 @@ export const EditBoolean = ({
   value: boolean;
 }) => {
   return (
-    <View className={'flex-row-center'}>
+    <View className={'flex-row-center'} style={{}}>
       <Text>{valueTitles[0]}</Text>
-      <Switch onChange={e => onChange(e.detail.value)} checked={value} />
+      <Switch
+        onChange={(e) => onChange(e.detail.value)}
+        checked={value}
+        style={{ margin: '0 10px' }}
+      />
       <Text>{valueTitles[1]}</Text>
     </View>
   );
 };
 
-const Comp = ({ condition, value }: IProps) => {
+const Comp = ({ condition, detail: { value, title } }: IProps) => {
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(() => {
     setChecked(condition.condition);

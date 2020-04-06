@@ -1,4 +1,11 @@
+@import '@/styles/theme.scss';
+
 .mbutton-default {
-  height: 46px * 2;
-  border-radius: 23px * 2;
+  height: 70px;
+  margin: 0;
+  border-radius: $border-radius;
+  background: $primary-color;
+  border: 0;
+  line-height: 70px;
+  font-size: 28px;
 }

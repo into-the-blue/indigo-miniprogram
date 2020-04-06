@@ -10,8 +10,8 @@ import { GlobalStore, MapStore } from '@/store';
 import Tabbar from '@/components/Tabbar';
 import classNames from 'classnames';
 import ApartmentInfoModal from './components/ApartmentInfo';
+import Assets from '@/assets';
 
-const IMAGE_MAP_PIN = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/map_pin.png';
 interface IProps {
   feed: FeedStore;
   global: GlobalStore;
@@ -78,7 +78,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
             </View>
           )}
           {mapDragged && !showDetailModal && (
-            <CoverImage className={'map-pin'} src={IMAGE_MAP_PIN} />
+            <CoverImage className={'map-pin'} src={Assets.CenterPin} />
           )}
           <ApartmentInfoModal />
         </View>
