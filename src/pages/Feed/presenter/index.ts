@@ -69,5 +69,13 @@ class FeedPresenter implements IPresenter {
     this.interactor.setCurrentCoordinate(longitude, latitude);
     this.interactor.queryStationsNearby(longitude, latitude);
   };
+
+  showApartmentList = () => {
+    
+  };
+
+  goToSubscription = () => {
+
+  };
 }
 export { FeedPresenter };

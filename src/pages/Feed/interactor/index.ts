@@ -98,7 +98,7 @@ class FeedInteractor implements IInteractor {
       this.mMap.setApartments(apartments);
     } catch (err) {
       console.warn(err.message);
-      this.mMap.focusedPosition = undefined;
+      this.mMap.focusedLocation = undefined;
       Taro.showToast({
         title: '出错啦...',
         icon: 'none',

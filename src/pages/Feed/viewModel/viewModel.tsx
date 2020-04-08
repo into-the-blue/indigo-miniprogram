@@ -10,6 +10,7 @@ import { GlobalStore, MapStore } from '@/store';
 import Tabbar from '@/components/Tabbar';
 import classNames from 'classnames';
 import ApartmentInfoModal from './components/ApartmentInfo';
+import FocusedLocationConsole from './components/FocusedLocationConsole';
 import Assets from '@/assets';
 
 interface IProps {
@@ -81,6 +82,10 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
             <CoverImage className={'map-pin'} src={Assets.CenterPin} />
           )}
           <ApartmentInfoModal />
+          <FocusedLocationConsole 
+            onPressList={this.presenter.showApartmentList}
+            onPressSubscribe={this.presenter.goToSubscription}
+          />
         </View>
         <Tabbar />
       </View>

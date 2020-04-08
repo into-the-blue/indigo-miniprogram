@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Button, Text, CoverView } from '@tarojs/components';
-import { IApartmentComputedInfo } from '@/types';
+import { View, Text } from '@tarojs/components';
+import { TApartmentComputed } from '@/types';
 
-export const ComputedInfo = ({ computed }: { computed?: IApartmentComputedInfo }) => {
+export const ComputedInfo = ({ computed }: { computed?: TApartmentComputed }) => {
   if (!computed) return <Text>{'对比信息正在努力计算中 ~'}</Text>;
 
   return (

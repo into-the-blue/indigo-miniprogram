@@ -1,0 +1,29 @@
+@import '@/styles/theme.scss';
+
+.location-console__ {
+  &container {
+    position: absolute;
+    right: 0px;
+    bottom: 15vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &icon-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    box-shadow: $shadow;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 10px;
+  }
+
+  &icon {
+    object-fit: contain;
+    width: 70px;
+    height: 70px;
+  }
+}

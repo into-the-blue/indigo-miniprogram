@@ -10,5 +10,8 @@ export default class Assets {
 
   static ApartmentMarker = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/apartment.png';
 
-  static CenterPin = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/map_pin.png'
+  static CenterPin = 'https://indigo.oss-cn-hangzhou.aliyuncs.com/images/map_pin.png';
+  static List = require('./list.png');
+
+  static Subscribe = require('./subscribe.png');
 }
