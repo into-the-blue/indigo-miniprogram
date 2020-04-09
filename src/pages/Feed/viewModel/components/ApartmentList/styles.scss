@@ -1,0 +1,29 @@
+@import '@/styles/theme.scss';
+
+.apt-list__ {
+  &container {
+    margin: 0 30px;
+    height: 300px;
+    background-color: white;
+  }
+
+  &card-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: $border-color;
+    height: 60px;
+    margin: 0 10px;
+
+    &-focused {
+      background-color: $primary-color;
+      transition: ease-in 0.5s;
+    }
+  }
+
+  &card-text {
+    font-size: 24px;
+  }
+}

@@ -71,11 +71,9 @@ class FeedPresenter implements IPresenter {
   };
 
   showApartmentList = () => {
-    
+    this.interactor.openOrCloseApartmentList();
   };
 
-  goToSubscription = () => {
-
-  };
+  goToSubscription = () => {};
 }
 export { FeedPresenter };

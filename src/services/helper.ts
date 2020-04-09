@@ -7,6 +7,7 @@ export const apartmentDefaultSchemas = `
             houseType
             houseId
             price
+            area
             pricePerSquareMeter
             tags
             coordinates

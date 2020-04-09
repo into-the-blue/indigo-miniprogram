@@ -6,6 +6,13 @@
     right: 0px;
     bottom: 15vh;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  &icon-wrapper {
+    display: flex;
     flex-direction: column;
   }
 

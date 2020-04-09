@@ -51,8 +51,15 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
     });
   };
   render() {
-    const { showDetailModal } = this.props.feed!;
-    const { currentCoordinate, setting, markers, scale, mapDragged } = this.props.mMap;
+    const { showDetailModal, currentApartment, showApartmentListModal } = this.props.feed!;
+    const {
+      currentCoordinate,
+      setting,
+      markers,
+      scale,
+      mapDragged,
+      currentApartments,
+    } = this.props.mMap;
     return (
       <View className={'page-container'}>
         <View style={{ display: 'flex', flex: 1 }}>
@@ -82,7 +89,11 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
             <CoverImage className={'map-pin'} src={Assets.CenterPin} />
           )}
           <ApartmentInfoModal />
-          <FocusedLocationConsole 
+          <FocusedLocationConsole
+            mMap={this.props.mMap}
+            showApartmentList={showApartmentListModal}
+            currentApartment={currentApartment}
+            apartments={currentApartments}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
           />

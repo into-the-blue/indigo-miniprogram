@@ -1,4 +1,4 @@
-import { gqlClient, apiClient } from '@/utils';
+import { gqlClient } from '@/utils';
 import { IMetroStationClient, IApartment } from '@/types';
 import gql from 'graphql-tag';
 import { apartmentDefaultSchemas } from './helper';
