@@ -2,9 +2,12 @@
 
 .apt-list__ {
   &container {
-    margin: 0 30px;
+    margin: 30px 30px;
     height: 300px;
     background-color: white;
+    display: flex;
+    flex: 1;
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.3);
   }
 
   &card-container {
@@ -16,6 +19,7 @@
     border-color: $border-color;
     height: 60px;
     margin: 0 10px;
+    justify-content: space-evenly;
 
     &-focused {
       background-color: $primary-color;
@@ -24,6 +28,6 @@
   }
 
   &card-text {
-    font-size: 24px;
+    font-size: 28px;
   }
 }

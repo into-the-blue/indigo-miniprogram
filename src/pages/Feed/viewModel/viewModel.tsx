@@ -96,6 +96,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
             apartments={currentApartments}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
+            onPressApartment={this.presenter.onPressApartment}
           />
         </View>
         <Tabbar />

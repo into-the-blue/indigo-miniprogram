@@ -1,8 +1,8 @@
 import { observable, action } from 'mobx';
-import { IStore, nextState, IApartment } from '@/types';
+import { nextState, IApartment } from '@/types';
 
 class FeedStore {
-  currentApartment?: IApartment;
+  @observable currentApartment?: IApartment;
   @observable showDetailModal: boolean = false;
   @observable showApartmentListModal: boolean = false;
 

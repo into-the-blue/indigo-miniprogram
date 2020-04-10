@@ -38,10 +38,12 @@ class FeedPresenter implements IPresenter {
         this.interactor.onPressMetroStation(id);
         break;
       case 'apartment':
-        this.interactor.onPressApartment(id);
+        this.onPressApartment(id);
         break;
     }
   };
+
+  onPressApartment = (houseId: string) => this.interactor.onPressApartment(houseId);
 
   /**
    * causedBy: update: (map init, pinch ) | "gesture" (drag) |

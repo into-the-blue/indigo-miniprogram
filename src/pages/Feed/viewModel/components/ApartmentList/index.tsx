@@ -9,13 +9,23 @@ interface IProps {
   show: boolean;
   apartments: IApartment[];
   currentApartment?: IApartment;
+  onPressApartment: (houseId: string) => void;
 }
-const Card = ({ apartment, focused }: { apartment: IApartment; focused: boolean }) => {
+const Card = ({
+  apartment,
+  focused,
+  onPress,
+}: {
+  apartment: IApartment;
+  focused: boolean;
+  onPress: () => void;
+}) => {
   return (
     <View
       className={classNames('apt-list__card-container', {
         'apt-list__card-container-focused': focused,
       })}
+      onClick={onPress}
     >
       <Text className={'apt-list__card-text'}>{apartment.houseType}</Text>
       <Text className={'apt-list__card-text'}>{apartment.price + '¥'}</Text>
@@ -25,8 +35,9 @@ const Card = ({ apartment, focused }: { apartment: IApartment; focused: boolean 
   );
 };
 
-const ApartmentList = ({ show, apartments, currentApartment }: IProps) => {
+const ApartmentList = ({ show, apartments, currentApartment, onPressApartment }: IProps) => {
   if (!show) return null;
+
   return (
     <ScrollView scrollY className={'apt-list__container'}>
       {apartments.map((apt, idx) => (
@@ -34,6 +45,7 @@ const ApartmentList = ({ show, apartments, currentApartment }: IProps) => {
           key={apt.houseId + idx}
           apartment={apt}
           focused={get(currentApartment, 'houseId') === apt.houseId}
+          onPress={() => onPressApartment(apt.houseId)}
         />
       ))}
     </ScrollView>

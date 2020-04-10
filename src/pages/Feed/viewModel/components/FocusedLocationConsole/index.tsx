@@ -7,6 +7,7 @@ import './styles.scss';
 import Assets from '@/assets';
 import ApartmentList from '../ApartmentList';
 import { IApartment } from '@/types';
+import classNames from 'classnames';
 
 interface IProps {
   mMap: MapStore;
@@ -15,6 +16,7 @@ interface IProps {
   showApartmentList: boolean;
   currentApartment?: IApartment;
   apartments: IApartment[];
+  onPressApartment: (houseId: string) => void;
 }
 
 const FocusedLocationConsole = ({
@@ -24,16 +26,21 @@ const FocusedLocationConsole = ({
   showApartmentList,
   currentApartment,
   apartments,
+  onPressApartment,
 }: IProps) => {
   const { focusedLocation } = mMap;
   if (!focusedLocation) return null;
-  console.warn('show');
   return (
-    <CoverView className={'location-console__container'}>
+    <CoverView
+      className={classNames('location-console__container', {
+        'location-console__container-list-open': showApartmentList,
+      })}
+    >
       <ApartmentList
         show={showApartmentList}
         currentApartment={currentApartment}
         apartments={apartments}
+        onPressApartment={onPressApartment}
       />
       <View className={'location-console__icon-wrapper'}>
         <View

@@ -7,8 +7,12 @@
     bottom: 15vh;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     align-items: flex-end;
+  }
+
+  &container-list-open {
+    width: 100vw;
+    overflow: visible;
   }
 
   &icon-wrapper {
