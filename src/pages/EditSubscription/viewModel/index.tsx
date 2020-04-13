@@ -7,6 +7,7 @@ import { EditSubscriptionPresenter } from '../presenter';
 import {} from '../interactor';
 import { EditSubscriptionStore } from '../stores';
 import TargetInfo from './components/TargetInfo';
+import { ConfigureConditions } from '@/components/ConfigureConditions';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => EditSubscriptionPresenter;
@@ -34,6 +35,7 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
       <View style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }}>
           <TargetInfo type={targetType} info={targetInfo} />
+          <ConfigureConditions />
         </ScrollView>
       </View>
     );

@@ -14,7 +14,7 @@ interface IProps {
 
 const TargetInfo = ({ type, info }: IProps) => {
   return (
-    <View>
+    <View className={'target-info__container'}>
       <Text className={'target-info__title'}>{info.address}</Text>
 
       <Map
