@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import { TSubCondition, TConfigRange, TConfigBoolean } from '@/types';
-import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import ChooseCondition from './components/ChooseCondition';
 import BooleanCondition from './components/BooleanCondition';
 import RangeCondition from './components/RangeCondition';
 import './styles.scss';
-import { SubscriptionStore, getStores } from '@/store';
+import { EditSubscriptionStore } from '@/store';
 import { observer, inject } from 'mobx-react';
 import { Button } from '@/components';
 
 interface IProps {
-  subscriptionStore?: SubscriptionStore;
+  editSubscriptionStore?: EditSubscriptionStore;
 }
 
-const ConfigureConditions = ({ subscriptionStore }: IProps) => {
+const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
   const {
     conditions,
     addCondition,
     availableConfigKeys,
     getDetailedCondition,
-  } = subscriptionStore!;
+  } = editSubscriptionStore!;
   const [edited, setEdited] = useState<boolean>(false);
 
   const onEdit = () => {
@@ -69,4 +68,4 @@ const ConfigureConditions = ({ subscriptionStore }: IProps) => {
   );
 };
 
-export default inject('subscriptionStore')(observer(ConfigureConditions));
+export default inject('editSubscriptionStore')(observer(ConfigureConditions));

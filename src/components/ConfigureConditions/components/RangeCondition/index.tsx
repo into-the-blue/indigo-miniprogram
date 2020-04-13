@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, Text, Image } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { TSubCondition, TConfigRange } from '@/types';
 import { AtRange, AtInput } from 'taro-ui';
 import addContainer from '../conditionContainer';
 import './styles.scss';
-import Assets from '@/assets';
-import classNames from 'classnames';
 import Collapsable from '@/components/Collapsable';
 
 interface IProps {
@@ -90,7 +88,7 @@ const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   const currentRange: [number, number] = useMemo(() => {
     if (!rangeThreshold) return [0, 0];
     const per = (rangeThreshold![1] - rangeThreshold![0]) / 100;
-    return rangeValue.map((v) => {
+    return rangeValue.map(v => {
       if (v === 0) return rangeThreshold[0];
       if (v === 100) return rangeThreshold[1];
       return Math.round(rangeThreshold![0] + v * per);

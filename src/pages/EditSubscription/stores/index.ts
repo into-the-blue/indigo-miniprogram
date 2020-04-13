@@ -1,5 +1,13 @@
 import { observable, action, computed } from 'mobx';
-import { TSetState, IMetroStationClient, ICustomLocation } from '@/types';
+import {
+  TSetState,
+  IMetroStationClient,
+  ICustomLocation,
+  TConfigBoolean,
+  TConfigRange,
+  TSubCondition,
+} from '@/types';
+import { CONFIGURABLE_KEYS } from './data';
 
 type TTarget =
   | {
@@ -13,6 +21,10 @@ type TTarget =
 
 class EditSubscriptionStore {
   @observable target?: TTarget;
+
+  @observable configurableKeys: (TConfigBoolean | TConfigRange)[] = CONFIGURABLE_KEYS;
+  @observable conditions: TSubCondition[] = [];
+
   @action setState: TSetState<EditSubscriptionStore> = next => {
     Object.assign(this, next);
   };
@@ -34,5 +46,17 @@ class EditSubscriptionStore {
           coordinates: (this.target!.payload as ICustomLocation).coordinates,
         };
   }
+
+  @computed get availableConfigKeys() {
+    return this.configurableKeys.filter(o => !this.conditions.some(c => c.key === o.key));
+  }
+
+  @action addCondition = (condition: TSubCondition) => {
+    this.conditions.push(condition);
+  };
+
+  getDetailedCondition = (key: string) => {
+    return this.configurableKeys.find(o => o.key === key)!;
+  };
 }
 export { EditSubscriptionStore };
