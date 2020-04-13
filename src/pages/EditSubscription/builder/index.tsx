@@ -1,11 +1,11 @@
 import React from 'react';
 import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel';
-import { TemplatePresenter } from '../presenter';
-import { TemplateInteractor } from '../interactor';
+import { EditSubscriptionPresenter } from '../presenter';
+import { EditSubscriptionInteractor } from '../interactor';
 
 class Builder extends React.Component<IProps> {
-  presenter: TemplatePresenter;
+  presenter: EditSubscriptionPresenter;
   VM: JSX.Element;
 
   constructor(props: IProps) {
@@ -16,12 +16,12 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    return new TemplateInteractor();
+    return new EditSubscriptionInteractor();
   };
-  buildPresenter = (interactor: TemplateInteractor) => (viewModel: IViewModel) => {
-    return new TemplatePresenter(interactor, viewModel);
+  buildPresenter = (interactor: EditSubscriptionInteractor) => (viewModel: IViewModel) => {
+    return new EditSubscriptionPresenter(interactor, viewModel);
   };
-  buildViewModel = (buildPresenter: (viewModel: IViewModel) => TemplatePresenter) => {
+  buildViewModel = (buildPresenter: (viewModel: IViewModel) => EditSubscriptionPresenter) => {
     // @ts-ignore
     return <ViewModel buildPresenter={buildPresenter} />;
   };

@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
 import {} from '@/types';
+import { getStores } from '@/store';
 
 class FeedPresenter implements IPresenter {
   beginTimeStamp: number = Date.now();
@@ -76,6 +77,11 @@ class FeedPresenter implements IPresenter {
     this.interactor.openOrCloseApartmentList();
   };
 
-  goToSubscription = () => {};
+  goToSubscription = () => {
+    this.interactor.setMetroStationAsSubTarget();
+    Taro.navigateTo({
+      url: '../../EditSubscription/builder/index',
+    });
+  };
 }
 export { FeedPresenter };

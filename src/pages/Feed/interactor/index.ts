@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
-import { MapStore, UserStore } from '@/store';
+import { MapStore, UserStore, getStores } from '@/store';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
@@ -119,6 +119,19 @@ class FeedInteractor implements IInteractor {
   openOrCloseApartmentList = () => {
     if (this.feed.showApartmentListModal) return this.feed.dismissApartmentList();
     this.feed.openApartmentList();
+  };
+
+  setMetroStationAsSubTarget = () => {
+    const { editSubscriptionStore } = getStores('editSubscriptionStore');
+    const station = this.mMap.currentMetroStations.find(
+      o => o.stationId === this.mMap.focusedMetroStation.stationId,
+    );
+    editSubscriptionStore.setState({
+      target: {
+        type: 'metroStation',
+        payload: station!,
+      },
+    });
   };
 }
 

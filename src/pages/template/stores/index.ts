@@ -1,16 +1,10 @@
-import { observable, action, configure } from 'mobx';
+import { observable, action } from 'mobx';
+import { TSetState } from '@/types';
 
-// configure({
-//   enforceActions: 'always',
-// });
-
-interface IStore {
-  count?: number;
-}
 class TemplateStore {
   @observable public count: number = 0;
-  @action setState = (nextState: IStore) => {
-    Object.assign(this, nextState);
+  @action setState: TSetState<TemplateStore> = next => {
+    Object.assign(this, next);
   };
 }
 export { TemplateStore };

@@ -4,6 +4,7 @@ import { GlobalStore } from './global';
 import { MapStore } from './map';
 import { UserStore } from './user';
 import { SubscriptionStore } from './subscription/subscription.store';
+import { EditSubscriptionStore } from '@/pages/EditSubscription/stores';
 
 class RootStore {
   feed: FeedStore;
@@ -11,12 +12,14 @@ class RootStore {
   mMap: MapStore;
   userStore: UserStore;
   subscriptionStore: SubscriptionStore;
+  editSubscriptionStore: EditSubscriptionStore;
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
     this.mMap = new MapStore();
     this.userStore = new UserStore();
     this.subscriptionStore = new SubscriptionStore();
+    this.editSubscriptionStore = new EditSubscriptionStore();
   }
 }
 const store = new RootStore();
@@ -32,4 +35,4 @@ export const getStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootSt
   }
   return res;
 };
-export { GlobalStore, FeedStore, MapStore, UserStore, SubscriptionStore };
+export { GlobalStore, FeedStore, MapStore, UserStore, SubscriptionStore, EditSubscriptionStore };

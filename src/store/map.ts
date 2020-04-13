@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { IStore, nextState, IMarker, IMetroStationClient, IApartment } from '@/types';
 import { get } from 'lodash';
 import Assets from '@/assets';
+import { MAP_SETTING } from '@/utils/constants';
 
 type FocusedMetroStation = {
   type: 'metroStation';
@@ -37,22 +38,7 @@ class MapStore implements IStore<MapStore> {
 
   @observable focusedLocation?: TFocusedLocation;
 
-  setting: any = {
-    skew: 0,
-    rotate: 0,
-    showLocation: true,
-    showScale: true,
-    subKey: '',
-    layerStyle: -1,
-    enableZoom: true,
-    enableScroll: true,
-    enableRotate: false,
-    showCompass: true,
-    enable3D: false,
-    enableOverlooking: false,
-    enableSatellite: false,
-    enableTraffic: false,
-  };
+  setting: any = MAP_SETTING;
 
   @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = next => {
     Object.assign(this, next);
@@ -143,5 +129,9 @@ class MapStore implements IStore<MapStore> {
     };
     return false;
   };
+
+  get focusedMetroStation() {
+    return this.focusedLocation as FocusedMetroStation;
+  }
 }
 export { MapStore };
