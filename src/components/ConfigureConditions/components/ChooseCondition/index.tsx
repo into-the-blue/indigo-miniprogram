@@ -5,6 +5,7 @@ import {} from '@tarojs/taro';
 import { EditBoolean } from '../BooleanCondition';
 import { EditRange } from '../RangeCondition';
 import { Button } from '@/components';
+import { convertStringToNumber, cvtRangeToTitle, calNextThreshold } from '../RangeCondition/helper';
 
 interface IProps {
   onChooseCondition: (condition: TSubCondition) => void;
@@ -30,28 +31,11 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
   }, [selected, setRangeThreshold]);
 
   const onChangeRangeThreshold = (type: 'min' | 'max') => (v: string) => {
-    v = v.replace(/[a-zA-Z]/g, '');
-    const _value = +v;
-    const nextThreshold: [number, number] = rangeThreshold!.slice() as [number, number];
-    if (type === 'min') {
-      nextThreshold[0] = _value;
-    }
-    if (type === 'max') {
-      nextThreshold[1] = _value;
-    }
+    const _value = convertStringToNumber(v);
+    const nextThreshold: [number, number] = calNextThreshold(type, rangeThreshold!, _value);
     setRangeThreshold(nextThreshold);
     return _value.toString();
   };
-
-  // const currentRange: [number, number] = useMemo(() => {
-  //   if (!rangeThreshold) return [0, 0];
-  //   const per = (rangeThreshold![1] - rangeThreshold![0]) / 100;
-  //   return rangeValue.map((v) => {
-  //     if (v === 0) return rangeThreshold[0];
-  //     if (v === 100) return rangeThreshold[1];
-  //     return Math.round(rangeThreshold![0] + v * per);
-  //   }) as [number, number];
-  // }, [rangeValue, rangeThreshold]);
 
   const isBoolean = selected?.type === 'boolean';
   const isRange = selected?.type === 'range';
@@ -100,7 +84,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
           >
             <View className={'flex-row-center'}>
               <Text style={{ marginRight: '6px' }}>{selected.title + ': '}</Text>
-              {isRange && <Text>{rangeThreshold && rangeThreshold!.join(' - ')}</Text>}
+              {isRange && <Text>{cvtRangeToTitle(rangeThreshold)}</Text>}
               {isBoolean && <Text>{selected.value[+checked]}</Text>}
             </View>
             <Button onClick={onConfirmCondition}>{'确认'}</Button>
@@ -114,10 +98,8 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
           )}
           {isRange && rangeThreshold && (
             <EditRange
-              // range={rangeValue!}
               max={rangeThreshold![1]}
               min={rangeThreshold![0]}
-              // onChange={setRangeValue}
               onChangeThreshold={onChangeRangeThreshold}
             />
           )}

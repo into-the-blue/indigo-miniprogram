@@ -64,6 +64,10 @@ $right-border-width: 2px 2px 2px 0px;
     text-align: center;
     border-width: 0;
     border: none;
+    background-color: transparent;
+  }
+  &input-input::after {
+    border: none;
   }
 
   &input-container {

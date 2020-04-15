@@ -6,6 +6,7 @@ import addContainer from '../conditionContainer';
 import './styles.scss';
 import Collapsable from '@/components/Collapsable';
 import { EditRange } from './EditRange';
+import { convertStringToNumber, cvtRangeToTitle, calNextThreshold } from './helper';
 
 interface IProps {
   condition: TSubCondition & {
@@ -24,15 +25,8 @@ const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   }, [condition.condition]);
 
   const onChangeRangeThreshold = (type: 'min' | 'max') => (v: string) => {
-    v = v.replace(/\D/g, '');
-    const _value = +v;
-    const nextThreshold: [number, number] = rangeThreshold!.slice() as [number, number];
-    if (type === 'min') {
-      nextThreshold[0] = _value;
-    }
-    if (type === 'max') {
-      nextThreshold[1] = _value;
-    }
+    const _value = convertStringToNumber(v);
+    const nextThreshold: [number, number] = calNextThreshold(type, rangeThreshold!, _value);
     onEdit();
     setRangeThreshold(nextThreshold);
     return _value.toString();
@@ -53,7 +47,7 @@ const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   //   }) as [number, number];
   // }, [rangeValue, rangeThreshold]);
   return (
-    <Collapsable title={title + rangeThreshold && rangeThreshold!.join(' - ')}>
+    <Collapsable title={title + cvtRangeToTitle(rangeThreshold)}>
       {rangeThreshold && (
         <EditRange
           // range={rangeValue}

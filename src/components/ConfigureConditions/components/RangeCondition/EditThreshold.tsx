@@ -60,7 +60,7 @@ export const EditThreshold = ({ value, onChange, reverse, lastValue }: IProps) =
             'edit-threshold__input-input': true,
           })}
           type={'number'}
-          name={'threshold' + reverse ? 'r' : 'l'}
+          name={'threshold' + (reverse ? 'r' : 'l')}
           value={value}
           onChange={onChange}
         />
