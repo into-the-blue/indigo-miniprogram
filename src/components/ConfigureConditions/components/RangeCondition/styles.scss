@@ -1,5 +1,11 @@
 @import '@/styles/theme.scss';
 
+$width: 160px;
+$height: 80px;
+
+$left-border-width: 2px 0 2px 2px;
+$right-border-width: 2px 2px 2px 0px;
+
 .range-condition__threshold-input {
   border: none;
   width: 200px;
@@ -9,4 +15,80 @@
   height: 60px;
   margin: 0;
   padding: 0;
+}
+
+.edit-threshold__ {
+  &container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &button {
+    border-color: $grey;
+    border-style: solid;
+    width: $width;
+    height: $height;
+    color: $grey;
+    box-shadow: none;
+    line-height: $height;
+    border-radius: 0;
+  }
+
+  &no-limit-left {
+    border-width: $left-border-width;
+  }
+  &no-limit-right {
+    border-width: $right-border-width;
+  }
+
+  &no-limit-active {
+    border: none;
+    background-color: $primary-color;
+    color: white;
+    border-width: 2px;
+  }
+
+  &input-left {
+    border-width: $left-border-width;
+  }
+
+  &input {
+    border-width: $right-border-width;
+  }
+
+  &input-input {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    line-height: $height;
+    text-align: center;
+    border-width: 0;
+    border: none;
+  }
+
+  &input-container {
+    border-width: 2px;
+    border-color: $primary-color;
+    border-style: solid;
+    width: $width;
+    height: $height;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
+
+  &input-container-right {
+    border-color: $primary-color;
+    border-width: 2px;
+    border-style: solid;
+    width: $width;
+    height: $height;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
 }

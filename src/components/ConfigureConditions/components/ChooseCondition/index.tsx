@@ -15,11 +15,11 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [checked, setChecked] = useState<boolean>(false);
 
-  const [rangeValue, setRangeValue] = useState<[number, number]>([0, 100]);
+  // const [rangeValue, setRangeValue] = useState<[number, number]>([0, 100]);
   const [rangeThreshold, setRangeThreshold] = useState<[number, number] | null>(null);
 
   const selected = useMemo(() => {
-    return configurableKeys.find((o) => o.key === selectedKey);
+    return configurableKeys.find(o => o.key === selectedKey);
   }, [selectedKey, configurableKeys]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
   }, [selected, setRangeThreshold]);
 
   const onChangeRangeThreshold = (type: 'min' | 'max') => (v: string) => {
-    v = v.replace(/\D/g, '');
+    v = v.replace(/[a-zA-Z]/g, '');
     const _value = +v;
     const nextThreshold: [number, number] = rangeThreshold!.slice() as [number, number];
     if (type === 'min') {
@@ -43,15 +43,15 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
     return _value.toString();
   };
 
-  const currentRange: [number, number] = useMemo(() => {
-    if (!rangeThreshold) return [0, 0];
-    const per = (rangeThreshold![1] - rangeThreshold![0]) / 100;
-    return rangeValue.map((v) => {
-      if (v === 0) return rangeThreshold[0];
-      if (v === 100) return rangeThreshold[1];
-      return Math.round(rangeThreshold![0] + v * per);
-    }) as [number, number];
-  }, [rangeValue, rangeThreshold]);
+  // const currentRange: [number, number] = useMemo(() => {
+  //   if (!rangeThreshold) return [0, 0];
+  //   const per = (rangeThreshold![1] - rangeThreshold![0]) / 100;
+  //   return rangeValue.map((v) => {
+  //     if (v === 0) return rangeThreshold[0];
+  //     if (v === 100) return rangeThreshold[1];
+  //     return Math.round(rangeThreshold![0] + v * per);
+  //   }) as [number, number];
+  // }, [rangeValue, rangeThreshold]);
 
   const isBoolean = selected?.type === 'boolean';
   const isRange = selected?.type === 'range';
@@ -67,7 +67,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
     const condition: any = {
       type: selected!.type,
       key: selected!.key,
-      condition: isRange ? rangeValue : checked,
+      condition: isRange ? rangeThreshold! : checked,
       value: isRange ? rangeThreshold! : selected!.value,
     };
     onChooseCondition(condition);
@@ -79,11 +79,11 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
       {!selectedKey && (
         <View style={{ flexWrap: 'wrap', flexDirection: 'column', display: 'flex' }}>
           <Text>{'添加订阅条件'}</Text>
-          {configurableKeys.map((item) => (
+          {configurableKeys.map(item => (
             <Radio
               key={item.key}
               value={item.key}
-              onClick={(_) => setSelectedKey(item.key)}
+              onClick={_ => setSelectedKey(item.key)}
               checked={selectedKey === item.key}
               style={{ margin: '2px 0' }}
             >
@@ -100,7 +100,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
           >
             <View className={'flex-row-center'}>
               <Text style={{ marginRight: '6px' }}>{selected.title + ': '}</Text>
-              {isRange && <Text>{currentRange.join(' - ')}</Text>}
+              {isRange && <Text>{rangeThreshold && rangeThreshold!.join(' - ')}</Text>}
               {isBoolean && <Text>{selected.value[+checked]}</Text>}
             </View>
             <Button onClick={onConfirmCondition}>{'确认'}</Button>
@@ -114,10 +114,10 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
           )}
           {isRange && rangeThreshold && (
             <EditRange
-              range={rangeValue!}
+              // range={rangeValue!}
               max={rangeThreshold![1]}
               min={rangeThreshold![0]}
-              onChange={setRangeValue}
+              // onChange={setRangeValue}
               onChangeThreshold={onChangeRangeThreshold}
             />
           )}
