@@ -5,19 +5,19 @@ export const CONFIGURABLE_KEYS: (TConfigRange | TConfigBoolean)[] = [
     key: 'area',
     type: 'range',
     title: '面积',
-    value: [1, 150],
+    value: [10, 100],
   },
   {
     key: 'price',
     type: 'range',
     title: '价格',
-    value: [100, 20000],
+    value: [1500, 8000],
   },
   {
     key: 'pricePerSquareMeter',
     type: 'range',
     title: '每平米价格',
-    value: [10, 1000],
+    value: [50, 200],
   },
   {
     key: 'type',

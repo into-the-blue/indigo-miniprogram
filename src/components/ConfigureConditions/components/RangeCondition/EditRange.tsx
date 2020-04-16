@@ -7,11 +7,13 @@ export const EditRange = ({
   max,
   min,
   // onChange,
+  defaultRange,
   onChangeThreshold,
 }: {
   // range: [number, number];
   max: number;
   min: number;
+  defaultRange: [number, number];
   // onChange: (value: [number, number]) => void;
   onChangeThreshold: (type: 'min' | 'max') => (value: string) => string;
 }) => {
@@ -30,11 +32,13 @@ export const EditRange = ({
         value={min.toString()}
         onChange={onChangeThreshold('min')}
         lastValue={lastMin}
+        defaultValue={defaultRange[0]}
       />
       <EditThreshold
         value={max.toString()}
         onChange={onChangeThreshold('max')}
         lastValue={lastMax}
+        defaultValue={defaultRange[1]}
         reverse
       />
       {/* <AtInput

@@ -21,7 +21,12 @@ const Collapsable = ({ title, renderHeader, children }: IProps) => {
       {renderHeader ? (
         renderHeader(collapse)
       ) : (
-        <View onClick={openCloseEditor} className={'collapse__header'}>
+        <View
+          onClick={openCloseEditor}
+          className={classNames('collapse__header', {
+            'collapse__header-collapsed': collapse,
+          })}
+        >
           <React.Fragment>
             <Text>{title}</Text>
             <Image

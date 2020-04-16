@@ -98,6 +98,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
           )}
           {isRange && rangeThreshold && (
             <EditRange
+              defaultRange={selected.value as [number, number]}
               max={rangeThreshold![1]}
               min={rangeThreshold![0]}
               onChangeThreshold={onChangeRangeThreshold}

@@ -6,6 +6,11 @@
   justify-content: space-between;
   padding: 30px 20px;
   border-bottom-width: 2px;
+  border-color: transparent;
+}
+
+.collapse__header-collapsed {
+  border-bottom-width: 2px;
   border-color: $light-grey-bk;
   border-style: solid;
 }

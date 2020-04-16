@@ -9,10 +9,11 @@ interface IProps {
   value: string;
   onChange: (v: string) => string;
   lastValue: string;
+  defaultValue: number;
   reverse?: boolean;
 }
 
-export const EditThreshold = ({ value, onChange, reverse, lastValue }: IProps) => {
+export const EditThreshold = ({ value, onChange, reverse, lastValue, defaultValue }: IProps) => {
   const [mode, setMode] = useState<'noLimit' | 'input'>('input');
   useEffect(() => {
     if (value === '-1' && mode === 'input') {
@@ -30,7 +31,7 @@ export const EditThreshold = ({ value, onChange, reverse, lastValue }: IProps) =
 
   const onPressInput = () => {
     setMode('input');
-    onChange(lastValue);
+    onChange(lastValue === '-1' ? `${defaultValue}` : lastValue);
   };
 
   const isNoLimit = mode === 'noLimit';
