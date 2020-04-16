@@ -32,9 +32,13 @@ const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
     addCondition(condition);
   };
 
+  const onPressSave = () => {
+    console.warn(conditions.length, conditions.slice());
+  };
+
   return (
     <View>
-      {edited && <Button>{'保存'}</Button>}
+      {edited && <Button onClick={onPressSave}>{'保存'}</Button>}
       {conditions.map((condition, idx) => {
         if (condition.type === 'boolean') {
           return (

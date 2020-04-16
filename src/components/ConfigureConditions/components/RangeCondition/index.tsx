@@ -7,12 +7,12 @@ import './styles.scss';
 import Collapsable from '@/components/Collapsable';
 import { EditRange } from './EditRange';
 import { convertStringToNumber, cvtRangeToTitle, calNextThreshold } from './helper';
-import { CONFIGURABLE_KEYS } from '@/pages/EditSubscription/stores/data';
 
 interface IProps {
   condition: TSubCondition & {
     type: 'range';
     condition: [number | -1, number | -1];
+    value?: [number, number];
   };
   detail: TConfigRange;
   onEdit: () => void;
@@ -48,16 +48,13 @@ const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   //   }) as [number, number];
   // }, [rangeValue, rangeThreshold]);
 
-  const defaultRange = useMemo(() => {
-    return CONFIGURABLE_KEYS.find(o => o.key === condition.key)!.value as [number, number];
-  }, [condition.key]);
   return (
     <Collapsable title={title + ': ' + cvtRangeToTitle(rangeThreshold)}>
       {rangeThreshold && (
         <EditRange
           // range={rangeValue}
           // onChange={onChangeRange}
-          defaultRange={defaultRange}
+          defaultRange={condition.value!}
           max={rangeThreshold![1]}
           min={rangeThreshold![0]}
           onChangeThreshold={onChangeRangeThreshold}

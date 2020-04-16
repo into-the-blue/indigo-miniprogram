@@ -52,7 +52,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
       type: selected!.type,
       key: selected!.key,
       condition: isRange ? rangeThreshold! : checked,
-      value: isRange ? rangeThreshold! : selected!.value,
+      value: selected!.value,
     };
     onChooseCondition(condition);
     resetState();
