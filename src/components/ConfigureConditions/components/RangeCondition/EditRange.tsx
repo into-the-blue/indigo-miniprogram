@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from '@tarojs/components';
 import { EditThreshold } from './EditThreshold';
+import { get } from 'lodash';
 
 export const EditRange = ({
   // range,
@@ -9,13 +10,17 @@ export const EditRange = ({
   // onChange,
   defaultRange,
   onChangeThreshold,
-}: {
+  thresholdError,
+}: // reportError,
+{
   // range: [number, number];
   max: number;
   min: number;
   defaultRange: [number, number];
   // onChange: (value: [number, number]) => void;
   onChangeThreshold: (type: 'min' | 'max') => (value: string) => string;
+  thresholdError?: [boolean, boolean];
+  // reportError: (type: 'min' | 'max', isError: boolean) => void;
 }) => {
   const [lastMin, setLastMin] = useState<string>(min.toString());
   const [lastMax, setLastMax] = useState<string>(max.toString());
@@ -33,12 +38,14 @@ export const EditRange = ({
         onChange={onChangeThreshold('min')}
         lastValue={lastMin}
         defaultValue={defaultRange[0]}
+        showError={get(thresholdError, '[0]')}
       />
       <EditThreshold
         value={max.toString()}
         onChange={onChangeThreshold('max')}
         lastValue={lastMax}
         defaultValue={defaultRange[1]}
+        showError={get(thresholdError, '[1]')}
         reverse
       />
       {/* <AtInput

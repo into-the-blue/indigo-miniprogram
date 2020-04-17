@@ -1,11 +1,16 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { View, Radio, Text } from '@tarojs/components';
 import { TSubCondition, TConfigBoolean, TConfigRange } from '@/types';
-import {} from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import { EditBoolean } from '../BooleanCondition';
 import { EditRange } from '../RangeCondition';
 import { Button } from '@/components';
-import { convertStringToNumber, cvtRangeToTitle, calNextThreshold } from '../RangeCondition/helper';
+import {
+  convertStringToNumber,
+  cvtRangeToTitle,
+  calNextThreshold,
+  isInvalidThreshold,
+} from '../RangeCondition/helper';
 
 interface IProps {
   onChooseCondition: (condition: TSubCondition) => void;
@@ -18,7 +23,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
 
   // const [rangeValue, setRangeValue] = useState<[number, number]>([0, 100]);
   const [rangeThreshold, setRangeThreshold] = useState<[number, number] | null>(null);
-
+  const [invalidThreshold, setInvalidThreshold] = useState<[boolean, boolean]>([false, false]);
   const selected = useMemo(() => {
     return configurableKeys.find(o => o.key === selectedKey);
   }, [selectedKey, configurableKeys]);
@@ -33,7 +38,9 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
   const onChangeRangeThreshold = (type: 'min' | 'max') => (v: string) => {
     const _value = convertStringToNumber(v);
     const nextThreshold: [number, number] = calNextThreshold(type, rangeThreshold!, _value);
+    const invalid = isInvalidThreshold(type, nextThreshold);
     setRangeThreshold(nextThreshold);
+    setInvalidThreshold(invalid);
     return _value.toString();
   };
 
@@ -48,6 +55,13 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
   };
 
   const onConfirmCondition = () => {
+    if (invalidThreshold.filter(o => o).length) {
+      return Taro.showToast({
+        title: '条件不合法!',
+        duration: 2000,
+        icon: 'none',
+      });
+    }
     const condition: any = {
       type: selected!.type,
       key: selected!.key,
@@ -102,6 +116,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
               max={rangeThreshold![1]}
               min={rangeThreshold![0]}
               onChangeThreshold={onChangeRangeThreshold}
+              thresholdError={invalidThreshold}
             />
           )}
         </View>

@@ -10,12 +10,13 @@ interface IProps {
   condition: TSubCondition & {
     type: 'boolean';
     condition: boolean;
+    value: [string, string];
   };
   detail: TConfigBoolean;
   onEdit: () => void;
 }
 
-const Comp = ({ condition, detail: { value, title }, onEdit }: IProps) => {
+const Comp = ({ condition, detail: { title }, onEdit }: IProps) => {
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(() => {
     setChecked(condition.condition);
@@ -27,9 +28,9 @@ const Comp = ({ condition, detail: { value, title }, onEdit }: IProps) => {
   };
 
   return (
-    <Collapsable title={title + ':' + value[+checked]}>
+    <Collapsable title={title + ':' + condition.value[+checked]}>
       <View style={{ padding: '10px 20px' }}>
-        <EditBoolean valueTitles={value} onChange={onChange} value={checked} />
+        <EditBoolean valueTitles={condition.value} onChange={onChange} value={checked} />
       </View>
     </Collapsable>
   );

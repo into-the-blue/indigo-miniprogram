@@ -11,9 +11,17 @@ interface IProps {
   lastValue: string;
   defaultValue: number;
   reverse?: boolean;
+  showError?: true;
 }
 
-export const EditThreshold = ({ value, onChange, reverse, lastValue, defaultValue }: IProps) => {
+export const EditThreshold = ({
+  value,
+  onChange,
+  reverse,
+  lastValue,
+  defaultValue,
+  showError,
+}: IProps) => {
   const [mode, setMode] = useState<'noLimit' | 'input'>('input');
   useEffect(() => {
     if (value === '-1' && mode === 'input') {
@@ -54,6 +62,7 @@ export const EditThreshold = ({ value, onChange, reverse, lastValue, defaultValu
         key={'ipt'}
         className={classNames({
           'edit-threshold__input-container': true,
+          'edit-threshold__input-container-error': showError,
         })}
       >
         <AtInput

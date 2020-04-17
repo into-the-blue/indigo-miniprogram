@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {} from '@tarojs/components';
 import { TSubCondition, TConfigRange } from '@/types';
 import {} from 'taro-ui';
@@ -6,7 +6,12 @@ import addContainer from '../conditionContainer';
 import './styles.scss';
 import Collapsable from '@/components/Collapsable';
 import { EditRange } from './EditRange';
-import { convertStringToNumber, cvtRangeToTitle, calNextThreshold } from './helper';
+import {
+  convertStringToNumber,
+  cvtRangeToTitle,
+  calNextThreshold,
+  isInvalidThreshold,
+} from './helper';
 
 interface IProps {
   condition: TSubCondition & {
@@ -15,11 +20,12 @@ interface IProps {
     value?: [number, number];
   };
   detail: TConfigRange;
-  onEdit: () => void;
+  onEdit: (hasError?: boolean) => void;
 }
 const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   // const [rangeValue, setRangeValue] = useState<[number, number]>([0, 100]);
   const [rangeThreshold, setRangeThreshold] = useState<[number, number] | null>(null);
+  const [invalidThreshold, setInvalidThreshold] = useState<[boolean, boolean]>([false, false]);
 
   useEffect(() => {
     setRangeThreshold(condition.condition);
@@ -28,8 +34,10 @@ const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
   const onChangeRangeThreshold = (type: 'min' | 'max') => (v: string) => {
     const _value = convertStringToNumber(v);
     const nextThreshold: [number, number] = calNextThreshold(type, rangeThreshold!, _value);
-    onEdit();
+    const invalid = isInvalidThreshold(type, nextThreshold);
+    onEdit(!!invalid.filter(o => o).length);
     setRangeThreshold(nextThreshold);
+    setInvalidThreshold(invalid);
     return _value.toString();
   };
 
@@ -58,6 +66,7 @@ const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
           max={rangeThreshold![1]}
           min={rangeThreshold![0]}
           onChangeThreshold={onChangeRangeThreshold}
+          thresholdError={invalidThreshold}
         />
       )}
     </Collapsable>

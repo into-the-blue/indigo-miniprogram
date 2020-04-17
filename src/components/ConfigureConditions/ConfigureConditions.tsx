@@ -4,6 +4,7 @@ import { View } from '@tarojs/components';
 import ChooseCondition from './components/ChooseCondition';
 import BooleanCondition from './components/BooleanCondition';
 import RangeCondition from './components/RangeCondition';
+import Taro from '@tarojs/taro';
 import './styles.scss';
 import { EditSubscriptionStore } from '@/store';
 import { observer, inject } from 'mobx-react';
@@ -21,8 +22,9 @@ const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
     getDetailedCondition,
   } = editSubscriptionStore!;
   const [edited, setEdited] = useState<boolean>(false);
-
-  const onEdit = () => {
+  const [hasError, setHasError] = useState<boolean>(false);
+  const onEdit = (error?: boolean) => {
+    if (typeof error === 'boolean') setHasError(error);
     if (edited) return;
     setEdited(true);
   };
@@ -34,6 +36,12 @@ const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
 
   const onPressSave = () => {
     console.warn(conditions.length, conditions.slice());
+    if (hasError) {
+      return Taro.showToast({
+        title: '条件不合法',
+        duration: 2000,
+      });
+    }
   };
 
   return (

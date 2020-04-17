@@ -21,3 +21,20 @@ export const calNextThreshold = (type: 'min' | 'max', current: [number, number],
   }
   return nextThreshold;
 };
+
+export const isInvalidThreshold = (
+  type: 'min' | 'max',
+  threshold: [number, number],
+): [boolean, boolean] => {
+  const min = threshold[0];
+  const max = threshold[1];
+  const isInvalid: [boolean, boolean] = [false, false];
+  if (min === -1 || max === -1) return isInvalid;
+  if (type === 'min') {
+    if (min >= max) isInvalid[0] = true;
+  }
+  if (type === 'max') {
+    if (max <= min) isInvalid[1] = true;
+  }
+  return isInvalid;
+};

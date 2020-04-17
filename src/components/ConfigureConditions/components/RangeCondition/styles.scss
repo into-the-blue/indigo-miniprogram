@@ -83,6 +83,10 @@ $right-border-width: 2px 2px 2px 0px;
     background-color: white;
   }
 
+  &input-container-error {
+    background-color: #ef9a9a;
+  }
+
   &input-container-right {
     border-color: $primary-color;
     border-width: 2px;
