@@ -84,7 +84,20 @@ $right-border-width: 2px 2px 2px 0px;
   }
 
   &input-container-error {
-    background-color: #ef9a9a;
+    animation: twinking;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+  }
+
+  @keyframes twinking{
+    from {
+      background-color: white;
+    }
+    to {
+      background-color: #ef9a9a;
+    }
   }
 
   &input-container-right {
