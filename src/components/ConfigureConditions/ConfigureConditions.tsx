@@ -6,20 +6,25 @@ import BooleanCondition from './components/BooleanCondition';
 import RangeCondition from './components/RangeCondition';
 import Taro from '@tarojs/taro';
 import './styles.scss';
-import { EditSubscriptionStore } from '@/store';
+import { EditSubscriptionStore, MapStore, UserStore } from '@/store';
 import { observer, inject } from 'mobx-react';
 import { Button } from '@/components';
+import { SubscriptionClient } from '@/services/subscription';
 
 interface IProps {
   editSubscriptionStore?: EditSubscriptionStore;
+  mMap?: MapStore;
+  userStore?: UserStore;
 }
 
-const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
+const ConfigureConditions = ({ editSubscriptionStore, mMap, userStore }: IProps) => {
   const {
     conditions,
     addCondition,
     availableConfigKeys,
     getDetailedCondition,
+    targetInfo,
+    targetStationId,
   } = editSubscriptionStore!;
   const [edited, setEdited] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -34,11 +39,53 @@ const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
     addCondition(condition);
   };
 
-  const onPressSave = () => {
+  const onPressSave = async () => {
     console.warn(conditions.length, conditions.slice());
+    if (!userStore!.isLoggedIn) {
+      return Taro.showToast({
+        title: '请先登录',
+        duration: 2000,
+      });
+    }
     if (hasError) {
       return Taro.showToast({
         title: '条件不合法',
+        duration: 2000,
+      });
+    }
+    const coordinates = targetInfo.coordinates;
+    const city = mMap!.currentCity;
+    const radius = editSubscriptionStore!.radius;
+    const type = editSubscriptionStore!.targetType;
+    const payload =
+      type === 'metroStation'
+        ? { stationId: targetStationId!, type }
+        : { address: targetInfo.address, type };
+
+    const body = {
+      coordinates,
+      city,
+      radius,
+      conditions,
+      ...payload,
+    };
+    try {
+      const { success, message } = await SubscriptionClient.addSubscription(body);
+      if (!success) {
+        console.warn(message);
+        return;
+      }
+      Taro.showToast({
+        title: '订阅成功',
+        icon: 'success',
+        duration: 2000,
+      });
+      Taro.navigateBack();
+      setTimeout(editSubscriptionStore!.resetStore, 0);
+    } catch (err) {
+      console.warn('addSubscription', err);
+      Taro.showToast({
+        title: '前方拥挤...',
         duration: 2000,
       });
     }
@@ -80,4 +127,4 @@ const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
   );
 };
 
-export default inject('editSubscriptionStore')(observer(ConfigureConditions));
+export default inject('editSubscriptionStore', 'mMap', 'userStore')(observer(ConfigureConditions));

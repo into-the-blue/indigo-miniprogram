@@ -19,11 +19,14 @@ type TTarget =
       payload: ICustomLocation;
     };
 
+const DEFAULT_RADIUS = 1000;
 class EditSubscriptionStore {
   @observable target?: TTarget;
 
   @observable configurableKeys: (TConfigBoolean | TConfigRange)[] = CONFIGURABLE_KEYS;
   @observable conditions: TSubCondition[] = [];
+
+  @observable radius: number = DEFAULT_RADIUS;
 
   @action setState: TSetState<EditSubscriptionStore> = next => {
     Object.assign(this, next);
@@ -54,6 +57,16 @@ class EditSubscriptionStore {
   @action addCondition = (condition: TSubCondition) => {
     this.conditions.push(condition);
   };
+
+  @action resetStore = () => {
+    this.conditions = [];
+    this.radius = DEFAULT_RADIUS;
+  };
+
+  get targetStationId() {
+    if (this.targetType === 'metroStation')
+      return (this.target!.payload as IMetroStationClient).stationId;
+  }
 
   getDetailedCondition = (key: string) => {
     return this.configurableKeys.find(o => o.key === key)!;

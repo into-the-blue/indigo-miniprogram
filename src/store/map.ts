@@ -17,33 +17,45 @@ type FocusedCustomAddr = {
 type TFocusedLocation = FocusedMetroStation | FocusedCustomAddr;
 
 class MapStore implements IStore<MapStore> {
+  // user location
   initialCoordinate?: {
     lng: number;
     lat: number;
   };
+  // center of the map
   @observable currentCoordinate?: {
     lng: number;
     lat: number;
   };
-
+  // if map has been dragged
   @observable mapDragged: boolean = false;
-
+  // map scale
   @observable scale: number = 14;
-
+  // markers on the map
   @observable markers: IMarker[] = [];
-
+  // metro stations in region
   currentMetroStations: IMetroStationClient[] = [];
-
+  // apartments in region
   currentApartments: IApartment[] = [];
-
+  // current location been tapped, can be metro station or search result
   @observable focusedLocation?: TFocusedLocation;
-
+  // map default setting
   setting: any = MAP_SETTING;
+  // city
+  @observable currentCity: string = 'shanghai';
 
   @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = next => {
     Object.assign(this, next);
   };
 
+  /**
+   *
+   *
+   * @memberof MapStore
+   * set current metro stations in region
+   * clean station markers
+   * set new markers
+   */
   @action
   setMetroStations = (stations: IMetroStationClient[]) => {
     if (!stations.length) return;
