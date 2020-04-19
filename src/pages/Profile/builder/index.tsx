@@ -17,8 +17,8 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    const { userStore } = getStores('userStore');
-    return new ProfileInteractor(userStore);
+    const { userStore, subscriptionStore } = getStores('userStore', 'subscriptionStore');
+    return new ProfileInteractor(userStore, subscriptionStore);
   };
   buildPresenter = (interactor: ProfileInteractor) => (viewModel: IViewModel) => {
     return new ProfilePresenter(interactor, viewModel);

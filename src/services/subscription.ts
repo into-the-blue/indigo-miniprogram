@@ -1,5 +1,5 @@
 import { apiClient } from '@/utils';
-import { TSubCondition } from '@/types';
+import { TSubCondition, ISubscription } from '@/types';
 
 type IAddSubBody = {
   coordinates: [number, number];
@@ -24,6 +24,11 @@ export class SubscriptionClient {
     const { data } = await apiClient.post('/subscription', {
       ...body,
     });
+    return data;
+  };
+
+  static queryUserSubscriptions = async (): Promise<ISubscription[]> => {
+    const { data } = await apiClient.get('/subscription');
     return data;
   };
 }

@@ -1,10 +1,11 @@
 import { IInteractor } from '../types';
-import { UserStore } from '@/store';
+import { UserStore, SubscriptionStore } from '@/store';
 import { Cache } from '@/utils';
 import Taro from '@tarojs/taro';
+import { SubscriptionClient } from '@/services/subscription';
 
 class ProfileInteractor implements IInteractor {
-  constructor(public userStore: UserStore) {}
+  constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}
 
   login = async (encryptedData: string, iv: string) => {
     try {
@@ -28,6 +29,12 @@ class ProfileInteractor implements IInteractor {
         icon: 'none',
       });
     }
+  };
+
+  queryUserSubscriptions = async () => {
+    const subscriptions = await SubscriptionClient.queryUserSubscriptions();
+    console.warn(subscriptions);
+    this.subscriptionStore.setUserSubscriptions(subscriptions);
   };
 }
 
