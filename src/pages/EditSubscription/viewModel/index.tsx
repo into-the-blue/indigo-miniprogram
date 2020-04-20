@@ -8,6 +8,7 @@ import {} from '../interactor';
 import { EditSubscriptionStore } from '../stores';
 import TargetInfo from './components/TargetInfo';
 import { ConfigureConditions } from '@/components/ConfigureConditions';
+import EditRadius from './components/EditRadius';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => EditSubscriptionPresenter;
@@ -30,11 +31,12 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
   componentWillUnmount() {}
 
   render() {
-    const { target, targetInfo, targetType } = this.props.editSubscriptionStore!;
+    const { targetInfo, targetType, radius, setRadius } = this.props.editSubscriptionStore!;
     return (
       <View style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }}>
           <TargetInfo type={targetType} info={targetInfo} />
+          <EditRadius radius={radius} setRadius={setRadius} />
           <ConfigureConditions />
         </ScrollView>
       </View>

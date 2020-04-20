@@ -67,6 +67,12 @@ class EditSubscriptionStore {
     this.radius = DEFAULT_RADIUS;
   };
 
+  @action setRadius = (value: string) => {
+    if (!/\d+/g.test(value)) return this.radius.toString();
+    this.radius = +value;
+    return value;
+  };
+
   get targetStationId() {
     if (this.targetType === 'metroStation')
       return (this.target!.payload as IMetroStationClient).stationId;

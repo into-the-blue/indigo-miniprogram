@@ -28,3 +28,12 @@
 text {
   color: $text-color;
 }
+
+.input {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+.input::after {
+  border: none;
+}
