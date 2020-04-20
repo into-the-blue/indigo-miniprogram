@@ -8,7 +8,6 @@ import {} from '../interactor';
 import {} from '../stores';
 import {} from '@/services/user';
 import { Button } from '@/components';
-import Tabbar from '@/components/Tabbar';
 import { UserInfo } from './components/UserInfoCard';
 import { UserStore } from '@/store';
 
@@ -50,7 +49,6 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
             </Button>
           )}
         </ScrollView>
-        <Tabbar />
       </View>
     );
   }

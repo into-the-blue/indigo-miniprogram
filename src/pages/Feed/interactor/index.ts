@@ -122,16 +122,27 @@ class FeedInteractor implements IInteractor {
   };
 
   setMetroStationAsSubTarget = () => {
-    const { editSubscriptionStore } = getStores('editSubscriptionStore');
+    const { editSubscriptionStore, subscriptionStore } = getStores(
+      'editSubscriptionStore',
+      'subscriptionStore',
+    );
     const station = this.mMap.currentMetroStations.find(
       o => o.stationId === this.mMap.focusedMetroStation.stationId,
     );
-    editSubscriptionStore.setState({
+    const existingSub = subscriptionStore.findSubscriptionByCoordinates(station!.coordinates);
+
+    const next: any = {
       target: {
         type: 'metroStation',
         payload: station!,
       },
-    });
+    };
+    if (existingSub) {
+      Object.assign(next, {
+        conditions: existingSub.conditions,
+      });
+    }
+    editSubscriptionStore.setState(next);
   };
 }
 

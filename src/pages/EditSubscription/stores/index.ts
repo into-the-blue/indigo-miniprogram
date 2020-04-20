@@ -58,6 +58,10 @@ class EditSubscriptionStore {
     this.conditions.push(condition);
   };
 
+  @action deleteCondition = (index: number) => {
+    this.conditions = this.conditions.filter((_, idx) => idx !== index);
+  };
+
   @action resetStore = () => {
     this.conditions = [];
     this.radius = DEFAULT_RADIUS;

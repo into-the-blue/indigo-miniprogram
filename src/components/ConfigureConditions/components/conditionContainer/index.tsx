@@ -4,7 +4,7 @@ import { SwipeActionOption } from 'taro-ui/types/swipe-action';
 
 const Wrapper: <P extends object>(
   Comp: React.ComponentType<P>,
-) => (props: { onDeleteCondition } & P) => JSX.Element = (Comp) => (props) => {
+) => (props: { onDeleteCondition: () => void } & P) => JSX.Element = Comp => props => {
   const { onDeleteCondition, ...restProps } = props;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [secConfirm, setSecConfirm] = useState<boolean>(false);
@@ -14,21 +14,21 @@ const Wrapper: <P extends object>(
     console.warn('index', index);
     if (item.text === '删除') {
       setSecConfirm(true);
-      setIsOpen(true);
       return;
     }
     if (item.text === '确认删除') {
+      setIsOpen(false);
+      setSecConfirm(false);
+      onDeleteCondition();
       // delete condition
     }
   };
   const onSwipeClose = () => {
-    console.warn('on close', isOpen, secConfirm);
-    setSecConfirm(false);
+    console.warn('on close', isOpen);
     setIsOpen(false);
   };
   const onSwipeOpen = () => {
-    console.warn('on open', isOpen, secConfirm);
-    setSecConfirm(false);
+    console.warn('on open', isOpen);
     setIsOpen(true);
   };
   return (
@@ -41,6 +41,7 @@ const Wrapper: <P extends object>(
                 style: {
                   width: '60px',
                   backgroundColor: '#f44336',
+                  color: 'white',
                 },
               },
             ]
@@ -50,6 +51,7 @@ const Wrapper: <P extends object>(
                 style: {
                   backgroundColor: '#ff9800',
                   width: '30px',
+                  color: 'white',
                 },
               },
             ]

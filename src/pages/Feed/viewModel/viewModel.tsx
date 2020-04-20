@@ -7,7 +7,6 @@ import { FeedPresenter } from '../presenter';
 import {} from '../interactor';
 import { FeedStore } from '../stores';
 import { GlobalStore, MapStore } from '@/store';
-import Tabbar from '@/components/Tabbar';
 import classNames from 'classnames';
 import ApartmentInfoModal from './components/ApartmentInfo';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
@@ -99,7 +98,6 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
             onPressApartment={this.presenter.onPressApartment}
           />
         </View>
-        <Tabbar />
       </View>
     );
   }

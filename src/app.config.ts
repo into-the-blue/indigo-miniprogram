@@ -16,4 +16,33 @@ export default {
       desc: '你的位置信息将用于获取周边房源信息', // 高速公路行驶持续后台定位
     },
   },
+
+  tabBar: {
+    backgroundColor: '#f9f9f9',
+
+    borderStyle: 'white',
+
+    selectedColor: '#00b38b',
+
+    color: '#666666',
+
+    list: [
+      {
+        pagePath: 'pages/Feed/builder/index',
+        iconPath: './assets/home.png',
+        selectedIconPath: './assets/home.png',
+        text: '首页',
+      },
+
+      {
+        pagePath: 'pages/Profile/builder/index',
+
+        iconPath: './assets/profile.png',
+
+        selectedIconPath: './assets/profile.png',
+
+        text: '我的',
+      },
+    ],
+  },
 };

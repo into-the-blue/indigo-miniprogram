@@ -25,6 +25,7 @@ const ConfigureConditions = ({ editSubscriptionStore, mMap, userStore }: IProps)
     getDetailedCondition,
     targetInfo,
     targetStationId,
+    deleteCondition,
   } = editSubscriptionStore!;
   const [edited, setEdited] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -100,7 +101,7 @@ const ConfigureConditions = ({ editSubscriptionStore, mMap, userStore }: IProps)
             <BooleanCondition
               key={'cc' + idx}
               onEdit={onEdit}
-              onDeleteCondition={() => {}}
+              onDeleteCondition={() => deleteCondition(idx)}
               condition={condition}
               detail={getDetailedCondition(condition.key) as TConfigBoolean}
             />
@@ -111,7 +112,7 @@ const ConfigureConditions = ({ editSubscriptionStore, mMap, userStore }: IProps)
             <RangeCondition
               key={'cc' + idx}
               onEdit={onEdit}
-              onDeleteCondition={() => {}}
+              onDeleteCondition={() => deleteCondition(idx)}
               condition={condition}
               detail={getDetailedCondition(condition.key) as TConfigRange}
             />
