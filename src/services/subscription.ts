@@ -31,4 +31,14 @@ export class SubscriptionClient {
     const { data } = await apiClient.get('/subscription');
     return data;
   };
+
+  static updateSubscription = <K extends keyof ISubscription>(
+    id: string,
+    updates: Pick<ISubscription, K>,
+  ): Promise<{ success: boolean; message: string }> => {
+    return apiClient.put('/subscription', {
+      id,
+      ...updates,
+    });
+  };
 }

@@ -3,6 +3,7 @@ import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel';
 import { EditSubscriptionPresenter } from '../presenter';
 import { EditSubscriptionInteractor } from '../interactor';
+import { getStores } from '@/store';
 
 class Builder extends React.Component<IProps> {
   presenter: EditSubscriptionPresenter;
@@ -16,7 +17,12 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    return new EditSubscriptionInteractor();
+    const { userStore, editSubscriptionStore, mMap } = getStores(
+      'userStore',
+      'editSubscriptionStore',
+      'mMap',
+    );
+    return new EditSubscriptionInteractor(userStore, editSubscriptionStore, mMap);
   };
   buildPresenter = (interactor: EditSubscriptionInteractor) => (viewModel: IViewModel) => {
     return new EditSubscriptionPresenter(interactor, viewModel);

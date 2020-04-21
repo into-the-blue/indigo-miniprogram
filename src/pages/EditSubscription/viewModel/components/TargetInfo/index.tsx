@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Map } from '@tarojs/components';
 import { MAP_SETTING } from '@/utils/constants';
 import Assets from '@/assets';
+import { Button } from '@/components';
 import './styles.scss';
 
 interface IProps {
@@ -10,12 +11,17 @@ interface IProps {
     address: string;
     coordinates: [number, number];
   };
+  isUpdating: boolean;
+  onPressSave: () => void;
 }
 
-const TargetInfo = ({ type, info }: IProps) => {
+const TargetInfo = ({ type, info, isUpdating, onPressSave }: IProps) => {
   return (
     <View className={'target-info__container'}>
-      <Text className={'target-info__title'}>{info.address}</Text>
+      <View>
+        <Text className={'target-info__title'}>{info.address}</Text>
+        <Button onClick={onPressSave}>{isUpdating ? '更新' : '增加'}</Button>
+      </View>
 
       <Map
         className={'target-info__map'}

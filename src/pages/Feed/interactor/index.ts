@@ -140,6 +140,7 @@ class FeedInteractor implements IInteractor {
     if (existingSub) {
       Object.assign(next, {
         conditions: existingSub.conditions,
+        originSubscription: existingSub,
       });
     }
     editSubscriptionStore.setState(next);

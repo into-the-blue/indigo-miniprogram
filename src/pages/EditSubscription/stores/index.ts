@@ -6,6 +6,7 @@ import {
   TConfigBoolean,
   TConfigRange,
   TSubCondition,
+  ISubscription,
 } from '@/types';
 import { CONFIGURABLE_KEYS } from './data';
 
@@ -21,7 +22,11 @@ type TTarget =
 
 const DEFAULT_RADIUS = 1000;
 class EditSubscriptionStore {
+  @observable originSubscription?: ISubscription;
   @observable target?: TTarget;
+
+  @observable edited: boolean = false;
+  @observable hasError: boolean = false;
 
   @observable configurableKeys: (TConfigBoolean | TConfigRange)[] = CONFIGURABLE_KEYS;
   @observable conditions: TSubCondition[] = [];
@@ -62,14 +67,23 @@ class EditSubscriptionStore {
     this.conditions = this.conditions.filter((_, idx) => idx !== index);
   };
 
+  @action
+  setEdited = (error?: boolean) => {
+    if (typeof error === 'boolean') this.hasError = error;
+    if (this.edited) return;
+    this.edited = true;
+  };
+
   @action resetStore = () => {
     this.conditions = [];
     this.radius = DEFAULT_RADIUS;
+    this.edited = false;
   };
 
   @action setRadius = (value: string) => {
     if (!/\d+/g.test(value)) return this.radius.toString();
     this.radius = +value;
+    this.setEdited();
     return value;
   };
 
@@ -81,5 +95,10 @@ class EditSubscriptionStore {
   getDetailedCondition = (key: string) => {
     return this.configurableKeys.find(o => o.key === key)!;
   };
+
+  @computed
+  get isUpdating() {
+    return !!this.originSubscription;
+  }
 }
 export { EditSubscriptionStore };

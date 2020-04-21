@@ -31,13 +31,25 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
   componentWillUnmount() {}
 
   render() {
-    const { targetInfo, targetType, radius, setRadius } = this.props.editSubscriptionStore!;
+    const {
+      targetInfo,
+      targetType,
+      radius,
+      setRadius,
+      isUpdating,
+    } = this.props.editSubscriptionStore!;
     return (
       <View style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }}>
-          <TargetInfo type={targetType} info={targetInfo} />
+          <TargetInfo
+            type={targetType}
+            info={targetInfo}
+            isUpdating={isUpdating}
+            onPressSave={this.presenter.onPressSave}
+          />
+
           <EditRadius radius={radius} setRadius={setRadius} />
-          <ConfigureConditions />
+          <ConfigureConditions onPressSave={this.presenter.onPressSave} />
         </ScrollView>
       </View>
     );
