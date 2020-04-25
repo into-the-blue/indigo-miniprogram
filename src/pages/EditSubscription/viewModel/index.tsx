@@ -26,7 +26,9 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
     this.presenter = this.props.buildPresenter(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.presenter.componentDidMount();
+  }
 
   componentWillUnmount() {}
 
@@ -49,7 +51,7 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
           />
 
           <EditRadius radius={radius} setRadius={setRadius} />
-          <ConfigureConditions onPressSave={this.presenter.onPressSave} />
+          <ConfigureConditions />
         </ScrollView>
       </View>
     );

@@ -1,6 +1,7 @@
 import { IInteractor } from '../types';
 import { SubscriptionClient } from '@/services/subscription';
-import { UserStore, EditSubscriptionStore, MapStore } from '@/store';
+import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/store';
+import Taro from '@tarojs/taro';
 
 class EditSubscriptionInteractor implements IInteractor {
   constructor(
@@ -8,6 +9,17 @@ class EditSubscriptionInteractor implements IInteractor {
     public editSubscriptionStore: EditSubscriptionStore,
     public mMap: MapStore,
   ) {}
+
+  addSubscription = (body: any) => {
+    return SubscriptionClient.addSubscription(body);
+  };
+
+  updateSubscription = (body: any) => {
+    return SubscriptionClient.updateSubscription(
+      this.editSubscriptionStore.originSubscription!.id!,
+      body,
+    );
+  };
 
   onSave = async () => {
     if (!this.userStore!.isLoggedIn) {
@@ -28,6 +40,7 @@ class EditSubscriptionInteractor implements IInteractor {
       targetStationId,
       targetType,
       conditions,
+      isUpdating,
     } = this.editSubscriptionStore;
     const coordinates = targetInfo.coordinates;
     const city = this.mMap.currentCity;
@@ -44,14 +57,21 @@ class EditSubscriptionInteractor implements IInteractor {
       conditions,
       ...payload,
     };
+    console.warn(conditions);
     try {
-      const { success, message } = await SubscriptionClient.addSubscription(body);
+      const { success, message } = await (isUpdating
+        ? this.updateSubscription
+        : this.addSubscription)(body);
       if (!success) {
         console.warn(message);
+        Taro.showToast({
+          title: message,
+          duration: 2000,
+        });
         return;
       }
       Taro.showToast({
-        title: '订阅成功',
+        title: '保存成功',
         icon: 'success',
         duration: 2000,
       });
@@ -62,6 +82,36 @@ class EditSubscriptionInteractor implements IInteractor {
       Taro.showToast({
         title: '前方拥挤...',
         duration: 2000,
+      });
+    }
+  };
+
+  /**
+   *
+   *
+   * @memberof EditSubscriptionInteractor
+   * get existing subscription from local store
+   */
+  getExistingSubFromLocal = () => {
+    const { targetType } = this.editSubscriptionStore;
+    if (targetType === 'metroStation') {
+      this.getExistingMetroSub();
+    }
+    if (targetType === 'customLocation') {
+      //
+    }
+  };
+
+  getExistingMetroSub = () => {
+    const { subscriptionStore } = getStores('subscriptionStore');
+    const existingSub = subscriptionStore.findSubscriptionByCoordinates(
+      this.editSubscriptionStore.targetInfo.coordinates,
+    );
+    if (existingSub) {
+      this.editSubscriptionStore.setState({
+        conditions: existingSub.conditions,
+        radius: existingSub.radius,
+        originSubscription: existingSub,
       });
     }
   };

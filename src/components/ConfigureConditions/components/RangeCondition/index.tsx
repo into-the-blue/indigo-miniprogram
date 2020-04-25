@@ -21,40 +21,31 @@ interface IProps {
   };
   detail: TConfigRange;
   onEdit: (hasError?: boolean) => void;
+  updateCondition: (value: [number, number]) => void;
 }
-const RangeCondition = ({ condition, onEdit, detail: { title } }: IProps) => {
-  // const [rangeValue, setRangeValue] = useState<[number, number]>([0, 100]);
+const RangeCondition = ({ condition, onEdit, updateCondition, detail: { title } }: IProps) => {
   const [rangeThreshold, setRangeThreshold] = useState<[number, number] | null>(null);
   const [invalidThreshold, setInvalidThreshold] = useState<[boolean, boolean]>([false, false]);
 
   useEffect(() => {
+    const hasError = !!invalidThreshold.filter(o => o).length;
+    if (hasError) return;
     setRangeThreshold(condition.condition);
-  }, [condition.condition]);
+  }, [condition.condition, invalidThreshold]);
 
   const onChangeRangeThreshold = (type: 'min' | 'max') => (v: string) => {
     const _value = convertStringToNumber(v);
     const nextThreshold: [number, number] = calNextThreshold(type, rangeThreshold!, _value);
     const invalid = isInvalidThreshold(type, nextThreshold);
-    onEdit(!!invalid.filter(o => o).length);
+    const hasError = !!invalid.filter(o => o).length;
+    onEdit(hasError);
     setRangeThreshold(nextThreshold);
     setInvalidThreshold(invalid);
+    if (!hasError) {
+      updateCondition(nextThreshold);
+    }
     return _value.toString();
   };
-
-  // const onChangeRange = (v: [number, number]) => {
-  //   onEdit();
-  //   setRangeValue(v);
-  // };
-
-  // const currentRange: [number, number] = useMemo(() => {
-  //   if (!rangeThreshold) return [0, 0];
-  //   const per = (rangeThreshold![1] - rangeThreshold![0]) / 100;
-  //   return rangeValue.map(v => {
-  //     if (v === 0) return rangeThreshold[0];
-  //     if (v === 100) return rangeThreshold[1];
-  //     return Math.round(rangeThreshold![0] + v * per);
-  //   }) as [number, number];
-  // }, [rangeValue, rangeThreshold]);
 
   return (
     <Collapsable title={title + ': ' + cvtRangeToTitle(rangeThreshold)}>

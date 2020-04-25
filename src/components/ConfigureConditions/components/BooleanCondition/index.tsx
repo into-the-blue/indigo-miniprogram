@@ -14,23 +14,23 @@ interface IProps {
   };
   detail: TConfigBoolean;
   onEdit: () => void;
+  updateCondition: (condition: boolean) => void;
 }
 
-const Comp = ({ condition, detail: { title }, onEdit }: IProps) => {
-  const [checked, setChecked] = useState<boolean>(false);
-  useEffect(() => {
-    setChecked(condition.condition);
-  }, [condition.condition]);
-
+const Comp = ({ condition, updateCondition, detail: { title }, onEdit }: IProps) => {
   const onChange = (bool: boolean) => {
     onEdit();
-    setChecked(bool);
+    updateCondition(bool);
   };
 
   return (
-    <Collapsable title={title + ':' + condition.value[+checked]}>
+    <Collapsable title={title + ':' + condition.value[+condition.condition]}>
       <View style={{ padding: '10px 20px' }}>
-        <EditBoolean valueTitles={condition.value} onChange={onChange} value={checked} />
+        <EditBoolean
+          valueTitles={condition.value}
+          onChange={onChange}
+          value={condition.condition}
+        />
       </View>
     </Collapsable>
   );

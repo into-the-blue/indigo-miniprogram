@@ -100,5 +100,10 @@ class EditSubscriptionStore {
   get isUpdating() {
     return !!this.originSubscription;
   }
+
+  @action
+  updateSingleCondition = (idx: number, value: boolean | [number, number]) => {
+    this.conditions[idx].condition = value;
+  };
 }
 export { EditSubscriptionStore };

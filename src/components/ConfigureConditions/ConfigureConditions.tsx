@@ -10,10 +10,9 @@ import { observer, inject } from 'mobx-react';
 
 interface IProps {
   editSubscriptionStore?: EditSubscriptionStore;
-  onPressSave: (hasError: boolean) => void;
 }
 
-const ConfigureConditions = ({ editSubscriptionStore, onPressSave }: IProps) => {
+const ConfigureConditions = ({ editSubscriptionStore, }: IProps) => {
   const {
     conditions,
     addCondition,
@@ -21,6 +20,7 @@ const ConfigureConditions = ({ editSubscriptionStore, onPressSave }: IProps) => 
     getDetailedCondition,
     deleteCondition,
     setEdited,
+    updateSingleCondition,
   } = editSubscriptionStore!;
   const onEdit = (error?: boolean) => {
     setEdited(error);
@@ -31,6 +31,9 @@ const ConfigureConditions = ({ editSubscriptionStore, onPressSave }: IProps) => 
     addCondition(condition);
   };
 
+  const onUpdateCondition = (idx: number) => (condition: boolean | [number, number]) => {
+    updateSingleCondition(idx, condition);
+  };
   return (
     <View>
       {conditions.map((condition, idx) => {
@@ -42,6 +45,7 @@ const ConfigureConditions = ({ editSubscriptionStore, onPressSave }: IProps) => 
               onDeleteCondition={() => deleteCondition(idx)}
               condition={condition}
               detail={getDetailedCondition(condition.key) as TConfigBoolean}
+              updateCondition={onUpdateCondition(idx)}
             />
           );
         }
@@ -53,6 +57,7 @@ const ConfigureConditions = ({ editSubscriptionStore, onPressSave }: IProps) => 
               onDeleteCondition={() => deleteCondition(idx)}
               condition={condition}
               detail={getDetailedCondition(condition.key) as TConfigRange}
+              updateCondition={onUpdateCondition(idx)}
             />
           );
         }

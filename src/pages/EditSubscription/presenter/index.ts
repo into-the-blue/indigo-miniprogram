@@ -4,9 +4,14 @@ import { EditSubscriptionInteractor } from '../interactor';
 class EditSubscriptionPresenter implements IPresenter {
   constructor(public interactor: EditSubscriptionInteractor, public viewModel: IViewModel) {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.checkIfHaveExistingSub();
+  }
   componentWillUnmount() {}
 
+  checkIfHaveExistingSub = () => {
+    this.interactor.getExistingSubFromLocal();
+  };
   onPressSave = () => {
     this.interactor.onSave();
   };
