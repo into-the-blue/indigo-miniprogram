@@ -55,6 +55,16 @@ class EditSubscriptionStore {
         };
   }
 
+  @computed
+  get metroPayload() {
+    return this.target!.payload as IMetroStationClient;
+  }
+
+  @computed
+  get customLocationPayload() {
+    return this.target!.payload as ICustomLocation;
+  }
+
   @computed get availableConfigKeys() {
     return this.configurableKeys.filter(o => !this.conditions.some(c => c.key === o.key));
   }

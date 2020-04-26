@@ -2,6 +2,7 @@ import { IInteractor } from '../types';
 import { SubscriptionClient } from '@/services/subscription';
 import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/store';
 import Taro from '@tarojs/taro';
+import { pick } from '@/utils';
 
 class EditSubscriptionInteractor implements IInteractor {
   constructor(
@@ -37,25 +38,27 @@ class EditSubscriptionInteractor implements IInteractor {
     const {
       targetInfo,
       radius,
-      targetStationId,
       targetType,
       conditions,
       isUpdating,
+      metroPayload,
     } = this.editSubscriptionStore;
     const coordinates = targetInfo.coordinates;
     const city = this.mMap.currentCity;
     const type = targetType;
     const payload =
       type === 'metroStation'
-        ? { stationId: targetStationId!, type }
-        : { address: targetInfo.address, type };
+        ? pick(metroPayload, ['stationId', 'stationName', 'urls', 'lineIds'])
+        : { address: targetInfo.address };
 
     const body = {
       coordinates,
       city,
       radius,
       conditions,
-      ...payload,
+      type,
+      address: targetInfo.address,
+      payload,
     };
     console.warn(conditions);
     try {
