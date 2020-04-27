@@ -1,25 +1,28 @@
 import React from 'react';
-import { View } from '@tarojs/components';
-import { inject, observer } from 'mobx-react';
-import { SubscriptionStore } from '@/store';
+import { View, Text } from '@tarojs/components';
+import {} from 'mobx-react';
+import {} from '@/store';
 import SubscriptionCard from './SubscriptionCard';
 import './styles.scss';
-import { ISubscription } from '@/types';
+import { ISubscription, ISubscriptionClient } from '@/types';
+import {} from 'taro-ui';
 
 interface IProps {
-  subscriptionStore?: SubscriptionStore;
   onPressSubscription: (sub: ISubscription) => void;
+  onDelete: (subscriptionId: string, idx: number) => void;
+  subscriptions: ISubscriptionClient[];
 }
 
-const UserSubscriptions = ({ subscriptionStore, onPressSubscription }: IProps) => {
-  const { userSubscriptions } = subscriptionStore!;
+const UserSubscriptions = ({ subscriptions, onPressSubscription, onDelete }: IProps) => {
   return (
     <View className={'user-subscription__container'}>
-      {userSubscriptions.map(sub => {
+      <Text className={'user-subscription__my-subs'}>{'我的订阅:'}</Text>
+      {subscriptions.map((sub, idx) => {
         return (
           <SubscriptionCard
             key={sub.id!}
             subscription={sub}
+            onDelete={() => onDelete(sub.id, idx)}
             onPress={() => onPressSubscription(sub)}
           />
         );
@@ -28,4 +31,4 @@ const UserSubscriptions = ({ subscriptionStore, onPressSubscription }: IProps) =
   );
 };
 
-export default inject('subscriptionStore')(observer(UserSubscriptions));
+export default UserSubscriptions;

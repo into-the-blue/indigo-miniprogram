@@ -1,5 +1,5 @@
 import { apiClient } from '@/utils';
-import { TSubCondition, ISubscription } from '@/types';
+import { TSubCondition, ISubscription, ISubscriptionClient } from '@/types';
 
 type IAddSubBody = {
   coordinates: [number, number];
@@ -27,7 +27,7 @@ export class SubscriptionClient {
     return data;
   };
 
-  static queryUserSubscriptions = async (): Promise<ISubscription[]> => {
+  static queryUserSubscriptions = async (): Promise<ISubscriptionClient[]> => {
     const { data } = await apiClient.get('/subscription');
     return data;
   };
@@ -39,6 +39,20 @@ export class SubscriptionClient {
     const { data } = await apiClient.put('/subscription', {
       id,
       ...updates,
+    });
+    return data;
+  };
+
+  static deleteSubscription = async (
+    id: string,
+  ): Promise<{
+    success: boolean;
+    deletedCount: number;
+  }> => {
+    const { data } = await apiClient.delete('/subscription', {
+      params: {
+        id,
+      },
     });
     return data;
   };

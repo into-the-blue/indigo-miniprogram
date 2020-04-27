@@ -1,10 +1,10 @@
 import { action, observable, computed } from 'mobx';
-import { ISubscription } from '@/types';
+import { ISubscriptionClient } from '@/types';
 
 class SubscriptionStore {
-  @observable userSubscriptions: ISubscription[] = [];
+  @observable userSubscriptions: ISubscriptionClient[] = [];
 
-  setUserSubscriptions = (subscriptions: ISubscription[]) => {
+  setUserSubscriptions = (subscriptions: ISubscriptionClient[]) => {
     this.userSubscriptions = subscriptions;
   };
 

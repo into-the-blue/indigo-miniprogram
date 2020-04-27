@@ -18,5 +18,9 @@ class ProfilePresenter implements IPresenter {
   queryUserSubscriptions = () => {
     this.interactor.queryUserSubscriptions();
   };
+
+  onPressSubscription = () => {};
+
+  onDeleteSubscription = (subscriptionId: string, index: number) => {};
 }
 export { ProfilePresenter };

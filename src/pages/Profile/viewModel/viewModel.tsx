@@ -9,14 +9,16 @@ import {} from '../stores';
 import {} from '@/services/user';
 import { Button } from '@/components';
 import { UserInfo } from './components/UserInfoCard';
-import { UserStore } from '@/store';
+import { UserStore, SubscriptionStore } from '@/store';
+import UserSubscriptions from './components/UserSubscriptions';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => ProfilePresenter;
   userStore?: UserStore;
+  subscriptionStore?: SubscriptionStore;
 }
 
-@inject('global', 'userStore')
+@inject('global', 'userStore', 'subscriptionStore')
 @observer
 class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   presenter: ProfilePresenter;
@@ -34,6 +36,7 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   componentWillUnmount() {}
   render() {
     const { userInfo, isLoggedIn } = this.props.userStore!;
+    const { userSubscriptions } = this.props.subscriptionStore!;
     return (
       <View style={{ flex: 1 }}>
         <ScrollView>
@@ -48,6 +51,11 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
               {'Get user info'}
             </Button>
           )}
+          <UserSubscriptions
+            onPressSubscription={this.presenter.onPressSubscription}
+            onDelete={this.presenter.onDeleteSubscription}
+            subscriptions={userSubscriptions}
+          />
         </ScrollView>
       </View>
     );

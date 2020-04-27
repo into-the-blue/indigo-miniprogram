@@ -2,11 +2,37 @@
   &container {
     display: flex;
     flex-direction: column;
+    margin-top: 60px;
+  }
+
+  &my-subs {
+    font-size: 68px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 30px;
+    margin-left: 30px;
   }
 }
 
-.subscription-card__{
-    &container{
-        
-    }
+.subscription-card__ {
+  &container {
+    padding-left: 60px;
+    padding-right: 10px;
+  }
+
+  &address {
+    font-size: 50px;
+    color: black;
+  }
+
+  &left-text {
+    font-size: 36px;
+  }
+
+  &right-text {
+    font-size: 40px;
+    color: black;
+    font-weight: bold;
+    margin-right: 60px;
+  }
 }
