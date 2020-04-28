@@ -21,6 +21,8 @@ class ProfilePresenter implements IPresenter {
 
   onPressSubscription = () => {};
 
-  onDeleteSubscription = (subscriptionId: string, index: number) => {};
+  onDeleteSubscription = async (subscriptionId: string) => {
+    this.interactor.deleteSubscription(subscriptionId);
+  };
 }
 export { ProfilePresenter };

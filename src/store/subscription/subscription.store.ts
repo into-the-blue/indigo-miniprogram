@@ -13,6 +13,11 @@ class SubscriptionStore {
       o => JSON.stringify(o.coordinates) === JSON.stringify(coordinates),
     );
   };
+
+  @action
+  removeSubscriptionById = (subscriptionId: string) => {
+    this.userSubscriptions = this.userSubscriptions.filter(o => o.id !== subscriptionId);
+  };
 }
 
 export { SubscriptionStore };

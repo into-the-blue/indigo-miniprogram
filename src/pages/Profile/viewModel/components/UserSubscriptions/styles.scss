@@ -1,3 +1,5 @@
+@import '@/styles/theme.scss';
+
 .user-subscription__ {
   &container {
     display: flex;
@@ -11,6 +13,23 @@
     color: black;
     margin-bottom: 30px;
     margin-left: 30px;
+  }
+
+  &placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-width: 0;
+    border-bottom-width: 2px;
+    border-style: solid;
+    border-color: $border-color;
+    padding-bottom: 30px;
+    margin-left: 60px;
+    padding-right: 60px;
+  }
+  &placeholder-text {
+    font-size: 36px;
   }
 }
 

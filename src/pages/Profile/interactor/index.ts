@@ -36,6 +36,26 @@ class ProfileInteractor implements IInteractor {
     console.warn(subscriptions);
     this.subscriptionStore.setUserSubscriptions(subscriptions);
   };
+
+  deleteSubscription = async (subscriptionId: string) => {
+    try {
+      Taro.showLoading();
+      await SubscriptionClient.deleteSubscription(subscriptionId);
+      this.subscriptionStore.removeSubscriptionById(subscriptionId);
+      Taro.showToast({
+        title: '成了',
+        icon: 'success',
+        duration: 2000,
+      });
+    } catch (err) {
+      Taro.showToast({
+        title: '出错啦...',
+        icon: 'none',
+      });
+    } finally {
+      Taro.hideLoading();
+    }
+  };
 }
 
 export { ProfileInteractor };
