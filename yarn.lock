@@ -1963,14 +1963,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
-axios-miniprogram-adapter@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/axios-miniprogram-adapter/-/axios-miniprogram-adapter-0.3.0.tgz#6858cd0b1f1becbc0cffb9bff01a6e000b969a62"
-  integrity sha512-HFQox9abdxejMMxCv5ki994HAzGi6OOB57RqyZretLo0vN4T/CmVBqdT7PYKKhtn8jPdn8IbPptApQdCvAd6lg==
-  dependencies:
-    axios "^0.19.2"
-
-axios@^0.19.2:
+axios@0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
@@ -9184,6 +9177,13 @@ tar@^2.0.0:
     block-stream "*"
     fstream "^1.0.12"
     inherits "2"
+
+taro-axios@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/taro-axios/-/taro-axios-1.1.1.tgz#93fae855cbbce8fc002180c5ee33a7731475ad1b"
+  integrity sha512-Ahbxef5w6uy6wiJkooOxQbEeiqyE5vt/ikUe/bPDDhguZ7NjDSeGlNqvzLW+3lyT8ZFV+s5oqMI2EZ5c2Edwgg==
+  dependencies:
+    axios "0.19.2"
 
 taro-ui@3.0.0-alpha.2:
   version "3.0.0-alpha.2"

@@ -42,8 +42,6 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
-    "axios": "^0.19.2",
-    "axios-miniprogram-adapter": "^0.3.0",
     "classnames": "^2.2.6",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
@@ -53,6 +51,7 @@
     "qs": "^6.9.1",
     "react": "^16.10.0",
     "rxjs": "^6.5.4",
+    "taro-axios": "^1.1.1",
     "taro-ui": "3.0.0-alpha.2",
     "wx-apollo-fetcher": "^1.0.3"
   },

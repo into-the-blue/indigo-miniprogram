@@ -1,5 +1,4 @@
-import Axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
-import mpAdapter from 'axios-miniprogram-adapter';
+import axios, { AxiosRequestConfig, AxiosInstance } from 'taro-axios';
 import Taro from '@tarojs/taro';
 import { createHttpLink } from 'apollo-link-http';
 import WXApolloFetcher from 'wx-apollo-fetcher';
@@ -13,7 +12,6 @@ const link = createHttpLink({
   uri: GRAPHQL_ENDPOINT,
 });
 
-Axios.defaults.adapter = mpAdapter;
 
 const getNewToken = async (refreshToken: string) => {
   const { data } = await apiClient.post('/auth/refresh', {
@@ -24,10 +22,10 @@ const getNewToken = async (refreshToken: string) => {
 
 const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
   const config = err.config;
-  console.log('errrrr', err.response.status);
+  console.log('errorHanlder', err.response.status);
   if (err.response.status === 401) {
     // not authorized
-    const authData = await Cache.get('authData').catch((error) => {
+    const authData = await Cache.get('authData').catch(error => {
       console.log('httpClient -> errorHanlder', error);
       return null;
     });
@@ -54,30 +52,31 @@ const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
 };
 
 const beforeRequest = async (value: AxiosRequestConfig) => {
-  const authData = await Cache.get('authData').catch((err) => {
+  const authData = await Cache.get('authData').catch(err => {
     console.log('httpClient -> beforeRequest', err);
     return null;
   });
+  console.warn('beforeRequest', authData);
   if (authData && authData.accessToken) {
     value.headers['Authorization'] = 'Bearer ' + authData.accessToken;
   }
   return value;
 };
-Axios.interceptors.response.use(undefined, errorHanlder);
+// axios.interceptors.response.use(undefined, errorHanlder);
 
 const headers = {
   'timvel-project': 'indigo',
   'timvel-app': 'indigo-mp',
   'timvel-platform': 'miniprogram',
 };
-const apiClient = Axios.create({
+const apiClient = axios.create({
   baseURL: API_ENDPOINT,
   headers,
 });
 
-[apiClient].forEach((instance) => {
+[apiClient].forEach(instance => {
   instance.interceptors.request.use(beforeRequest);
-  instance.interceptors.response.use(undefined, errorHanlder);
+  instance.interceptors.response.use(undefined, errorHanlder(instance));
 });
 
 const gqlClient = new ApolloClient({
