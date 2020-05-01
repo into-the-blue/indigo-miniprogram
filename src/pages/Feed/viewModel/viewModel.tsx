@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, Map, Image, CoverImage } from '@tarojs/components';
-// import {} from 'taro-ui';
+import { View, Map, CoverImage } from '@tarojs/components';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
-import {} from '../interactor';
 import { FeedStore } from '../stores';
 import { GlobalStore, MapStore } from '@/store';
 import classNames from 'classnames';
 import ApartmentInfoModal from './components/ApartmentInfo';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
 import Assets from '@/assets';
+import { AtMessage } from 'taro-ui';
 
 interface IProps {
   feed: FeedStore;
@@ -36,19 +35,6 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
   componentWillUnmount() {
     this.presenter.componentWillUnmount();
   }
-  increment = () => {
-    const { setState, count } = this.props.global;
-    setState({
-      count: count + 1,
-    });
-  };
-
-  decrement = () => {
-    const { setState, count } = this.props.global;
-    setState({
-      count: count - 1,
-    });
-  };
   render() {
     const { showDetailModal, currentApartment, showApartmentListModal } = this.props.feed!;
     const {
@@ -61,6 +47,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
     } = this.props.mMap;
     return (
       <View className={'page-container'}>
+        <AtMessage />
         <View style={{ display: 'flex', flex: 1 }}>
           {currentCoordinate && (
             <View

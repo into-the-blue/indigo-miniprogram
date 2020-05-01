@@ -5,6 +5,7 @@ import { MapStore } from './map';
 import { UserStore } from './user';
 import { SubscriptionStore } from './subscription/subscription.store';
 import { EditSubscriptionStore } from '@/pages/EditSubscription/stores';
+import { ModalStore } from './modal';
 
 class RootStore {
   feed: FeedStore;
@@ -13,6 +14,8 @@ class RootStore {
   userStore: UserStore;
   subscriptionStore: SubscriptionStore;
   editSubscriptionStore: EditSubscriptionStore;
+  modalStore: ModalStore;
+
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
@@ -20,6 +23,7 @@ class RootStore {
     this.userStore = new UserStore();
     this.subscriptionStore = new SubscriptionStore();
     this.editSubscriptionStore = new EditSubscriptionStore();
+    this.modalStore = new ModalStore();
   }
 }
 const store = new RootStore();
@@ -35,4 +39,12 @@ export const getStores: <K extends keyof RootStore>(...keys: K[]) => Pick<RootSt
   }
   return res;
 };
-export { GlobalStore, FeedStore, MapStore, UserStore, SubscriptionStore, EditSubscriptionStore };
+export {
+  GlobalStore,
+  FeedStore,
+  MapStore,
+  UserStore,
+  SubscriptionStore,
+  EditSubscriptionStore,
+  ModalStore,
+};

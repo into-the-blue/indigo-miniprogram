@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, ScrollView } from '@tarojs/components';
-import {} from 'taro-ui';
+import { AtMessage } from 'taro-ui';
 import { IViewModel } from '../types';
 import { ProfilePresenter } from '../presenter';
 import {} from '../interactor';
@@ -39,6 +39,7 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
     const { userSubscriptions } = this.props.subscriptionStore!;
     return (
       <View style={{ flex: 1 }}>
+        <AtMessage />
         <ScrollView>
           {isLoggedIn ? (
             <UserInfo userInfo={userInfo!} />
@@ -55,6 +56,7 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
             onPressSubscription={this.presenter.onPressSubscription}
             onDelete={this.presenter.onDeleteSubscription}
             subscriptions={userSubscriptions}
+            onPressEdit={this.presenter.onPressEdit}
           />
         </ScrollView>
       </View>

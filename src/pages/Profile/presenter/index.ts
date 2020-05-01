@@ -1,6 +1,7 @@
 import { IPresenter, IViewModel } from '../types';
 import { ProfileInteractor } from '../interactor';
 import Taro from '@tarojs/taro';
+import { ISubscriptionClient } from '@/types';
 
 class ProfilePresenter implements IPresenter {
   constructor(public interactor: ProfileInteractor, public viewModel: IViewModel) {}
@@ -20,6 +21,17 @@ class ProfilePresenter implements IPresenter {
   };
 
   onPressSubscription = () => {};
+
+  onPressEdit = (subscription: ISubscriptionClient) => {
+    console.warn(subscription.payload);
+    this.interactor.setMetroStationAsSubscriptionTarget({
+      coordinates: subscription.coordinates,
+      ...(subscription.payload as any),
+    });
+    Taro.navigateTo({
+      url: '../../EditSubscription/builder/index',
+    });
+  };
 
   onDeleteSubscription = async (subscriptionId: string) => {
     this.interactor.deleteSubscription(subscriptionId);

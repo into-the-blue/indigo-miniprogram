@@ -24,15 +24,15 @@ class EditSubscriptionInteractor implements IInteractor {
 
   onSave = async () => {
     if (!this.userStore!.isLoggedIn) {
-      return Taro.showToast({
-        title: '请先登录',
-        duration: 2000,
+      return Taro.atMessage({
+        message: '请先登录',
+        type: 'warning',
       });
     }
     if (this.editSubscriptionStore.hasError) {
-      return Taro.showToast({
-        title: '条件不合法',
-        duration: 2000,
+      return Taro.atMessage({
+        message: '无效条件',
+        type: 'error',
       });
     }
     const {
@@ -48,7 +48,7 @@ class EditSubscriptionInteractor implements IInteractor {
     const type = targetType;
     const payload =
       type === 'metroStation'
-        ? pick(metroPayload, ['stationId', 'stationName', 'urls', 'lineIds'])
+        ? pick(metroPayload, ['stationId', 'stationName', 'urls', 'lineIds', 'coordinates'])
         : { address: targetInfo.address };
 
     const body = {
@@ -67,24 +67,23 @@ class EditSubscriptionInteractor implements IInteractor {
         : this.addSubscription)(body);
       if (!success) {
         console.warn(message);
-        Taro.showToast({
-          title: message,
-          duration: 2000,
+        Taro.atMessage({
+          message,
+          type: 'info',
         });
         return;
       }
-      Taro.showToast({
-        title: '保存成功',
-        icon: 'success',
-        duration: 2000,
+      Taro.atMessage({
+        message: '保存成功',
+        type: 'success',
       });
       Taro.navigateBack();
       setTimeout(this.editSubscriptionStore.resetStore, 0);
     } catch (err) {
       console.warn('addSubscription', err);
-      Taro.showToast({
-        title: '前方拥挤...',
-        duration: 2000,
+      Taro.atMessage({
+        message: '前方拥挤...',
+        type: 'error',
       });
     }
   };

@@ -3,6 +3,8 @@ import { UserStore, SubscriptionStore } from '@/store';
 import { Cache } from '@/utils';
 import Taro from '@tarojs/taro';
 import { SubscriptionClient } from '@/services/subscription';
+import { IMetroStation } from '@/types';
+import { setMetroStationAsSubTarget } from '@/store/helper';
 
 class ProfileInteractor implements IInteractor {
   constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}
@@ -24,9 +26,9 @@ class ProfileInteractor implements IInteractor {
         // new user...
       }
     } catch (err) {
-      Taro.showToast({
-        title: '出错啦...',
-        icon: 'none',
+      Taro.atMessage({
+        message: '出错啦...',
+        type: 'error',
       });
     }
   };
@@ -40,21 +42,28 @@ class ProfileInteractor implements IInteractor {
   deleteSubscription = async (subscriptionId: string) => {
     try {
       Taro.showLoading();
-      await SubscriptionClient.deleteSubscription(subscriptionId);
+      const { success, deletedCount } = await SubscriptionClient.deleteSubscription(subscriptionId);
       this.subscriptionStore.removeSubscriptionById(subscriptionId);
-      Taro.showToast({
-        title: '成了',
-        icon: 'success',
-        duration: 2000,
+      console.warn(success, deletedCount);
+      Taro.atMessage({
+        message: '成了',
+        type: 'success',
       });
     } catch (err) {
-      Taro.showToast({
-        title: '出错啦...',
-        icon: 'none',
+      console.warn(err.message);
+      Taro.atMessage({
+        message: '出错啦...',
+        type: 'error',
       });
     } finally {
       Taro.hideLoading();
     }
+  };
+
+  setMetroStationAsSubscriptionTarget = (
+    station: Pick<IMetroStation, 'stationId' | 'stationName' | 'coordinates'>,
+  ) => {
+    setMetroStationAsSubTarget(station);
   };
 }
 

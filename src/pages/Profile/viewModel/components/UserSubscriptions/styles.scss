@@ -54,4 +54,14 @@
     font-weight: bold;
     margin-right: 60px;
   }
+
+  &more-button {
+    // position: absolute;
+    // top: 30px;
+    // right: 30px;
+    object-fit: contain;
+    width: 50px;
+    height: 50px;
+    margin-right: 30px;
+  }
 }

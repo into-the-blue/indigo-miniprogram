@@ -17,3 +17,11 @@ export const pick = <T, K extends keyof T>(
   });
   return toReturn;
 };
+
+export const findItemByKeyValue = <T>(items: T[], key: keyof T, value: any): T | undefined => {
+  return items.find(o => o[key] === value);
+};
+
+export const removeItemByKeyValue = <T>(items: T[], key: keyof T, value: any): T[] => {
+  return items.filter(o => o[key] !== value);
+};

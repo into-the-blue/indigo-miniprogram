@@ -14,4 +14,6 @@ export default class Assets {
   static List = require('./list.png');
 
   static Subscribe = require('./subscribe.png');
+
+  static More = require('./more.png');
 }

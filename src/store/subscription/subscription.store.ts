@@ -1,5 +1,6 @@
 import { action, observable, computed } from 'mobx';
 import { ISubscriptionClient } from '@/types';
+import { removeItemByKeyValue } from '@/utils';
 
 class SubscriptionStore {
   @observable userSubscriptions: ISubscriptionClient[] = [];
@@ -16,7 +17,7 @@ class SubscriptionStore {
 
   @action
   removeSubscriptionById = (subscriptionId: string) => {
-    this.userSubscriptions = this.userSubscriptions.filter(o => o.id !== subscriptionId);
+    this.userSubscriptions = removeItemByKeyValue(this.userSubscriptions, 'id', subscriptionId);
   };
 }
 

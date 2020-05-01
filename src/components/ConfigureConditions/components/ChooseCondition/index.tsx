@@ -56,10 +56,9 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
 
   const onConfirmCondition = () => {
     if (invalidThreshold.filter(o => o).length) {
-      return Taro.showToast({
-        title: '条件不合法!',
-        duration: 2000,
-        icon: 'none',
+      return  Taro.atMessage({
+        message: '无效条件',
+        type: 'warning',
       });
     }
     const condition: any = {

@@ -5,6 +5,8 @@ import { MapStore, UserStore, getStores } from '@/store';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
+import { findItemByKeyValue } from '@/utils';
+import { setMetroStationAsSubTarget } from '@/store/helper';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -81,8 +83,15 @@ class FeedInteractor implements IInteractor {
     }
   };
 
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * when user press metro station
+   * check if it's focused already, if not set it as current focused position
+   *
+   */
   onPressMetroStation = async (stationId: string) => {
-    // const station = this.mMap.currentMetroStations.find(o => o.stationId === stationId)!;
     if (this.mMap.isStationFocused(stationId)) return;
 
     Taro.showLoading({
@@ -99,16 +108,21 @@ class FeedInteractor implements IInteractor {
     } catch (err) {
       console.warn(err.message);
       this.mMap.focusedLocation = undefined;
-      Taro.showToast({
-        title: '出错啦...',
-        icon: 'none',
-        duration: 2000,
+      Taro.atMessage({
+        message: '出错啦...',
+        type: 'error',
       });
     } finally {
       Taro.hideLoading();
     }
   };
 
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * show detail modal
+   */
   onPressApartment = (houseId: string) => {
     const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
     console.warn(apartment);
@@ -116,24 +130,20 @@ class FeedInteractor implements IInteractor {
     this.feed.showApartmentDetail(apartment);
   };
 
-  openOrCloseApartmentList = () => {
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   */
+  toggleApartmentList = () => {
     if (this.feed.showApartmentListModal) return this.feed.dismissApartmentList();
     this.feed.openApartmentList();
   };
 
-  
-  setMetroStationAsSubTarget = () => {
-    const { editSubscriptionStore } = getStores('editSubscriptionStore');
-    const station = this.mMap.currentMetroStations.find(
-      o => o.stationId === this.mMap.focusedMetroStation.stationId,
-    );
-    const next: any = {
-      target: {
-        type: 'metroStation',
-        payload: station!,
-      },
-    };
-    editSubscriptionStore.setState(next);
+  setTarget = (type: 'metroStation' | 'customLocation') => {
+    if (type === 'metroStation') {
+      setMetroStationAsSubTarget(this.mMap.focusedMetroStation.stationId);
+    }
   };
 }
 
