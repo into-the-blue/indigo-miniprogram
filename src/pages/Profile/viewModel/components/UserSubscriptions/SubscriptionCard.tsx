@@ -38,7 +38,7 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore }: IProps) => {
         </View>
         <AtDivider height={20} />
         <Info leftText={'条件'} rightText={subscription.conditions.length} />
-        <Info leftText={'推送数量'} rightText={subscription.countOfNotifications} />
+        <Info leftText={'推送数量'} rightText={subscription.numOfNotificationRecords} />
         <Info leftText={'热度'} rightText={subscription.popuparity} />
       </View>
     </Deletable>

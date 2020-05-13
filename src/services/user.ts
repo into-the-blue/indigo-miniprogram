@@ -4,7 +4,7 @@ import { IUserInfo } from '@/types';
 class UserClient {
   static queryUserInfo = async (): Promise<IUserInfo> => {
     const { data } = await apiClient.get('/users/info');
-    return data;
+    return data.data;
   };
 }
 

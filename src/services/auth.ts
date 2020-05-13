@@ -7,7 +7,7 @@ class AuthClient {
       type: 'wechat_mp',
       code,
     });
-    return data.sessionKey;
+    return data.data.sessionKey;
   };
 
   static wechatAuth = async (
@@ -25,7 +25,7 @@ class AuthClient {
       iv,
       sessionKey,
     });
-    return data;
+    return data.data;
   };
 }
 

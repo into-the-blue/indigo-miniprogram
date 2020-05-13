@@ -17,7 +17,7 @@ const getNewToken = async (refreshToken: string) => {
   const { data } = await apiClient.post('/auth/refresh', {
     refreshToken,
   });
-  return data;
+  return data.data;
 };
 
 const errorHanlder = (instance: AxiosInstance) => async (err: any) => {

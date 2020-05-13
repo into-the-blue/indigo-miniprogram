@@ -1,5 +1,5 @@
 import { apiClient } from '@/utils';
-import { TSubCondition, ISubscription, ISubscriptionClient } from '@/types';
+import { TSubCondition, ISubscription, ISubscriptionClient, THttpResponse } from '@/types';
 
 type IAddSubBody = {
   coordinates: [number, number];
@@ -18,9 +18,7 @@ type IAddSubBody = {
 );
 
 export class SubscriptionClient {
-  static addSubscription = async (
-    body: IAddSubBody,
-  ): Promise<{ success: boolean; message: 'string' }> => {
+  static addSubscription = async (body: IAddSubBody): Promise<THttpResponse> => {
     const { data } = await apiClient.post('/subscription', {
       ...body,
     });
@@ -29,13 +27,13 @@ export class SubscriptionClient {
 
   static queryUserSubscriptions = async (): Promise<ISubscriptionClient[]> => {
     const { data } = await apiClient.get('/subscription');
-    return data;
+    return data.data;
   };
 
   static updateSubscription = async <K extends keyof ISubscription>(
     id: string,
     updates: Pick<ISubscription, K>,
-  ): Promise<{ success: boolean; message: string }> => {
+  ): Promise<THttpResponse> => {
     const { data } = await apiClient.put('/subscription', {
       id,
       ...updates,
@@ -43,17 +41,25 @@ export class SubscriptionClient {
     return data;
   };
 
-  static deleteSubscription = async (
-    id: string,
-  ): Promise<{
-    success: boolean;
-    deletedCount: number;
-  }> => {
+  static deleteSubscription = async (id: string): Promise<THttpResponse> => {
     const { data } = await apiClient.delete('/subscription', {
       params: {
         id,
       },
     });
     return data;
+  };
+
+  static querySubscriptionNotificationRecords = async (
+    subscriptionId: string,
+    skip: number = 0,
+  ) => {
+    const { data } = await apiClient.get('/subscription/notifications', {
+      params: {
+        id: subscriptionId,
+        skip,
+      },
+    });
+    return data.data;
   };
 }
