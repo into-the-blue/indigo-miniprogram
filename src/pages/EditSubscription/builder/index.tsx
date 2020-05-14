@@ -3,7 +3,7 @@ import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel';
 import { EditSubscriptionPresenter } from '../presenter';
 import { EditSubscriptionInteractor } from '../interactor';
-import { getStores } from '@/store';
+import { getStores } from '@/stores';
 
 class Builder extends React.Component<IProps> {
   presenter: EditSubscriptionPresenter;

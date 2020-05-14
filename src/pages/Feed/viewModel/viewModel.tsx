@@ -4,7 +4,7 @@ import { View, Map, CoverImage } from '@tarojs/components';
 import { IViewModel } from '../types';
 import { FeedPresenter } from '../presenter';
 import { FeedStore } from '../stores';
-import { GlobalStore, MapStore } from '@/store';
+import { GlobalStore, MapStore } from '@/stores';
 import classNames from 'classnames';
 import ApartmentInfoModal from './components/ApartmentInfo';
 import FocusedLocationConsole from './components/FocusedLocationConsole';

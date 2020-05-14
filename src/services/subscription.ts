@@ -1,5 +1,11 @@
 import { apiClient } from '@/utils';
-import { TSubCondition, ISubscription, ISubscriptionClient, THttpResponse } from '@/types';
+import {
+  TSubCondition,
+  ISubscription,
+  ISubscriptionClient,
+  THttpResponse,
+  ISubscriptionNotificationRecordClient,
+} from '@/types';
 
 type IAddSubBody = {
   coordinates: [number, number];
@@ -41,7 +47,9 @@ export class SubscriptionClient {
     return data;
   };
 
-  static deleteSubscription = async (id: string): Promise<THttpResponse> => {
+  static deleteSubscription = async (
+    id: string,
+  ): Promise<THttpResponse<{ deletedCount: number }>> => {
     const { data } = await apiClient.delete('/subscription', {
       params: {
         id,
@@ -53,7 +61,7 @@ export class SubscriptionClient {
   static querySubscriptionNotificationRecords = async (
     subscriptionId: string,
     skip: number = 0,
-  ) => {
+  ): Promise<ISubscriptionNotificationRecordClient[]> => {
     const { data } = await apiClient.get('/subscription/notifications', {
       params: {
         id: subscriptionId,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { AtModal } from 'taro-ui';
-import { ModalStore } from '@/store';
+import { ModalStore } from '@/stores';
 
 const Modal = ({ modalStore }: { modalStore?: ModalStore }) => {
   const {

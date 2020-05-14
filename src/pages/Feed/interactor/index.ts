@@ -1,12 +1,12 @@
 import Taro from '@tarojs/taro';
 import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
-import { MapStore, UserStore, getStores } from '@/store';
+import { MapStore, UserStore, getStores } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
 import { findItemByKeyValue } from '@/utils';
-import { setMetroStationAsSubTarget } from '@/store/helper';
+import { setMetroStationAsSubTarget } from '@/stores/helper';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -17,7 +17,7 @@ class FeedInteractor implements IInteractor {
     try {
       await this.userStore.initUserInfo();
     } catch (err) {
-      console.warn('queryLastestUserInfo', err);
+      console.warn('queryLastestUserInfo', err.message);
       //
     }
   };

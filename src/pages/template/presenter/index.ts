@@ -1,8 +1,8 @@
-import { IPresenter, IInteractor, IViewModel } from '../types';
+import { IPresenter, IViewModel } from '../types';
+import { TemplateInteractor } from '../interactor';
 
 class TemplatePresenter implements IPresenter {
-  
-  constructor(public interactor: IInteractor, public viewModel: IViewModel) {}
+  constructor(public interactor: TemplateInteractor, public viewModel: IViewModel) {}
 
   componentDidMount() {}
   componentWillUnmount() {}

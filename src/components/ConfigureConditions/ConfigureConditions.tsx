@@ -5,7 +5,7 @@ import ChooseCondition from './components/ChooseCondition';
 import BooleanCondition from './components/BooleanCondition';
 import RangeCondition from './components/RangeCondition';
 import './styles.scss';
-import { EditSubscriptionStore } from '@/store';
+import { EditSubscriptionStore } from '@/stores';
 import { observer, inject } from 'mobx-react';
 
 interface IProps {

@@ -1,11 +1,12 @@
 import {} from 'mobx';
 import { FeedStore } from '../pages/Feed/stores';
-import { GlobalStore } from './global';
-import { MapStore } from './map';
-import { UserStore } from './user';
-import { SubscriptionStore } from './subscription/subscription.store';
+import { GlobalStore } from './globalStore';
+import { MapStore } from './mapStore';
+import { UserStore } from './userStore';
+import { SubscriptionStore } from './subscriptionStore';
 import { EditSubscriptionStore } from '@/pages/EditSubscription/stores';
-import { ModalStore } from './modal';
+import { NotificationRecordsStore } from '@/pages/NotificationRecords/stores';
+import { ModalStore } from './modalStore';
 
 class RootStore {
   feed: FeedStore;
@@ -15,7 +16,7 @@ class RootStore {
   subscriptionStore: SubscriptionStore;
   editSubscriptionStore: EditSubscriptionStore;
   modalStore: ModalStore;
-
+  notificationRecordsStore: NotificationRecordsStore;
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
@@ -24,6 +25,7 @@ class RootStore {
     this.subscriptionStore = new SubscriptionStore();
     this.editSubscriptionStore = new EditSubscriptionStore();
     this.modalStore = new ModalStore();
+    this.notificationRecordsStore = new NotificationRecordsStore();
   }
 }
 const store = new RootStore();

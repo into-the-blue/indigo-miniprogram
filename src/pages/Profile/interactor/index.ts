@@ -1,10 +1,10 @@
 import { IInteractor } from '../types';
-import { UserStore, SubscriptionStore } from '@/store';
+import { UserStore, SubscriptionStore } from '@/stores';
 import { Cache } from '@/utils';
 import Taro from '@tarojs/taro';
 import { SubscriptionClient } from '@/services/subscription';
 import { IMetroStation } from '@/types';
-import { setMetroStationAsSubTarget } from '@/store/helper';
+import { setMetroStationAsSubTarget } from '@/stores/helper';
 
 class ProfileInteractor implements IInteractor {
   constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}
@@ -42,9 +42,9 @@ class ProfileInteractor implements IInteractor {
   deleteSubscription = async (subscriptionId: string) => {
     try {
       Taro.showLoading();
-      const { success, deletedCount } = await SubscriptionClient.deleteSubscription(subscriptionId);
+      const { success, data } = await SubscriptionClient.deleteSubscription(subscriptionId);
       this.subscriptionStore.removeSubscriptionById(subscriptionId);
-      console.warn(success, deletedCount);
+      console.warn(success, data!.deletedCount);
       Taro.atMessage({
         message: '成了',
         type: 'success',

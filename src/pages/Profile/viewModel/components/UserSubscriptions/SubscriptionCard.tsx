@@ -24,17 +24,27 @@ const Info = ({ leftText, rightText }: { leftText: string; rightText: string | n
   );
 };
 
-const SubscriptionCard = ({ subscription, onDelete, onPressMore }: IProps) => {
+const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IProps) => {
   return (
     <Deletable onDelete={onDelete}>
-      <View className={'subscription-card__container'}>
+      <View
+        className={'subscription-card__container'}
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          onPress();
+        }}
+      >
         <View className={'flex-row-center'} style={{ justifyContent: 'space-between' }}>
           <Text className={'subscription-card__address'}>{subscription.address}</Text>
-          <Image
-            src={Assets.More}
-            className={'subscription-card__more-button'}
-            onClick={onPressMore}
-          />
+            <Image
+              src={Assets.More}
+              className={'subscription-card__more-button'}
+              onClick={e => {
+                e.stopPropagation();
+                onPressMore();
+              }}
+            />
         </View>
         <AtDivider height={20} />
         <Info leftText={'条件'} rightText={subscription.conditions.length} />

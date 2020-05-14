@@ -2,7 +2,7 @@ import React from 'react';
 import Taro from '@tarojs/taro';
 import { AtTabBar } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
-import { GlobalStore } from '@/store';
+import { GlobalStore } from '@/stores';
 
 interface IProps {
   global?: GlobalStore;

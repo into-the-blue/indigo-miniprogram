@@ -6,18 +6,20 @@ import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { API_ENDPOINT, GRAPHQL_ENDPOINT } from './constants';
 import { Cache } from './Cache';
+import { THttpResponse } from '@/types';
 
 const link = createHttpLink({
   fetch: WXApolloFetcher,
   uri: GRAPHQL_ENDPOINT,
 });
 
-
-const getNewToken = async (refreshToken: string) => {
+const getNewToken = async (
+  refreshToken: string,
+): Promise<THttpResponse<{ accessToken: string; refreshToken: string }>> => {
   const { data } = await apiClient.post('/auth/refresh', {
     refreshToken,
   });
-  return data.data;
+  return data;
 };
 
 const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
@@ -31,13 +33,13 @@ const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
     });
     console.log({ authData });
     if (authData && authData.refreshToken) {
-      const { success, message, accessToken, refreshToken } = await getNewToken(
-        authData.refreshToken,
-      );
+      const { success, message, data } = await getNewToken(authData.refreshToken);
+      const { accessToken, refreshToken } = data!;
       if (!success) {
+        console.log('refresh token failed');
         return Promise.reject(new Error(message));
       }
-      Cache.set('authData', {
+      await Cache.set('authData', {
         accessToken,
         refreshToken,
       });

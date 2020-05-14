@@ -1,7 +1,7 @@
 import React, { Component, ComponentType } from 'react';
 import { View, Button, Text, Map } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
-import { GlobalStore } from '@/store';
+import { GlobalStore } from '@/stores';
 // import './index.scss';
 
 interface IProps {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
-import store from './store';
+import store from './stores';
 import 'taro-ui/dist/style/index.scss';
 import './app.scss';
 

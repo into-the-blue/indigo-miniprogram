@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, CoverView, Image, CoverImage } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
 import {} from 'taro-ui';
-import { MapStore } from '@/store';
+import { MapStore } from '@/stores';
 import './styles.scss';
 import Assets from '@/assets';
 import ApartmentList from '../ApartmentList';

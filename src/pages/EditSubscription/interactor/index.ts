@@ -1,6 +1,6 @@
 import { IInteractor } from '../types';
 import { SubscriptionClient } from '@/services/subscription';
-import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/store';
+import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/stores';
 import Taro from '@tarojs/taro';
 import { pick } from '@/utils';
 

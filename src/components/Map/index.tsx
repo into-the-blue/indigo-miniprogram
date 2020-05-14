@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, View } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
-import { MapStore } from '@/store';
+import { MapStore } from '@/stores';
 
 interface IProps {
   mMap?: MapStore;

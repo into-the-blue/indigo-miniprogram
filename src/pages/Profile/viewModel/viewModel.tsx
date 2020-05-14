@@ -9,7 +9,7 @@ import {} from '../stores';
 import {} from '@/services/user';
 import { Button } from '@/components';
 import { UserInfo } from './components/UserInfoCard';
-import { UserStore, SubscriptionStore } from '@/store';
+import { UserStore, SubscriptionStore } from '@/stores';
 import UserSubscriptions from './components/UserSubscriptions';
 
 interface IProps {

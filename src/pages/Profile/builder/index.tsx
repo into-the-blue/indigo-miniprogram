@@ -3,7 +3,7 @@ import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel/viewModel';
 import { ProfilePresenter } from '../presenter';
 import { ProfileInteractor } from '../interactor';
-import { getStores } from '@/store';
+import { getStores } from '@/stores';
 
 class Builder extends React.Component<IProps> {
   presenter: ProfilePresenter;
