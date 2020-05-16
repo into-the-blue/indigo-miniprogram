@@ -55,7 +55,6 @@ const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
 
 const beforeRequest = async (value: AxiosRequestConfig) => {
   const authData = await Cache.get('authData').catch(err => {
-    console.log('httpClient -> beforeRequest', err);
     return null;
   });
   console.warn('beforeRequest', authData);

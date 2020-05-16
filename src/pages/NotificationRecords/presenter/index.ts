@@ -13,8 +13,12 @@ class NotificationRecordsPresenter implements IPresenter {
       return;
     }
     this.interactor.saveSubscriptionId(subscriptionId);
-    this.interactor.queryNotificationRecords();
+    this.initialQuerys();
   }
   componentWillUnmount() {}
+
+  initialQuerys = () => {
+    this.interactor.queryNotificationRecords();
+  };
 }
 export { NotificationRecordsPresenter };

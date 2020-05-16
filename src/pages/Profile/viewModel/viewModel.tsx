@@ -8,7 +8,7 @@ import {} from '../interactor';
 import {} from '../stores';
 import {} from '@/services/user';
 import { Button } from '@/components';
-import { UserInfo } from './components/UserInfoCard';
+import { UserInfo } from './components/UserInfo';
 import { UserStore, SubscriptionStore } from '@/stores';
 import UserSubscriptions from './components/UserSubscriptions';
 

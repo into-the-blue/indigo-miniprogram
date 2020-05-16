@@ -1,0 +1,25 @@
+@import '@styles/theme.scss';
+.text-bar__ {
+  &container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 40px;
+    // border: 0 solid $border-color;
+    // border-bottom-width: 1px;
+    align-items: center;
+    width: auto;
+  }
+
+  &title {
+    color: black;
+    font-size: 40px;
+    font-weight: 300;
+  }
+
+  &content {
+    color: $text-color;
+    font-size: 36px;
+    font-weight: 300;
+  }
+}

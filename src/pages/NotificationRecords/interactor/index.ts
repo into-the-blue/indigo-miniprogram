@@ -13,25 +13,25 @@ class NotificationRecordsInteractor implements IInteractor {
 
   queryNotificationRecords = async () => {
     try {
+      this.notificationRecordsStore.onInitStart();
       const records = await SubscriptionClient.querySubscriptionNotificationRecords(
         this.notificationRecordsStore.subscriptionId!,
       );
-      console.warn('[queryNotificationRecords]',records)
+      console.warn('[queryNotificationRecords]', records);
       this.notificationRecordsStore.setState({
         notificationRecords: records,
+        isLoading: false,
       });
     } catch (err) {
       //
+      this.notificationRecordsStore.onInitError();
     }
   };
 
-  queryMoreNotificationRecords=async()=>{
-    try{
-
-    }catch(err){
-      
-    }
-  }
+  queryMoreNotificationRecords = async () => {
+    try {
+    } catch (err) {}
+  };
 }
 
 export { NotificationRecordsInteractor };

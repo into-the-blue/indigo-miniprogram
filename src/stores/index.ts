@@ -1,4 +1,3 @@
-import {} from 'mobx';
 import { FeedStore } from '../pages/Feed/stores';
 import { GlobalStore } from './globalStore';
 import { MapStore } from './mapStore';
