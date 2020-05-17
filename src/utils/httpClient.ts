@@ -57,7 +57,6 @@ const beforeRequest = async (value: AxiosRequestConfig) => {
   const authData = await Cache.get('authData').catch(err => {
     return null;
   });
-  console.warn('beforeRequest', authData);
   if (authData && authData.accessToken) {
     value.headers['Authorization'] = 'Bearer ' + authData.accessToken;
   }

@@ -5,8 +5,6 @@ import { MapStore, UserStore, getStores } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
-import { findItemByKeyValue } from '@/utils';
-import { setMetroStationAsSubTarget } from '@/stores/helper';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;

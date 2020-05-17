@@ -11,8 +11,8 @@ export function setMetroStationAsSubTarget(
   if (typeof stationId === 'string') {
     station = findItemByKeyValue(
       mMap.currentMetroStations,
-      'stationId',
       mMap.focusedMetroStation.stationId,
+      'stationId',
     );
   } else {
     station = stationId;

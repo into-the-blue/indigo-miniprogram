@@ -1,13 +1,19 @@
+import Taro from '@tarojs/taro';
+
+const systemInfo = Taro.getSystemInfoSync();
+export const SCREEN_WIDTH = systemInfo.screenWidth;
+export const SCREEN_HEIGHT = systemInfo.screenHeight;
+
 let host = 'https://indigo.timvel.com';
 
 if (process.env.NODE_ENV === 'development') {
   host = 'http://localhost:7000';
 }
-const API_ENDPOINT = host + '/api/v1';
+export const API_ENDPOINT = host + '/api/v1';
 
-const GRAPHQL_ENDPOINT = host + '/graphql';
+export const GRAPHQL_ENDPOINT = host + '/graphql';
 
-const MAP_SETTING = {
+export const MAP_SETTING = {
   skew: 0,
   rotate: 0,
   showLocation: true,
@@ -23,5 +29,3 @@ const MAP_SETTING = {
   enableSatellite: false,
   enableTraffic: false,
 };
-
-export { API_ENDPOINT, GRAPHQL_ENDPOINT, MAP_SETTING };

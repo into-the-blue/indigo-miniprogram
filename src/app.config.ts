@@ -30,17 +30,17 @@ export default {
     list: [
       {
         pagePath: 'pages/Feed/builder/index',
-        iconPath: './assets/home.png',
-        selectedIconPath: './assets/home.png',
+        iconPath: './assets/images/home.png',
+        selectedIconPath: './assets/images/home.png',
         text: '首页',
       },
 
       {
         pagePath: 'pages/Profile/builder/index',
 
-        iconPath: './assets/profile.png',
+        iconPath: './assets/images/profile.png',
 
-        selectedIconPath: './assets/profile.png',
+        selectedIconPath: './assets/images/profile.png',
 
         text: '我的',
       },

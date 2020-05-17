@@ -17,7 +17,11 @@ class SubscriptionStore {
 
   @action
   removeSubscriptionById = (subscriptionId: string) => {
-    this.userSubscriptions = removeItemByKeyValue(this.userSubscriptions, 'id', subscriptionId);
+    this.userSubscriptions = removeItemByKeyValue(this.userSubscriptions, subscriptionId, 'id');
+  };
+
+  getSubscriptionById = (subscriptionId: string) => {
+    return this.userSubscriptions.find(o => o.id === subscriptionId);
   };
 }
 

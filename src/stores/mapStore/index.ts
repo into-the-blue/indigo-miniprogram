@@ -17,7 +17,7 @@ type FocusedCustomAddr = {
 type TFocusedLocation = FocusedMetroStation | FocusedCustomAddr;
 
 class MapStore implements IStore<MapStore> {
-  // user location
+  // user initial location
   initialCoordinate?: {
     lng: number;
     lat: number;

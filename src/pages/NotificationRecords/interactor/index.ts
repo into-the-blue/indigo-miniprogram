@@ -1,13 +1,18 @@
 import { IInteractor } from '../types';
 import { NotificationRecordsStore } from '../stores';
 import { SubscriptionClient } from '@/services/subscription';
+import { SubscriptionStore } from '@/stores';
 
 class NotificationRecordsInteractor implements IInteractor {
-  constructor(private notificationRecordsStore: NotificationRecordsStore) {}
+  constructor(
+    private notificationRecordsStore: NotificationRecordsStore,
+    private subscriptionStore: SubscriptionStore,
+  ) {}
 
   saveSubscriptionId = (subscriptionId: string) => {
     this.notificationRecordsStore.setState({
       subscriptionId,
+      subscription: this.subscriptionStore.getSubscriptionById(subscriptionId),
     });
   };
 
@@ -31,6 +36,10 @@ class NotificationRecordsInteractor implements IInteractor {
   queryMoreNotificationRecords = async () => {
     try {
     } catch (err) {}
+  };
+
+  onPressRecord = (recordId: string) => {
+    this.notificationRecordsStore.addOrRemoveRecordId(recordId);
   };
 }
 

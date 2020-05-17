@@ -9,7 +9,7 @@ interface IProps {
   onPressRetry?: () => void;
   showPlaceholder?: boolean;
   renderPlaceholder?: () => JSX.Element;
-  children: React.ReactChild | React.ReactChild[];
+  children: React.ReactChild | (React.ReactChild | null | undefined)[] | null | undefined;
 }
 export const BaseView = ({
   isLoading,

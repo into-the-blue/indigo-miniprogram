@@ -35,12 +35,12 @@ const UserSubscriptions = ({
 
   const onPressHistory = () => {
     onCancel();
-    onPressSubscription(findItemByKeyValue(subscriptions, 'id', selectedSubscriptionId)!);
+    onPressSubscription(findItemByKeyValue(subscriptions, selectedSubscriptionId, 'id')!);
   };
 
   const _onPressEdit = () => {
     onCancel();
-    const subscription = findItemByKeyValue(subscriptions, 'id', selectedSubscriptionId);
+    const subscription = findItemByKeyValue(subscriptions, selectedSubscriptionId, 'id');
     onPressEdit(subscription!);
   };
 

@@ -20,5 +20,9 @@ class NotificationRecordsPresenter implements IPresenter {
   initialQuerys = () => {
     this.interactor.queryNotificationRecords();
   };
+
+  onPressRecord = (notificationRecordId: string) => {
+    this.interactor.onPressRecord(notificationRecordId);
+  };
 }
 export { NotificationRecordsPresenter };
