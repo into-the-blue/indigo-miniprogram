@@ -6,16 +6,17 @@ import { Button } from '@/components';
 import './styles.scss';
 
 interface IProps {
-  type: 'metroStation' | 'customLocation';
+  type: 'metroStation' | 'customLocation' | null;
   info: {
     address: string;
     coordinates: [number, number];
-  };
+  } | null;
   isUpdating: boolean;
   onPressSave: () => void;
 }
 
 const TargetInfo = ({ type, info, isUpdating, onPressSave }: IProps) => {
+  if (!info) return null;
   return (
     <View className={'target-info__container'}>
       <View>

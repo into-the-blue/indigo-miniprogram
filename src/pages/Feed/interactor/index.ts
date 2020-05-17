@@ -139,12 +139,6 @@ class FeedInteractor implements IInteractor {
     if (this.feed.showApartmentListModal) return this.feed.dismissApartmentList();
     this.feed.openApartmentList();
   };
-
-  setTarget = (type: 'metroStation' | 'customLocation') => {
-    if (type === 'metroStation') {
-      setMetroStationAsSubTarget(this.mMap.focusedMetroStation.stationId);
-    }
-  };
 }
 
 export { FeedInteractor };

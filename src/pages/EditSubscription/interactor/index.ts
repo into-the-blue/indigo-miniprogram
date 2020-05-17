@@ -3,6 +3,7 @@ import { SubscriptionClient } from '@/services/subscription';
 import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/stores';
 import Taro from '@tarojs/taro';
 import { pick } from '@/utils';
+import { setMetroStationAsSubTarget } from '@/stores/helper';
 
 class EditSubscriptionInteractor implements IInteractor {
   constructor(
@@ -43,13 +44,13 @@ class EditSubscriptionInteractor implements IInteractor {
       isUpdating,
       metroPayload,
     } = this.editSubscriptionStore;
-    const coordinates = targetInfo.coordinates;
+    const coordinates = targetInfo!.coordinates;
     const city = this.mMap.currentCity;
     const type = targetType;
     const payload =
       type === 'metroStation'
         ? pick(metroPayload, ['stationId', 'stationName', 'urls', 'lineIds', 'coordinates'])
-        : { address: targetInfo.address };
+        : { address: targetInfo!.address };
 
     const body = {
       coordinates,
@@ -57,7 +58,7 @@ class EditSubscriptionInteractor implements IInteractor {
       radius,
       conditions,
       type,
-      address: targetInfo.address,
+      address: targetInfo!.address,
       payload,
     };
     console.warn(conditions);
@@ -107,7 +108,7 @@ class EditSubscriptionInteractor implements IInteractor {
   getExistingMetroSub = () => {
     const { subscriptionStore } = getStores('subscriptionStore');
     const existingSub = subscriptionStore.findSubscriptionByCoordinates(
-      this.editSubscriptionStore.targetInfo.coordinates,
+      this.editSubscriptionStore.targetInfo!.coordinates,
     );
     if (existingSub) {
       this.editSubscriptionStore.setState({
@@ -115,6 +116,18 @@ class EditSubscriptionInteractor implements IInteractor {
         radius: existingSub.radius,
         originSubscription: existingSub,
       });
+    }
+  };
+
+  setTarget = (type: 'metroStation' | 'customLoaction', id: string) => {
+    if (type === 'metroStation') {
+      setMetroStationAsSubTarget(id);
+      return;
+    }
+
+    if (type === 'customLoaction') {
+      // to be implemented
+      return;
     }
   };
 }

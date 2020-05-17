@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
 import {} from '@/types';
+import queryString from 'query-string';
 
 class FeedPresenter implements IPresenter {
   beginTimeStamp: number = Date.now();
@@ -77,9 +78,13 @@ class FeedPresenter implements IPresenter {
   };
 
   goToSubscription = () => {
-    this.interactor.setTarget('metroStation');
     Taro.navigateTo({
-      url: '../../EditSubscription/builder/index',
+      url:
+        '../../EditSubscription/builder/index?' +
+        queryString.stringify({
+          type: 'metroStation',
+          id: this.interactor.mMap.focusedMetroStation.stationId,
+        }),
     });
   };
 }

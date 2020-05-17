@@ -39,11 +39,13 @@ class EditSubscriptionStore {
 
   @computed
   get targetType() {
+    if (!this.target) return null;
     return this.target!.type;
   }
 
   @computed
-  get targetInfo(): { address: string; coordinates: [number, number] } {
+  get targetInfo(): { address: string; coordinates: [number, number] } | null {
+    if (!this.target) return null;
     return this.target?.type === 'metroStation'
       ? {
           address: (this.target!.payload as IMetroStationClient).stationName,
