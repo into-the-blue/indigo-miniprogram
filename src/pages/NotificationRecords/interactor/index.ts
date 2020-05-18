@@ -2,6 +2,7 @@ import { IInteractor } from '../types';
 import { NotificationRecordsStore } from '../stores';
 import { SubscriptionClient } from '@/services/subscription';
 import { SubscriptionStore } from '@/stores';
+import Taro from '@tarojs/taro';
 
 class NotificationRecordsInteractor implements IInteractor {
   constructor(
@@ -10,9 +11,14 @@ class NotificationRecordsInteractor implements IInteractor {
   ) {}
 
   saveSubscriptionId = (subscriptionId: string) => {
+    const subscription = this.subscriptionStore.getSubscriptionById(subscriptionId);
+    Taro.setNavigationBarTitle({
+      title: subscription!.address,
+    });
     this.notificationRecordsStore.setState({
       subscriptionId,
-      subscription: this.subscriptionStore.getSubscriptionById(subscriptionId),
+      subscription,
+      mapCentralCoordinates: subscription?.coordinates,
     });
   };
 
@@ -39,7 +45,23 @@ class NotificationRecordsInteractor implements IInteractor {
   };
 
   onPressRecord = (recordId: string) => {
-    this.notificationRecordsStore.addOrRemoveRecordId(recordId);
+    const {
+      addOrRemoveRecordId,
+      setRecordAsMapCentral,
+      subscription,
+      selectedRecordIds,
+      setMapCentral,
+    } = this.notificationRecordsStore;
+    const isAdd = addOrRemoveRecordId(recordId);
+    if (isAdd) {
+      setRecordAsMapCentral(recordId);
+    } else {
+      if (selectedRecordIds.length) {
+        setRecordAsMapCentral(selectedRecordIds[selectedRecordIds.length - 1]);
+      } else {
+        setMapCentral(subscription!.coordinates);
+      }
+    }
   };
 }
 

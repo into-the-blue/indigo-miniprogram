@@ -19,11 +19,11 @@ export const pick = <T, K extends keyof T>(
 };
 
 export const findItemByKeyValue = <T>(items: T[], value: any, key?: keyof T): T | undefined => {
-  return items.find(o => (key ? o[key] : o === value));
+  return items.find(o => (key ? o[key] : o) === value);
 };
 
 export const removeItemByKeyValue = <T>(items: T[], value: any, key?: keyof T): T[] => {
-  return items.filter(o => (key ? o[key] : o !== value));
+  return items.filter(o => (key ? o[key] : o) !== value);
 };
 
 export const isApartment = (tags: string[]) => {

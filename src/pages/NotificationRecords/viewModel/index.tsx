@@ -9,7 +9,8 @@ import { NotificationRecordsStore } from '../stores';
 import { BaseView } from '@/components';
 import { Records } from './components/Records';
 import { MapComp } from './components/MapComp';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants';
+import { SCREEN_WIDTH } from '@/utils/constants';
+import { toJS } from 'mobx';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => NotificationRecordsPresenter;
@@ -23,7 +24,6 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
 
   constructor(props: IProps) {
     super(props);
-
     this.presenter = this.props.buildPresenter(this);
   }
 
@@ -43,9 +43,11 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
       selectedRecordIds,
       selectedRecords,
       subscription,
+      mapCentralCoordinates,
     } = this.props.notificationRecordsStore!;
+    console.warn(toJS(mapCentralCoordinates));
     return (
-      <View style={{ flex: 1 ,display:'flex',flexDirection:'column'}}>
+      <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <BaseView
           isError={isError}
           isLoading={isLoading}
@@ -55,9 +57,10 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
             <MapComp
               selectedRecords={selectedRecords}
               subscriptionCoordinates={subscription!.coordinates}
+              centralCoordinates={mapCentralCoordinates!}
             />
           )}
-          <ScrollView style={{ marginTop:SCREEN_WIDTH*0.8 }}>
+          <ScrollView style={{ marginTop: SCREEN_WIDTH * 0.8 }}>
             <Records
               notificationRecords={notificationRecords}
               onPressRecord={this.presenter.onPressRecord}
