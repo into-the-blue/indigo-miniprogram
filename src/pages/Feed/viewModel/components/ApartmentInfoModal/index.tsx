@@ -7,23 +7,26 @@ import { ComputedInfo } from '@/components';
 import {} from 'taro-ui';
 import './styles.scss';
 import Assets from '@/assets';
+import { ApartmentInfo } from '@/components/ApartmentInfo';
 
 interface IProps {
-  feed?: FeedStore;
+  feed: FeedStore;
 }
 
-const ApartmentInfo = ({ feed }: IProps) => {
+export const ApartmentInfoModal = observer(({ feed }: IProps) => {
   const { currentApartment, showDetailModal, closeApartmentDetail } = feed!;
   if (!showDetailModal) return null;
   return (
     <CoverView className={'flex apartment-info__container'}>
       <CoverView className={'flex'} style={{ backgroundColor: 'white' }}>
-        <Swiper indicatorDots indicatorColor={'#e8eaf6'} indicatorActiveColor={'#7986cb'}>
+        <Swiper
+          indicatorDots
+          indicatorColor={'#e8eaf6'}
+          indicatorActiveColor={'#7986cb'}
+          style={{ height: '50vh' }}
+        >
           <SwiperItem>
-            <View className={'flex'}>
-              <Text>{'房价: ' + currentApartment!.price}</Text>
-              <Text>{'户型: ' + currentApartment!.houseType}</Text>
-            </View>
+            <ApartmentInfo apartment={currentApartment!} />
           </SwiperItem>
           <SwiperItem>
             <ComputedInfo computed={currentApartment!.computed} />
@@ -40,6 +43,4 @@ const ApartmentInfo = ({ feed }: IProps) => {
       </CoverView>
     </CoverView>
   );
-};
-
-export default inject('feed')(observer(ApartmentInfo));
+});

@@ -6,7 +6,7 @@ import { FeedPresenter } from '../presenter';
 import { FeedStore } from '../stores';
 import { GlobalStore, MapStore } from '@/stores';
 import classNames from 'classnames';
-import ApartmentInfoModal from './components/ApartmentInfo';
+import { ApartmentInfoModal } from './components/ApartmentInfoModal';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
 import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
@@ -74,7 +74,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
           {mapDragged && !showDetailModal && (
             <CoverImage className={'map-pin'} src={Assets.CenterPin} />
           )}
-          <ApartmentInfoModal />
+          <ApartmentInfoModal feed={this.props.feed} />
           <FocusedLocationConsole
             mMap={this.props.mMap}
             showApartmentList={showApartmentListModal}
