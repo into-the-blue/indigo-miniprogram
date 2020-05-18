@@ -45,7 +45,6 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
       subscription,
       mapCentralCoordinates,
     } = this.props.notificationRecordsStore!;
-    console.warn(toJS(mapCentralCoordinates));
     return (
       <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <BaseView

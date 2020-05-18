@@ -5,7 +5,7 @@ import './style.scss';
 
 interface IProps {
   title: string;
-  content: string;
+  content: string | number | boolean;
   titleClassName?: string;
   contentClassName?: string;
   titleStyle?: React.CSSProperties;

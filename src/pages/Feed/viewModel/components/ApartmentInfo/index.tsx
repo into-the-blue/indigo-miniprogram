@@ -2,10 +2,10 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, CoverView, CoverImage, Text, Swiper, SwiperItem } from '@tarojs/components';
 import {} from '@/types';
-import { FeedStore } from '../../stores';
-import { ComputedInfo } from './functional';
+import { FeedStore } from '@/stores';
+import { ComputedInfo } from '@/components';
 import {} from 'taro-ui';
-import '../index.scss';
+import './styles.scss';
 import Assets from '@/assets';
 
 interface IProps {
@@ -16,7 +16,7 @@ const ApartmentInfo = ({ feed }: IProps) => {
   const { currentApartment, showDetailModal, closeApartmentDetail } = feed!;
   if (!showDetailModal) return null;
   return (
-    <CoverView className={'flex detail-container'}>
+    <CoverView className={'flex apartment-info__container'}>
       <CoverView className={'flex'} style={{ backgroundColor: 'white' }}>
         <Swiper indicatorDots indicatorColor={'#e8eaf6'} indicatorActiveColor={'#7986cb'}>
           <SwiperItem>
@@ -31,7 +31,7 @@ const ApartmentInfo = ({ feed }: IProps) => {
         </Swiper>
       </CoverView>
 
-      <CoverView className={'flex mask-container'} onClick={closeApartmentDetail}>
+      <CoverView className={'flex apartment-info__mask-container'} onClick={closeApartmentDetail}>
         <CoverImage
           src={Assets.CloseCircle}
           style={{ width: 30, height: 30, marginTop: 20, alignSelf: 'center' }}

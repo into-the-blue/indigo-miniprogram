@@ -29,3 +29,9 @@ export const MAP_SETTING = {
   enableSatellite: false,
   enableTraffic: false,
 };
+
+export const UNITS = {
+  squreMeter: '㎡',
+  CNY: '¥',
+  pricePerSquareMeter: '¥/㎡',
+};
