@@ -10,6 +10,7 @@ import { ApartmentInfoModal } from './components/ApartmentInfoModal';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
 import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
+import './index.scss'
 
 interface IProps {
   feed: FeedStore;

@@ -14,6 +14,8 @@ interface IProps {
   className?: string;
   alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
   justifyContent?: 'start' | 'end' | 'space-between' | 'space-evenly' | 'space-around';
+  wrap?: boolean;
+
   padding?: string;
   paddingLeft?: string | number;
   paddingRight?: string | number;
@@ -34,29 +36,29 @@ interface IProps {
 const getMarginPadding = (paddingMargins: any) => {
   const style = {};
   Object.keys(paddingMargins).forEach(key => {
-    if (key.includes('Horizontal')) {
-      const value = paddingMargins[key];
-      const extractKey = /(padding|margin)([a-zA-Z]+)/;
-      const styleType = extractKey.exec(key)![1];
-      const orient = extractKey.exec(key)![2];
-      if (orient.toLowerCase() === 'vertical') {
-        Object.assign(style, {
-          [styleType + 'Top']: value,
-          [styleType + 'Bottom']: value,
-        });
-        return;
-      }
-      if (orient.toLowerCase() === 'horizontal') {
-        Object.assign(style, {
-          [styleType + 'Left']: value,
-          [styleType + 'Right']: value,
-        });
-        return;
-      }
+    const value = paddingMargins[key];
+    const extractKey = /(padding|margin)([a-zA-Z]*)/;
+    const res = extractKey.exec(key);
+    if (!res) return;
+    const styleType = res[1];
+    const orient = res[2];
+    if (orient.toLowerCase() === 'vertical') {
       Object.assign(style, {
-        [key]: value,
+        [styleType + 'Top']: value,
+        [styleType + 'Bottom']: value,
       });
+      return;
     }
+    if (orient.toLowerCase() === 'horizontal') {
+      Object.assign(style, {
+        [styleType + 'Left']: value,
+        [styleType + 'Right']: value,
+      });
+      return;
+    }
+    Object.assign(style, {
+      [key]: value,
+    });
   });
   return style;
 };
@@ -68,6 +70,7 @@ export const FlexView = ({
   className,
   alignItems,
   justifyContent,
+  wrap,
   ...paddingMargin
 }: IProps) => {
   const getStyle = () => {
@@ -77,6 +80,7 @@ export const FlexView = ({
       boxSizing: 'border-box',
       minWidth: 0,
       minHeight: 0,
+      flexWrap: wrap ? 'wrap' : undefined,
       alignItems,
       justifyContent,
     };

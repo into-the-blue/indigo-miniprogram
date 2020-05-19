@@ -12,6 +12,8 @@ export const apartmentDefaultSchemas = `
             tags
             coordinates
             title
+            water
+            electricity
             createdAt
             createdTime
             distance

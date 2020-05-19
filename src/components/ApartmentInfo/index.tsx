@@ -12,22 +12,34 @@ import Taro from '@tarojs/taro';
 
 interface IProps {
   apartment: IApartment;
+  additionalInfo?: { title: string; content: string }[];
 }
 
-export const ApartmentInfo = ({ apartment }: IProps) => {
+export const ApartmentInfo = ({ apartment, additionalInfo }: IProps) => {
   const copyUrl = () => {
     Taro.setClipboardData({
       data: apartment.houseUrl,
     });
+    Taro.showToast({
+      title: '请打开浏览器粘贴查看哦~',
+      icon: 'success',
+      duration: 3000,
+    });
   };
   return (
     <View>
-      <FlexView justifyContent={'space-between'} paddingHorizontal={'10px'}>
-        <Text>{apartment.title}</Text>
+      <FlexView justifyContent={'space-between'} paddingHorizontal={'10px'} marginBottom={10}>
+        <Text className={'apartment-info__title'}>{apartment.title}</Text>
 
-        {isApartment(apartment.tags) && <AtTag active> {'公寓'}</AtTag>}
+        {isApartment(apartment.tags) && (
+          <AtTag className={'apartment-info__tag'} active>
+            {'公寓'}
+          </AtTag>
+        )}
       </FlexView>
-
+      {apartment.distance && (
+        <TextBar title={'距离'} content={apartment.distance.toFixed(0) + 'm'} />
+      )}
       <TextBar title={'价格'} content={apartment.price + UNITS.CNY} />
       <TextBar title={'面积'} content={apartment.area + UNITS.squreMeter} />
       <TextBar
@@ -35,9 +47,16 @@ export const ApartmentInfo = ({ apartment }: IProps) => {
         content={apartment.pricePerSquareMeter + UNITS.pricePerSquareMeter}
       />
       <TextBar title={'户型'} content={apartment.houseType} />
+      <TextBar title={'水电'} content={apartment.water + '/' + apartment.electricity} />
+      {additionalInfo &&
+        additionalInfo.map(item => (
+          <TextBar title={item.title} content={item.content} key={item.title} />
+        ))}
 
       <FlexView>
-        <Button onClick={copyUrl}>{'复制链接'}</Button>
+        <Button type={'primary'} onClick={copyUrl}>
+          {'复制链接'}
+        </Button>
       </FlexView>
     </View>
   );

@@ -1,6 +1,12 @@
-.apartment-info__{
+@import '@/styles/theme.scss';
 
-    &title{
-        color:black;
-    }
+.apartment-info__ {
+  &title {
+    color: black;
+  }
+
+  &tag {
+    color: $primary-color;
+    border-color: $primary-color;
+  }
 }

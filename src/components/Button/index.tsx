@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from '@tarojs/components';
-import { ButtonProps } from '@tarojs/components/types/Button';
+import { AtButton } from 'taro-ui';
+import { AtButtonProps } from 'taro-ui/types/button';
 import classNames from 'classnames';
 import './index.scss';
 
-interface IProps extends Omit<ButtonProps, 'type'> {
+interface IProps extends Omit<AtButtonProps, 'type'> {
   children: React.ReactChild;
   type?: 'default' | 'primary' | 'danger';
 }
@@ -19,7 +19,7 @@ const MButton = (props: IProps) => {
     [`mbutton-${_type}`]: true,
   });
 
-  return <Button {...props} type={undefined} className={classNames(styles, _className)} />;
+  return <AtButton {...props} type={undefined} className={classNames(styles, _className)} />;
 };
 
 export default MButton;
