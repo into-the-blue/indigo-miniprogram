@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text } from '@tarojs/components';
 import { TApartmentComputed } from '@/types';
-import { TextBar } from '../TextBar';
 import { UNITS } from '@/utils/constants';
 import { Unit } from './Unit';
 import './styles.scss';

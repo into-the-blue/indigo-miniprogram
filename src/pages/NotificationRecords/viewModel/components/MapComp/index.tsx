@@ -5,6 +5,7 @@ import { MAP_SETTING, SCREEN_WIDTH } from '@/utils/constants';
 import { ISubscriptionNotificationRecordClient } from '@/types';
 import Assets from '@/assets';
 import { observer } from 'mobx-react';
+import { MAP_HEIGHT } from '@/pages/NotificationRecords/constants';
 
 interface IProps {
   subscriptionCoordinates: [number, number];
@@ -37,9 +38,7 @@ export const MapComp = observer(
       height: 40,
     } as any;
     return (
-      <View
-        style={{ width: '100vw', height: SCREEN_WIDTH * 0.8, position: 'fixed', top: 0, zIndex: 1 }}
-      >
+      <View style={{ width: '100vw', height: MAP_HEIGHT, position: 'fixed', top: 0, zIndex: 1 }}>
         <Map
           style={{ width: '100%', height: '100%' }}
           longitude={centralCoordinates[0]}

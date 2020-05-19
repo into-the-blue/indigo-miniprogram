@@ -11,6 +11,7 @@ import { Records } from './components/Records';
 import { MapComp } from './components/MapComp';
 import { SCREEN_WIDTH } from '@/utils/constants';
 import { toJS } from 'mobx';
+import { MAP_HEIGHT } from '../constants';
 
 interface IProps {
   buildPresenter: (viewModel: IViewModel) => NotificationRecordsPresenter;
@@ -59,7 +60,7 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
               centralCoordinates={mapCentralCoordinates!}
             />
           )}
-          <ScrollView style={{ marginTop: SCREEN_WIDTH * 0.8 }}>
+          <ScrollView style={{ marginTop: MAP_HEIGHT }}>
             <Records
               notificationRecords={notificationRecords}
               onPressRecord={this.presenter.onPressRecord}
