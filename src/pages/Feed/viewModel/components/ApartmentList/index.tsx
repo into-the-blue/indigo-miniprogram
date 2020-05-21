@@ -8,22 +8,22 @@ import './styles.scss';
 interface IProps {
   show: boolean;
   apartments: IApartment[];
-  currentApartment?: IApartment;
+  // currentApartment?: IApartment;
   onPressApartment: (houseId: string) => void;
 }
 const Card = ({
   apartment,
-  focused,
+  // focused,
   onPress,
 }: {
   apartment: IApartment;
-  focused: boolean;
+  // focused: boolean;
   onPress: () => void;
 }) => {
   return (
     <View
       className={classNames('apt-list__card-container', {
-        'apt-list__card-container-focused': focused,
+        'apt-list__card-container-focused': false,
       })}
       onClick={onPress}
     >
@@ -35,7 +35,7 @@ const Card = ({
   );
 };
 
-const ApartmentList = ({ show, apartments, currentApartment, onPressApartment }: IProps) => {
+const ApartmentList = ({ show, apartments, onPressApartment }: IProps) => {
   if (!show) return null;
 
   return (
@@ -44,7 +44,7 @@ const ApartmentList = ({ show, apartments, currentApartment, onPressApartment }:
         <Card
           key={apt.houseId + idx}
           apartment={apt}
-          focused={get(currentApartment, 'houseId') === apt.houseId}
+          // focused={false}
           onPress={() => onPressApartment(apt.houseId)}
         />
       ))}

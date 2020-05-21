@@ -6,11 +6,10 @@ import { FeedPresenter } from '../presenter';
 import { FeedStore } from '../stores';
 import { GlobalStore, MapStore } from '@/stores';
 import classNames from 'classnames';
-import { ApartmentInfoModal } from './components/ApartmentInfoModal';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
 import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
-import './index.scss'
+import './index.scss';
 
 interface IProps {
   feed: FeedStore;
@@ -37,7 +36,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
     this.presenter.componentWillUnmount();
   }
   render() {
-    const { showDetailModal, currentApartment, showApartmentListModal } = this.props.feed!;
+    const {showApartmentListModal } = this.props.feed!;
     const {
       currentCoordinate,
       setting,
@@ -53,7 +52,7 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
           {currentCoordinate && (
             <View
               className={classNames('flex', {
-                'map-container': showDetailModal,
+                'map-container': showApartmentListModal,
               })}
               style={{ flex: 1 }}
             >
@@ -72,14 +71,13 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
               />
             </View>
           )}
-          {mapDragged && !showDetailModal && (
+          {mapDragged && !showApartmentListModal && (
             <CoverImage className={'map-pin'} src={Assets.CenterPin} />
           )}
-          <ApartmentInfoModal feed={this.props.feed} />
           <FocusedLocationConsole
             mMap={this.props.mMap}
             showApartmentList={showApartmentListModal}
-            currentApartment={currentApartment}
+            // currentApartment={currentApartment}
             apartments={currentApartments}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}

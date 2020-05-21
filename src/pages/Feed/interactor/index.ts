@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
-import { MapStore, UserStore, getStores } from '@/stores';
+import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
@@ -125,7 +125,8 @@ class FeedInteractor implements IInteractor {
     const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
     console.warn(apartment);
     if (!apartment) return;
-    this.feed.showApartmentDetail(apartment);
+    // go to detail page
+    // this.feed.showApartmentDetail(apartment);
   };
 
   /**

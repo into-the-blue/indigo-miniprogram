@@ -14,7 +14,7 @@ interface IProps {
   onPressSubscribe: () => void;
   onPressList: () => void;
   showApartmentList: boolean;
-  currentApartment?: IApartment;
+  // currentApartment?: IApartment;
   apartments: IApartment[];
   onPressApartment: (houseId: string) => void;
 }
@@ -24,7 +24,7 @@ const FocusedLocationConsole = ({
   onPressList,
   onPressSubscribe,
   showApartmentList,
-  currentApartment,
+  // currentApartment,
   apartments,
   onPressApartment,
 }: IProps) => {
@@ -38,7 +38,7 @@ const FocusedLocationConsole = ({
     >
       <ApartmentList
         show={showApartmentList}
-        currentApartment={currentApartment}
+        // currentApartment={currentApartment}
         apartments={apartments}
         onPressApartment={onPressApartment}
       />
