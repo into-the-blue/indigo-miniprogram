@@ -2,8 +2,6 @@ import { observable, action } from 'mobx';
 import { nextState, IApartment } from '@/types';
 
 class FeedStore {
-  @observable currentApartment?: IApartment;
-  @observable showDetailModal: boolean = false;
   @observable showApartmentListModal: boolean = false;
 
   @action setState: <K extends keyof FeedStore>(next: nextState<FeedStore, K>) => void = next => {
@@ -16,21 +14,6 @@ class FeedStore {
 
   @action dismissApartmentList = () => {
     this.showApartmentListModal = false;
-  };
-
-  @action showApartmentDetail = (apartment: IApartment) => {
-    this.currentApartment = apartment;
-    this.showDetailModal = true;
-    this.showApartmentListModal = true;
-  };
-
-  @action closeApartmentDetail = () => {
-    if (this.showApartmentListModal) {
-      this.showApartmentListModal = false;
-      return;
-    }
-    this.showDetailModal = false;
-    this.currentApartment = undefined;
   };
 }
 export { FeedStore };

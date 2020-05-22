@@ -30,3 +30,8 @@ export const isApartment = (tags: string[]) => {
   if (!tags) return false;
   return tags.includes('公寓');
 };
+
+export const isObject = (value: any) => {
+  if (!value) return false;
+  return String(value) === '[object Object]';
+};

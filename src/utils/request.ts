@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import qs from 'qs';
+import qs from 'query-string';
 
 class Request {
   constructor(public baseUrl: string, public headers?: any) {}
