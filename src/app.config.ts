@@ -4,7 +4,8 @@ export default {
     'pages/Profile/builder/index',
     'pages/index/index',
     'pages/EditSubscription/builder/index',
-    'pages/NotificationRecords/builder/index'
+    'pages/NotificationRecords/builder/index',
+    'pages/ApartmentInfo/builder/index'
   ],
   window: {
     backgroundTextStyle: 'light',

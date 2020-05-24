@@ -2,30 +2,33 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, ScrollView, Text } from '@tarojs/components';
 // import {} from 'taro-ui';
-import { IViewModel } from '../types';
+import { IViewModel, IViewModalProps } from '../types';
 import { ApartmentInfoPresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
-
-interface IProps {
-  buildPresenter: (viewModel: IViewModel) => ApartmentInfoPresenter;
-}
+import { injectXeno } from '@/xeno';
 
 @inject('global')
 @observer
-class ApartmentInfoViewModel extends React.Component<IProps> implements IViewModel {
+class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements IViewModel {
   presenter: ApartmentInfoPresenter;
 
-  constructor(props: IProps) {
+  constructor(props: IViewModalProps) {
     super(props);
 
     this.presenter = this.props.buildPresenter(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.presenter.componentDidMount();
+  }
+
+  get getProps() {
+    return this.props;
+  }
 
   componentWillUnmount() {}
-  
+
   render() {
     // const { count } = this.props.feed!;
     return (
@@ -38,4 +41,4 @@ class ApartmentInfoViewModel extends React.Component<IProps> implements IViewMod
   }
 }
 
-export default ApartmentInfoViewModel;
+export default injectXeno(ApartmentInfoViewModel);

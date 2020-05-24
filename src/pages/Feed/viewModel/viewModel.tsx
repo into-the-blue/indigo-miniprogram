@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, Map, CoverImage } from '@tarojs/components';
-import { IViewModel } from '../types';
+import { IViewModel, IViewModelProps } from '../types';
 import { FeedPresenter } from '../presenter';
-import { FeedStore } from '../stores';
-import { GlobalStore, MapStore } from '@/stores';
 import classNames from 'classnames';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
 import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
 import './index.scss';
-
-interface IProps {
-  feed: FeedStore;
-  global: GlobalStore;
-  buildPresenter: (viewModel: IViewModel) => FeedPresenter;
-  mMap: MapStore;
-}
+import { injectXeno } from '@/xeno';
 
 @inject('global', 'feed', 'mMap')
 @observer
-class FeedViewModel extends Component<IProps> implements IViewModel {
+class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   presenter: FeedPresenter;
 
-  constructor(props: IProps) {
+  constructor(props: IViewModelProps) {
     super(props);
     this.presenter = this.props.buildPresenter(this);
   }
@@ -35,8 +27,13 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
   componentWillUnmount() {
     this.presenter.componentWillUnmount();
   }
+
+  get getProps() {
+    return this.props;
+  }
+
   render() {
-    const {showApartmentListModal } = this.props.feed!;
+    const { showApartmentListModal } = this.props.feed!;
     const {
       currentCoordinate,
       setting,
@@ -89,4 +86,4 @@ class FeedViewModel extends Component<IProps> implements IViewModel {
   }
 }
 
-export default FeedViewModel;
+export default injectXeno(FeedViewModel);

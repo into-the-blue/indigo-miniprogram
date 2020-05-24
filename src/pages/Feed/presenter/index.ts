@@ -44,7 +44,19 @@ class FeedPresenter implements IPresenter {
     }
   };
 
-  onPressApartment = (houseId: string) => this.interactor.onPressApartment(houseId);
+  onPressApartment = (houseId: string) => {
+    const data = this.interactor.getApartmentInfoData(houseId);
+    if (!data) return;
+    this.viewModel.getProps.next('ApartmentInfo_init', {
+      guaranteed: true,
+      data: {
+        ...data,
+      },
+    });
+    Taro.navigateTo({
+      url: '../../ApartmentInfo/builder/index',
+    });
+  };
 
   /**
    * causedBy: update: (map init, pinch ) | "gesture" (drag) |

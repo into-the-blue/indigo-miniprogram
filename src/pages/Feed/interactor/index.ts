@@ -121,10 +121,15 @@ class FeedInteractor implements IInteractor {
    * @memberof FeedInteractor
    * show detail modal
    */
-  onPressApartment = (houseId: string) => {
+  getApartmentInfoData = (houseId: string) => {
     const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
     console.warn(apartment);
-    if (!apartment) return;
+    if (!apartment) return null;
+
+    return {
+      apartment,
+      apartments: this.mMap.currentApartments,
+    };
     // go to detail page
     // this.feed.showApartmentDetail(apartment);
   };

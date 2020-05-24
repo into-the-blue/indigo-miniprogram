@@ -20,18 +20,17 @@ function getInjectName(component: IReactComponent<any>, injectNames?: string): s
   return displayName;
 }
 
-export interface XenoComponentProps<T> {
+export interface XenoComponentProps<T = any> {
   on: <K extends keyof T = keyof T>(eventName: K, callback: (data: any) => void) => () => void;
   next: <K extends keyof T = keyof T>(eventName: K, payload: T[K]) => void;
 }
 
-export function InjectXeno<T = any>(target: React.ComponentClass<any, any>) {
+export function injectXeno<T = any>(target: React.ComponentClass<any, any>) {
   function InjectedComp(props, ref) {
     const { xeno } = useContext(XenoProviderContext)!;
     const unsubscribeRef = useRef<(() => void)[]>([]);
 
     const unlistenAll = () => {
-      console.warn('[InjectXeno]', 'unlistenAll', unsubscribeRef.current.length);
       for (let i = 0; i < unsubscribeRef.current.length; i++) {
         const unsubscribe = unsubscribeRef.current[i];
         if (typeof unsubscribe === 'function') unsubscribe();
