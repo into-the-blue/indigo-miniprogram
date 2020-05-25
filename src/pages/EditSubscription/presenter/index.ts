@@ -1,24 +1,32 @@
 import { IPresenter, IViewModel } from '../types';
 import { EditSubscriptionInteractor } from '../interactor';
+import { XEditSubscriptionInit } from '../eventStation';
 import Taro from '@tarojs/taro';
+import { XExtractData } from '@/types';
+import { TEditSubTarget } from '../stores';
 
 class EditSubscriptionPresenter implements IPresenter {
   constructor(public interactor: EditSubscriptionInteractor, public viewModel: IViewModel) {}
 
   componentDidMount() {
-    const { type, id } = Taro.Current.router!.params;
-    if (!type || !id) return Taro.navigateBack();
-    this.init();
+    this.getInitialProps();
   }
   componentWillUnmount() {}
 
-  init = () => {
-    this.setTarget();
-    this.checkIfHaveExistingSub();
+  getInitialProps = () => {
+    this.viewModel.getProps.on(
+      'EditSubscription_init',
+      (data: XExtractData<XEditSubscriptionInit>) => {
+        const { target } = data;
+        console.warn(target)
+        if (!target) return Taro.navigateBack();
+        this.setTarget(target);
+        this.checkIfHaveExistingSub();
+      },
+    );
   };
-  setTarget = () => {
-    const { type, id } = Taro.Current.router!.params;
-    this.interactor.setTarget(type as any, id);
+  setTarget = (target: TEditSubTarget) => {
+    this.interactor.setTarget(target);
   };
   checkIfHaveExistingSub = () => {
     this.interactor.getExistingSubFromLocal();

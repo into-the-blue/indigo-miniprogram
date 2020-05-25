@@ -3,6 +3,7 @@ import { NotificationRecordsStore } from '../stores';
 import { SubscriptionClient } from '@/services/subscription';
 import { SubscriptionStore } from '@/stores';
 import Taro from '@tarojs/taro';
+import { ISubscriptionClient } from '@/types';
 
 class NotificationRecordsInteractor implements IInteractor {
   constructor(
@@ -10,15 +11,14 @@ class NotificationRecordsInteractor implements IInteractor {
     private subscriptionStore: SubscriptionStore,
   ) {}
 
-  saveSubscriptionId = (subscriptionId: string) => {
-    const subscription = this.subscriptionStore.getSubscriptionById(subscriptionId);
+  saveSubscription = (subscription: ISubscriptionClient) => {
     Taro.setNavigationBarTitle({
-      title: subscription!.address,
+      title: subscription.address,
     });
     this.notificationRecordsStore.setState({
-      subscriptionId,
+      subscriptionId: subscription.id,
       subscription,
-      mapCentralCoordinates: subscription?.coordinates,
+      mapCentralCoordinates: subscription.coordinates,
     });
   };
 

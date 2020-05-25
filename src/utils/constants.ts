@@ -35,3 +35,11 @@ export const UNITS = {
   CNY: '¥',
   pricePerSquareMeter: '¥/㎡',
 };
+
+export const Routes = {
+  ApartmentInfo: '/pages/ApartmentInfo/builder/index',
+  EditSubscription: '/pages/EditSubscription/builder/index',
+  Feed: '/pages/Feed/builder/index',
+  NotificationRecords: '/pages/NotificationRecords/builder/index',
+  Profile: '/pages/Profile/builder/index',
+};

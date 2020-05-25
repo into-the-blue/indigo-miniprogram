@@ -4,6 +4,7 @@ import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/stores'
 import Taro from '@tarojs/taro';
 import { pick } from '@/utils';
 import { setMetroStationAsSubTarget } from '@/stores/helper';
+import { TEditSubTarget } from '../stores';
 
 class EditSubscriptionInteractor implements IInteractor {
   constructor(
@@ -119,16 +120,10 @@ class EditSubscriptionInteractor implements IInteractor {
     }
   };
 
-  setTarget = (type: 'metroStation' | 'customLoaction', id: string) => {
-    if (type === 'metroStation') {
-      setMetroStationAsSubTarget(id);
-      return;
-    }
-
-    if (type === 'customLoaction') {
-      // to be implemented
-      return;
-    }
+  setTarget = (target: TEditSubTarget) => {
+    this.editSubscriptionStore.setState({
+      target,
+    });
   };
 }
 

@@ -10,7 +10,7 @@ import {
 } from '@/types';
 import { CONFIGURABLE_KEYS } from './data';
 
-type TTarget =
+export type TEditSubTarget =
   | {
       type: 'metroStation';
       payload: IMetroStationClient;
@@ -23,7 +23,7 @@ type TTarget =
 const DEFAULT_RADIUS = 1000;
 class EditSubscriptionStore {
   @observable originSubscription?: ISubscription;
-  @observable target?: TTarget;
+  @observable target?: TEditSubTarget;
 
   @observable edited: boolean = false;
   @observable hasError: boolean = false;

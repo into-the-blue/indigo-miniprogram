@@ -2,6 +2,7 @@ import { IPresenter, IViewModel } from '../types';
 import { ProfileInteractor } from '../interactor';
 import Taro from '@tarojs/taro';
 import { ISubscriptionClient, ISubscription } from '@/types';
+import { Routes } from '@/utils/constants';
 
 class ProfilePresenter implements IPresenter {
   constructor(public interactor: ProfileInteractor, public viewModel: IViewModel) {}
@@ -20,20 +21,29 @@ class ProfilePresenter implements IPresenter {
     this.interactor.queryUserSubscriptions();
   };
 
-  onPressSubscription = (sub: ISubscription) => {
+  onPressSubscription = (sub: ISubscriptionClient) => {
+    this.viewModel.getProps.next('NotificationRecords_init', {
+      guaranteed: true,
+      data: {
+        subscription: sub,
+      },
+    });
     Taro.navigateTo({
-      url: '../../NotificationRecords/builder/index?subscriptionId=' + sub.id!,
+      url: Routes.NotificationRecords,
     });
   };
 
   onPressEdit = (subscription: ISubscriptionClient) => {
     console.warn(subscription.payload);
-    this.interactor.setMetroStationAsSubscriptionTarget({
-      coordinates: subscription.coordinates,
-      ...(subscription.payload as any),
+    const target = this.interactor.getEditSubscriptionTarget('metroStation', subscription)!;
+    this.viewModel.getProps.next('EditSubscription_init', {
+      guaranteed: true,
+      data: {
+        target: target as any,
+      },
     });
     Taro.navigateTo({
-      url: '../../EditSubscription/builder/index',
+      url: Routes.EditSubscription,
     });
   };
 

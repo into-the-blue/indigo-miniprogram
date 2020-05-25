@@ -3,7 +3,7 @@ import { UserStore, SubscriptionStore } from '@/stores';
 import { Cache } from '@/utils';
 import Taro from '@tarojs/taro';
 import { SubscriptionClient } from '@/services/subscription';
-import { IMetroStation } from '@/types';
+import { IMetroStation, ISubscriptionClient } from '@/types';
 import { setMetroStationAsSubTarget } from '@/stores/helper';
 
 class ProfileInteractor implements IInteractor {
@@ -60,10 +60,19 @@ class ProfileInteractor implements IInteractor {
     }
   };
 
-  setMetroStationAsSubscriptionTarget = (
-    station: Pick<IMetroStation, 'stationId' | 'stationName' | 'coordinates'>,
+  getEditSubscriptionTarget = (
+    type: 'metroStation' | 'customLocation',
+    subscription: ISubscriptionClient,
   ) => {
-    setMetroStationAsSubTarget(station);
+    if (type === 'metroStation') {
+      return {
+        type,
+        payload: {
+          coordinates: subscription.coordinates,
+          ...subscription.payload,
+        },
+      };
+    }
   };
 }
 

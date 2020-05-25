@@ -9,9 +9,9 @@ import { AtActionSheet, AtActionSheetItem, AtModal } from 'taro-ui';
 import { findItemByKeyValue } from '@/utils';
 
 interface IProps {
-  onPressSubscription: (sub: ISubscription) => void;
+  onPressSubscription: (sub: ISubscriptionClient) => void;
   onDelete: (subscriptionId: string) => void;
-  onPressEdit: (sub: ISubscription) => void;
+  onPressEdit: (sub: ISubscriptionClient) => void;
   subscriptions: ISubscriptionClient[];
 }
 

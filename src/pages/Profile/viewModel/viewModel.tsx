@@ -2,28 +2,22 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, ScrollView } from '@tarojs/components';
 import { AtMessage } from 'taro-ui';
-import { IViewModel } from '../types';
+import { IViewModel, IViewModelProps } from '../types';
 import { ProfilePresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
 import {} from '@/services/user';
 import { Button } from '@/components';
 import { UserInfo } from './components/UserInfo';
-import { UserStore, SubscriptionStore } from '@/stores';
 import UserSubscriptions from './components/UserSubscriptions';
-
-interface IProps {
-  buildPresenter: (viewModel: IViewModel) => ProfilePresenter;
-  userStore?: UserStore;
-  subscriptionStore?: SubscriptionStore;
-}
+import { injectXeno } from '@/xeno';
 
 @inject('global', 'userStore', 'subscriptionStore')
 @observer
-class ProfileViewModel extends React.Component<IProps> implements IViewModel {
+class ProfileViewModel extends React.Component<IViewModelProps> implements IViewModel {
   presenter: ProfilePresenter;
 
-  constructor(props: IProps) {
+  constructor(props: IViewModelProps) {
     super(props);
 
     this.presenter = this.props.buildPresenter(this);
@@ -34,6 +28,11 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   }
 
   componentWillUnmount() {}
+
+  get getProps() {
+    return this.props;
+  }
+
   render() {
     const { userInfo, isLoggedIn } = this.props.userStore!;
     const { userSubscriptions } = this.props.subscriptionStore!;
@@ -64,4 +63,4 @@ class ProfileViewModel extends React.Component<IProps> implements IViewModel {
   }
 }
 
-export default ProfileViewModel;
+export default injectXeno(ProfileViewModel);

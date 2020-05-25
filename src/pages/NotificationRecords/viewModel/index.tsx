@@ -1,29 +1,20 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { View, ScrollView } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import { IViewModel } from '../types';
+import { IViewModel, IViewModelProps } from '../types';
 import { NotificationRecordsPresenter } from '../presenter';
-import {} from '../interactor';
-import { NotificationRecordsStore } from '../stores';
 import { BaseView } from '@/components';
 import { Records } from './components/Records';
 import { MapComp } from './components/MapComp';
-import { SCREEN_WIDTH } from '@/utils/constants';
-import { toJS } from 'mobx';
 import { MAP_HEIGHT } from '../constants';
-
-interface IProps {
-  buildPresenter: (viewModel: IViewModel) => NotificationRecordsPresenter;
-  notificationRecordsStore?: NotificationRecordsStore;
-}
+import { injectXeno } from '@/xeno';
 
 @inject('notificationRecordsStore')
 @observer
-class NotificationRecordsViewModel extends React.Component<IProps> implements IViewModel {
+class NotificationRecordsViewModel extends React.Component<IViewModelProps> implements IViewModel {
   presenter: NotificationRecordsPresenter;
 
-  constructor(props: IProps) {
+  constructor(props: IViewModelProps) {
     super(props);
     this.presenter = this.props.buildPresenter(this);
   }
@@ -34,6 +25,10 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
 
   componentWillUnmount() {
     this.presenter.componentWillUnmount();
+  }
+
+  get getProps() {
+    return this.props;
   }
 
   render() {
@@ -73,4 +68,4 @@ class NotificationRecordsViewModel extends React.Component<IProps> implements IV
   }
 }
 
-export default NotificationRecordsViewModel;
+export default injectXeno(NotificationRecordsViewModel);

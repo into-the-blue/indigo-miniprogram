@@ -1,27 +1,22 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text } from '@tarojs/components';
-// import {} from 'taro-ui';
-import { IViewModel } from '../types';
+import { View, ScrollView } from '@tarojs/components';
+import { IViewModel, IViewModelProps } from '../types';
 import { EditSubscriptionPresenter } from '../presenter';
 import {} from '../interactor';
-import { EditSubscriptionStore } from '../stores';
 import TargetInfo from './components/TargetInfo';
 import { ConfigureConditions } from '@/components/ConfigureConditions';
 import EditRadius from './components/EditRadius';
 import { AtMessage } from 'taro-ui';
-
-interface IProps {
-  buildPresenter: (viewModel: IViewModel) => EditSubscriptionPresenter;
-  editSubscriptionStore?: EditSubscriptionStore;
-}
+import { injectXeno } from '@/xeno';
+import { BaseView } from '@/components';
 
 @inject('editSubscriptionStore')
 @observer
-class EditSubscriptionViewModel extends React.Component<IProps> implements IViewModel {
+class EditSubscriptionViewModel extends React.Component<IViewModelProps> implements IViewModel {
   presenter: EditSubscriptionPresenter;
 
-  constructor(props: IProps) {
+  constructor(props: IViewModelProps) {
     super(props);
 
     this.presenter = this.props.buildPresenter(this);
@@ -33,6 +28,10 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
 
   componentWillUnmount() {}
 
+  get getProps() {
+    return this.props;
+  }
+
   render() {
     const {
       targetInfo,
@@ -40,24 +39,27 @@ class EditSubscriptionViewModel extends React.Component<IProps> implements IView
       radius,
       setRadius,
       isUpdating,
+      target,
     } = this.props.editSubscriptionStore!;
     return (
       <View style={{ flex: 1 }}>
         <AtMessage />
-        <ScrollView style={{ flex: 1 }}>
-          <TargetInfo
-            type={targetType}
-            info={targetInfo}
-            isUpdating={isUpdating}
-            onPressSave={this.presenter.onPressSave}
-          />
+        <BaseView isLoading={!target}>
+          <ScrollView style={{ flex: 1 }}>
+            <TargetInfo
+              type={targetType}
+              info={targetInfo}
+              isUpdating={isUpdating}
+              onPressSave={this.presenter.onPressSave}
+            />
 
-          <EditRadius radius={radius} setRadius={setRadius} />
-          <ConfigureConditions />
-        </ScrollView>
+            <EditRadius radius={radius} setRadius={setRadius} />
+            <ConfigureConditions />
+          </ScrollView>
+        </BaseView>
       </View>
     );
   }
 }
 
-export default EditSubscriptionViewModel;
+export default injectXeno(EditSubscriptionViewModel);

@@ -3,6 +3,7 @@ import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
 import {} from '@/types';
 import queryString from 'query-string';
+import { Routes } from '@/utils/constants';
 
 class FeedPresenter implements IPresenter {
   beginTimeStamp: number = Date.now();
@@ -54,7 +55,7 @@ class FeedPresenter implements IPresenter {
       },
     });
     Taro.navigateTo({
-      url: '../../ApartmentInfo/builder/index',
+      url: Routes.ApartmentInfo,
     });
   };
 
@@ -90,13 +91,15 @@ class FeedPresenter implements IPresenter {
   };
 
   goToSubscription = () => {
+    const target = this.interactor.getEditSubscriptionTarget('metroStation')!;
+    this.viewModel.getProps.next('EditSubscription_init', {
+      guaranteed: true,
+      data: {
+        target,
+      },
+    });
     Taro.navigateTo({
-      url:
-        '../../EditSubscription/builder/index?' +
-        queryString.stringify({
-          type: 'metroStation',
-          id: this.interactor.mMap.focusedMetroStation.stationId,
-        }),
+      url: Routes.EditSubscription,
     });
   };
 }

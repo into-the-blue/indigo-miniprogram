@@ -5,6 +5,7 @@ import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
+import { findItemByKeyValue } from '@/utils';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -130,8 +131,6 @@ class FeedInteractor implements IInteractor {
       apartment,
       apartments: this.mMap.currentApartments,
     };
-    // go to detail page
-    // this.feed.showApartmentDetail(apartment);
   };
 
   /**
@@ -142,6 +141,20 @@ class FeedInteractor implements IInteractor {
   toggleApartmentList = () => {
     if (this.feed.showApartmentListModal) return this.feed.dismissApartmentList();
     this.feed.openApartmentList();
+  };
+
+  getEditSubscriptionTarget = (type: 'metroStation') => {
+    if (type === 'metroStation') {
+      const station = findItemByKeyValue(
+        this.mMap.currentMetroStations,
+        this.mMap.focusedMetroStation.stationId,
+        'stationId',
+      )!;
+      return {
+        payload: station,
+        type,
+      };
+    }
   };
 }
 
