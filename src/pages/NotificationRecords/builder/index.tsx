@@ -17,11 +17,8 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    const { notificationRecordsStore, subscriptionStore } = getStores(
-      'notificationRecordsStore',
-      'subscriptionStore',
-    );
-    return new NotificationRecordsInteractor(notificationRecordsStore, subscriptionStore);
+    const { notificationRecordsStore } = getStores('notificationRecordsStore');
+    return new NotificationRecordsInteractor(notificationRecordsStore);
   };
   buildPresenter = (interactor: NotificationRecordsInteractor) => (viewModel: IViewModel) => {
     return new NotificationRecordsPresenter(interactor, viewModel);

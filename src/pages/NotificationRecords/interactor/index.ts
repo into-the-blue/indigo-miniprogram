@@ -8,7 +8,6 @@ import { ISubscriptionClient } from '@/types';
 class NotificationRecordsInteractor implements IInteractor {
   constructor(
     private notificationRecordsStore: NotificationRecordsStore,
-    private subscriptionStore: SubscriptionStore,
   ) {}
 
   saveSubscription = (subscription: ISubscriptionClient) => {
