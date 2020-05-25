@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from '@tarojs/components';
+import { View, ITouchEvent } from '@tarojs/components';
 
 type ReactText = string | number;
 type ReactChild = React.ReactElement<unknown> | ReactText;
@@ -15,6 +15,7 @@ interface IProps {
   alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
   justifyContent?: 'start' | 'end' | 'space-between' | 'space-evenly' | 'space-around';
   wrap?: boolean;
+  onClick?: (e: ITouchEvent) => void;
 
   padding?: string;
   paddingLeft?: string | number;
@@ -71,6 +72,7 @@ export const FlexView = ({
   alignItems,
   justifyContent,
   wrap,
+  onClick,
   ...paddingMargin
 }: IProps) => {
   const getStyle = () => {
@@ -84,7 +86,6 @@ export const FlexView = ({
       alignItems,
       justifyContent,
     };
-
     return {
       ...basicStyle,
       ...style,
@@ -92,7 +93,7 @@ export const FlexView = ({
     };
   };
   return (
-    <View style={getStyle()} className={className}>
+    <View style={getStyle()} className={className} onClick={onClick}>
       {children}
     </View>
   );

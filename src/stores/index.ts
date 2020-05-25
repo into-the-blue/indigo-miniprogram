@@ -5,6 +5,7 @@ import { UserStore } from './userStore';
 import { SubscriptionStore } from './subscriptionStore';
 import { EditSubscriptionStore } from '@/pages/EditSubscription/stores';
 import { NotificationRecordsStore } from '@/pages/NotificationRecords/stores';
+import { ApartmentInfoStore } from '@/pages/ApartmentInfo/stores';
 import { ModalStore } from './modalStore';
 
 class RootStore {
@@ -16,6 +17,8 @@ class RootStore {
   editSubscriptionStore: EditSubscriptionStore;
   modalStore: ModalStore;
   notificationRecordsStore: NotificationRecordsStore;
+  apartmentInfoStore: ApartmentInfoStore;
+
   constructor() {
     this.feed = new FeedStore();
     this.global = new GlobalStore();
@@ -25,6 +28,7 @@ class RootStore {
     this.editSubscriptionStore = new EditSubscriptionStore();
     this.modalStore = new ModalStore();
     this.notificationRecordsStore = new NotificationRecordsStore();
+    this.apartmentInfoStore = new ApartmentInfoStore();
   }
 }
 const store = new RootStore();
@@ -48,4 +52,5 @@ export {
   SubscriptionStore,
   EditSubscriptionStore,
   ModalStore,
+  ApartmentInfoStore,
 };

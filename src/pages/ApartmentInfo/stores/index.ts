@@ -1,8 +1,9 @@
 import { observable, action } from 'mobx';
-import { TSetState } from '@/types';
+import { TSetState, IApartment } from '@/types';
 
 class ApartmentInfoStore {
-  @observable public count: number = 0;
+  @observable public apartment?: IApartment;
+  @observable public apartments: IApartment[] = [];
   @action setState: TSetState<ApartmentInfoStore> = next => {
     Object.assign(this, next);
   };

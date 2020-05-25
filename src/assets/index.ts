@@ -18,4 +18,8 @@ export default class Assets {
   static More = require('./images/more.png');
 
   static PinDot = require('./images/pin_dot.png');
+
+  static Asc = require('./images/asc.png');
+
+  static Desc = require('./images/desc.png');
 }

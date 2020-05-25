@@ -7,8 +7,11 @@ import { ApartmentInfoPresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
 import { injectXeno } from '@/xeno';
+import { ApartmentInfo } from '@/components/ApartmentInfo';
+import { BaseView, FlexView } from '@/components';
+import { ApartmentList } from '@/components/ApartmentList';
 
-@inject('global')
+@inject('global', 'apartmentInfoStore')
 @observer
 class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements IViewModel {
   presenter: ApartmentInfoPresenter;
@@ -30,12 +33,15 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
   componentWillUnmount() {}
 
   render() {
-    // const { count } = this.props.feed!;
+    const { apartment, apartments } = this.props.apartmentInfoStore!;
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView>
-          <Text>{'feed'}</Text>
-        </ScrollView>
+        <BaseView isLoading={!apartment}>
+          <ApartmentInfo apartment={apartment!} />
+          <FlexView style={{ margin: '20px 5px' }}>
+            <ApartmentList apartments={apartments} onPressApartment={() => {}} />
+          </FlexView>
+        </BaseView>
       </View>
     );
   }

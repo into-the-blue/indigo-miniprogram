@@ -3,6 +3,7 @@ import { IProps, IInteractor, IPresenter, IViewModel } from '../types';
 import ViewModel from '../viewModel';
 import { ApartmentInfoPresenter } from '../presenter';
 import { ApartmentInfoInteractor } from '../interactor';
+import { getStores } from '@/stores';
 
 class Builder extends React.Component<IProps> {
   presenter: ApartmentInfoPresenter;
@@ -16,7 +17,8 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    return new ApartmentInfoInteractor();
+    const { apartmentInfoStore } = getStores('apartmentInfoStore');
+    return new ApartmentInfoInteractor(apartmentInfoStore);
   };
   buildPresenter = (interactor: ApartmentInfoInteractor) => (viewModel: IViewModel) => {
     return new ApartmentInfoPresenter(interactor, viewModel);

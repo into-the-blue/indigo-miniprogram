@@ -1,0 +1,28 @@
+@import '@/styles/theme.scss';
+
+.sortable-header__ {
+  &title {
+    font-size: 32px;
+    color: black;
+  }
+  &title-active {
+    color: $primary-color;
+  }
+
+  &icon {
+    width: 36px;
+    height: 25px;
+    object-fit: contain;
+  }
+}
+
+.apartment-card__ {
+  &container {
+    padding: 5px 0;
+    border: 0px solid $border-color;
+    border-bottom-width: 1px;
+  }
+  &text {
+    font-size: 34px;
+  }
+}

@@ -12,8 +12,9 @@ class ApartmentInfoPresenter implements IPresenter {
   componentWillUnmount() {}
 
   getInitialProps = (data: XExtractData<XApartmentInfoInit>) => {
-    const {} = data;
+    const { apartment, apartments } = data;
     console.warn('getInitialProps', data);
+    this.interactor.setInitialData(apartment, apartments);
   };
 }
 export { ApartmentInfoPresenter };
