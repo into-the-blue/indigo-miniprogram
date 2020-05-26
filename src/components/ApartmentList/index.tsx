@@ -54,10 +54,11 @@ export const ApartmentList = ({
           />
         ))}
       </FlexView>
-      {sortedApartments.map(apartment => (
+      {sortedApartments.map((apartment, idx) => (
         <ApartmentCard
           apartment={apartment}
-          key={apartment.houseId}
+          key={'apt' + idx}
+          // key={apartment.houseId}
           onPressApartment={() => onPressApartment(apartment)}
           isSelected={apartment.houseId === selectedApartmentHouseId}
         />
@@ -65,8 +66,6 @@ export const ApartmentList = ({
     </FlexView>
   );
 };
-
-
 
 type TSortableKeys = 'houseType' | 'price' | 'area' | 'pricePerSquareMeter';
 type TActiveKey = {
