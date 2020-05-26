@@ -7,9 +7,10 @@ import { ApartmentInfoPresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
 import { injectXeno } from '@/xeno';
-import { ApartmentInfo } from '@/components/ApartmentInfo';
+import { ApartmentDetail } from '@/components/ApartmentDetail';
 import { BaseView, FlexView } from '@/components';
 import { ApartmentList } from '@/components/ApartmentList';
+import { get } from 'lodash';
 
 @inject('global', 'apartmentInfoStore')
 @observer
@@ -33,14 +34,20 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
   componentWillUnmount() {}
 
   render() {
-    const { apartment, apartments } = this.props.apartmentInfoStore!;
+    const { selectedApartment, apartments } = this.props.apartmentInfoStore!;
     return (
-      <View style={{ flex: 1 }}>
-        <BaseView isLoading={!apartment}>
-          <ApartmentInfo apartment={apartment!} />
-          <FlexView style={{ margin: '20px 5px' }}>
-            <ApartmentList apartments={apartments} onPressApartment={() => {}} />
-          </FlexView>
+      <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
+        <BaseView isLoading={!selectedApartment}>
+          <ApartmentDetail apartment={selectedApartment!} />
+          <ScrollView style={{ marginTop: 15, height: '45vh' }} scrollY>
+            <FlexView column>
+              <ApartmentList
+                apartments={apartments}
+                onPressApartment={this.presenter.onPressApartment}
+                selectedApartmentHouseId={get(selectedApartment, 'houseId')}
+              />
+            </FlexView>
+          </ScrollView>
         </BaseView>
       </View>
     );

@@ -14,15 +14,28 @@
     height: 25px;
     object-fit: contain;
   }
+
+  &container {
+    padding: 15px 0;
+  }
 }
 
 .apartment-card__ {
   &container {
-    padding: 5px 0;
+    padding: 10px 0;
     border: 0px solid $border-color;
     border-bottom-width: 1px;
   }
+
+  &container-selected {
+    background-color: $primary-color;
+  }
+
   &text {
     font-size: 34px;
+  }
+
+  &text-selected {
+    color: white;
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexView } from '../FlexView';
+import { FlexView } from '../../FlexView';
 import { Text } from '@tarojs/components';
 import './styles.scss';
 

@@ -7,46 +7,15 @@ import { ApartmentCard } from './ApartmentCard';
 
 interface IProps {
   apartments: IApartment[];
-  onPressApartment: (houseId: string) => void;
+  onPressApartment: (apartment: IApartment) => void;
+  selectedApartmentHouseId?: string;
 }
 
-type TSortableKeys = 'houseType' | 'price' | 'area' | 'pricePerSquareMeter';
-type TActiveKey = {
-  key: TSortableKeys;
-  mode: 'asc' | 'desc';
-};
-
-const KEYS: { title: string; key: TSortableKeys; style: React.CSSProperties }[] = [
-  {
-    title: '户型',
-    key: 'houseType',
-    style: { flex: 0.3 },
-  },
-  { title: '价格', key: 'price', style: { flex: 0.25 } },
-  { title: '面积', key: 'area', style: { flex: 0.20 } },
-  { title: '每平米价格', key: 'pricePerSquareMeter', style: { flex: 0.25 } },
-];
-
-const _compare = (a: string | number, b: string | number) => {
-  if (typeof a === 'string') return a.localeCompare(b as string);
-  return (a as number) - (b as number);
-};
-
-const sortApartment = (keys: TActiveKey[]) => (a: IApartment, b: IApartment) => {
-  let res: any = 0;
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-    const isAsc = key.mode === 'asc';
-    const v1 = a[key.key] as 'string' | 'number';
-    const v2 = b[key.key] as 'string' | 'number';
-    if (v1 === v2) continue;
-    res = isAsc ? _compare(v1, v2) : _compare(v2, v1);
-    break;
-  }
-  return res;
-};
-
-export const ApartmentList = ({ apartments, onPressApartment }: IProps) => {
+export const ApartmentList = ({
+  apartments,
+  onPressApartment,
+  selectedApartmentHouseId,
+}: IProps) => {
   const [sortedKeys, setSortedKeys] = useState<TActiveKey[]>([]);
   const [sortedApartments, setSortedApartments] = useState<IApartment[]>([]);
 
@@ -74,7 +43,7 @@ export const ApartmentList = ({ apartments, onPressApartment }: IProps) => {
   };
 
   return (
-    <FlexView column>
+    <FlexView column style={{ backgroundColor: 'white' }}>
       <FlexView>
         {KEYS.map(item => (
           <SortableHeader
@@ -86,8 +55,51 @@ export const ApartmentList = ({ apartments, onPressApartment }: IProps) => {
         ))}
       </FlexView>
       {sortedApartments.map(apartment => (
-        <ApartmentCard apartment={apartment} key={apartment.houseId} />
+        <ApartmentCard
+          apartment={apartment}
+          key={apartment.houseId}
+          onPressApartment={() => onPressApartment(apartment)}
+          isSelected={apartment.houseId === selectedApartmentHouseId}
+        />
       ))}
     </FlexView>
   );
+};
+
+
+
+type TSortableKeys = 'houseType' | 'price' | 'area' | 'pricePerSquareMeter';
+type TActiveKey = {
+  key: TSortableKeys;
+  mode: 'asc' | 'desc';
+};
+
+const KEYS: { title: string; key: TSortableKeys; style: React.CSSProperties }[] = [
+  {
+    title: '户型',
+    key: 'houseType',
+    style: { flex: 0.3 },
+  },
+  { title: '价格', key: 'price', style: { flex: 0.25 } },
+  { title: '面积', key: 'area', style: { flex: 0.2 } },
+  { title: '每平米价格', key: 'pricePerSquareMeter', style: { flex: 0.25 } },
+];
+
+const _compare = (a: string | number, b: string | number) => {
+  if (typeof a === 'string') return a.localeCompare(b as string);
+  return (a as number) - (b as number);
+};
+
+const sortApartment = (keys: TActiveKey[]) => (a: IApartment, b: IApartment) => {
+  let res: any = 0;
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    const isAsc = key.mode === 'asc';
+    const v1 = a[key.key] as 'string' | 'number';
+    const v2 = b[key.key] as 'string' | 'number';
+    if (v1 === v2) continue;
+    res = isAsc ? _compare(v1, v2) : _compare(v2, v1);
+    break;
+  }
+  return res;
 };

@@ -27,14 +27,19 @@ const getNextMode = (current: null | 'asc' | 'desc') => {
 export const SortableHeader = ({ title, onSort, style }: IProps) => {
   const [currentMode, setMode] = useState<null | 'asc' | 'desc'>(null);
   const isAsc = currentMode === 'asc';
-  
+
   const _setNextMode = () => {
     const next = getNextMode(currentMode);
     setMode(next);
     return next;
   };
   return (
-    <FlexView onClick={() => onSort(_setNextMode())} alignItems={'center'} style={style}>
+    <FlexView
+      className={'sortable-header__container'}
+      onClick={() => onSort(_setNextMode())}
+      alignItems={'center'}
+      style={style}
+    >
       <Text
         className={classNames('sortable-header__title', {
           'sortable-header__title-active': currentMode !== null,

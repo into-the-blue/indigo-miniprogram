@@ -8,7 +8,19 @@ class ApartmentInfoInteractor implements IInteractor {
   setInitialData = (apartment: IApartment, apartments?: IApartment[]) => {
     this.apartmentInfoStore.setState({
       apartments: apartments || [],
-      apartment,
+      initialApartment: apartment,
+      selectedApartment: apartment,
+    });
+  };
+
+  onPressApartment = (apartment: IApartment) => {
+    if (apartment.houseId === this.apartmentInfoStore.selectedApartment!.houseId) {
+      return this.apartmentInfoStore.setState({
+        selectedApartment: this.apartmentInfoStore.initialApartment!,
+      });
+    }
+    this.apartmentInfoStore.setState({
+      selectedApartment: apartment,
     });
   };
 }

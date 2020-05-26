@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text } from '@tarojs/components';
 import { IApartment } from '@/types';
-import { TextBar } from '../TextBar';
+import { TextBar } from '../../TextBar';
 import { UNITS } from '@/utils/constants';
-import { FlexView } from '../FlexView';
+import { FlexView } from '../../FlexView';
 import { isApartment } from '@/utils';
 import { AtTag } from 'taro-ui';
 import './styles.scss';
-import { Button } from '..';
+import { Button } from '../../';
 import Taro from '@tarojs/taro';
+import classNames from 'classnames';
 
 interface IProps {
   apartment: IApartment;
@@ -29,7 +30,13 @@ export const ApartmentInfo = ({ apartment, additionalInfo }: IProps) => {
   return (
     <View>
       <FlexView justifyContent={'space-between'} paddingHorizontal={'10px'} marginBottom={10}>
-        <Text className={'apartment-info__title'}>{apartment.title}</Text>
+        <Text
+          className={classNames('apartment-info__title', {
+            'apartment-info__title-long': apartment.title.length >= 20,
+          })}
+        >
+          {apartment.title}
+        </Text>
 
         {isApartment(apartment.tags) && (
           <AtTag className={'apartment-info__tag'} active>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Swiper, SwiperItem } from '@tarojs/components';
 import { ISubscriptionNotificationRecordClient } from '@/types';
-import { TextBar, ComputedInfo } from '@/components';
+import { TextBar } from '@/components';
 import './styles.scss';
 import classNames from 'classnames';
-import { ApartmentInfo } from '@/components/ApartmentInfo';
+import { ApartmentDetail } from '@/components/ApartmentDetail';
 
 interface IProps {
   record: ISubscriptionNotificationRecordClient;
@@ -29,17 +29,10 @@ export const RecordCard = ({ record, onPressRecord, isSelected }: IProps) => {
           'record-card__selected': isSelected,
         })}
       >
-        <Swiper indicatorDots style={{ height: 250 }}>
-          <SwiperItem>
-            <ApartmentInfo
-              apartment={apartment as any}
-              additionalInfo={[{ title: '距离', content: distance + 'm' }]}
-            />
-          </SwiperItem>
-          <SwiperItem>
-            <ComputedInfo computed={apartment.computed} />
-          </SwiperItem>
-        </Swiper>
+        <ApartmentDetail
+          apartment={apartment as any}
+          additionalInfo={[{ title: '距离', content: distance + 'm' }]}
+        />
         {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', display: 'flex' }}>
           <Text className={'record-card__title'}>{title}</Text>
           {isApartment(tags) && (
