@@ -3,8 +3,7 @@ import { UserStore, SubscriptionStore } from '@/stores';
 import { Cache } from '@/utils';
 import Taro from '@tarojs/taro';
 import { SubscriptionClient } from '@/services/subscription';
-import { IMetroStation, ISubscriptionClient } from '@/types';
-import { setMetroStationAsSubTarget } from '@/stores/helper';
+import { ISubscriptionClient } from '@/types';
 
 class ProfileInteractor implements IInteractor {
   constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}

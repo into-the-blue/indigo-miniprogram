@@ -70,4 +70,12 @@ export class SubscriptionClient {
     });
     return data.data;
   };
+  static querySubscriptionByCoordinates = async (
+    coordinates: [number, number],
+  ): Promise<ISubscriptionClient | undefined> => {
+    const { data } = await apiClient.get('/subscription', {
+      params: { coordinates },
+    });
+    return data.data[0];
+  };
 }

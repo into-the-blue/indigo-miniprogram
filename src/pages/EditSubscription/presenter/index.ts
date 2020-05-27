@@ -29,7 +29,7 @@ class EditSubscriptionPresenter implements IPresenter {
     this.interactor.setTarget(target);
   };
   checkIfHaveExistingSub = () => {
-    this.interactor.getExistingSubFromLocal();
+    this.interactor.getExistingSub();
   };
   onPressSave = () => {
     this.interactor.onSave();

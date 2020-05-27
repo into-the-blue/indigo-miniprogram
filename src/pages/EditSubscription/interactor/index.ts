@@ -3,8 +3,8 @@ import { SubscriptionClient } from '@/services/subscription';
 import { UserStore, EditSubscriptionStore, MapStore, getStores } from '@/stores';
 import Taro from '@tarojs/taro';
 import { pick } from '@/utils';
-import { setMetroStationAsSubTarget } from '@/stores/helper';
 import { TEditSubTarget } from '../stores';
+import { ISubscriptionClient } from '@/types';
 
 class EditSubscriptionInteractor implements IInteractor {
   constructor(
@@ -96,14 +96,17 @@ class EditSubscriptionInteractor implements IInteractor {
    * @memberof EditSubscriptionInteractor
    * get existing subscription from local store
    */
-  getExistingSubFromLocal = () => {
-    const { targetType } = this.editSubscriptionStore;
+  getExistingSub = () => {
+    const { targetType, targetInfo } = this.editSubscriptionStore;
+    if (!targetInfo) return;
     if (targetType === 'metroStation') {
-      this.getExistingMetroSub();
+      const exits = this.getExistingMetroSub();
+      if (exits) return;
     }
     if (targetType === 'customLocation') {
       //
     }
+    this.queryIfHasExistingSub();
   };
 
   getExistingMetroSub = () => {
@@ -112,11 +115,27 @@ class EditSubscriptionInteractor implements IInteractor {
       this.editSubscriptionStore.targetInfo!.coordinates,
     );
     if (existingSub) {
-      this.editSubscriptionStore.setState({
-        conditions: existingSub.conditions,
-        radius: existingSub.radius,
-        originSubscription: existingSub,
-      });
+      this.setExistingSubscription(existingSub);
+    }
+    return !!existingSub;
+  };
+
+  setExistingSubscription = (sub: ISubscriptionClient) => {
+    this.editSubscriptionStore.setState({
+      conditions: sub.conditions,
+      radius: sub.radius,
+      originSubscription: sub,
+    });
+  };
+
+  queryIfHasExistingSub = async () => {
+    const { coordinates } = this.editSubscriptionStore.targetInfo!;
+    try {
+      const sub = await SubscriptionClient.querySubscriptionByCoordinates(coordinates);
+      if (!sub) return;
+      this.setExistingSubscription(sub);
+    } catch (err) {
+      console.warn('[queryIfHasExistingSub]', err.message);
     }
   };
 
