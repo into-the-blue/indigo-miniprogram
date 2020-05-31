@@ -22,4 +22,6 @@ export default class Assets {
   static Asc = require('./images/asc.png');
 
   static Desc = require('./images/desc.png');
+
+  static Search = require('./images/search.png');
 }

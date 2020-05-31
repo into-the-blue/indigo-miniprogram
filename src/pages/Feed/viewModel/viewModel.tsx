@@ -5,6 +5,7 @@ import { IViewModel, IViewModelProps } from '../types';
 import { FeedPresenter } from '../presenter';
 import classNames from 'classnames';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
+import { SearchBar } from './components/SearchBar';
 import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
 import './index.scss';
@@ -80,6 +81,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             onPressSubscribe={this.presenter.goToSubscription}
             onPressApartment={this.presenter.onPressApartment}
           />
+          <SearchBar />
         </View>
       </View>
     );
