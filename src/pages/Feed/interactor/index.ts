@@ -6,6 +6,7 @@ import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import {} from 'lodash';
 import { findItemByKeyValue } from '@/utils';
+import { LocationClient } from '@/services/location';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -21,6 +22,10 @@ class FeedInteractor implements IInteractor {
     }
   };
 
+  setCustomLocationMarker = (locationId: string) => {
+    this.mMap.setCustomLocationMarker(locationId);
+  };
+
   getUserCurrentLocation = async () => {
     try {
       const res = await Taro.getLocation({
@@ -32,7 +37,7 @@ class FeedInteractor implements IInteractor {
           lat: res.latitude,
         },
       });
-      this.mMap.setUserCurrentPosition(121.44045, 31.22524);
+      this.mMap.setUserCurrentPositionMarker(121.44045, 31.22524);
       // console.warn(res);
       // this.mMap.setState({
       //   currentCoordinate: {
@@ -44,6 +49,13 @@ class FeedInteractor implements IInteractor {
       console.warn(err);
     }
   };
+
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * query metro stations nearby coordiantes
+   */
   queryStationsNearby = async (lng?: number, lat?: number) => {
     if (!this.mMap.currentCoordinate) return;
     const args: [number, number, number] = [
@@ -56,11 +68,28 @@ class FeedInteractor implements IInteractor {
       args[1] = lat;
     }
     this.$queryStationsSub = from(ApartmentClient.queryStationsNearby(...args)).subscribe({
-      next: stationsNearby => this.mMap.setMetroStations(stationsNearby),
+      next: stationsNearby => this.mMap.setMetroStationMarkers(stationsNearby),
       error: err => {
         console.warn(err.message);
       },
     });
+  };
+
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * get or create custom location
+   */
+  queryCustomLocation = async (coordinates: [number, number], address: string, city: string) => {
+    try {
+      const customLocation = await LocationClient.getCustomLOcation(coordinates, address, city);
+      this.mMap.addCustomLocations(customLocation);
+      console.warn('[queryCustomLocation]', customLocation);
+      return customLocation.id;
+    } catch (err) {
+      console.warn('[queryCustomLocation]', err.message);
+    }
   };
 
   cancelQueryStations = () => this.$queryStationsSub && this.$queryStationsSub.unsubscribe();
@@ -86,13 +115,49 @@ class FeedInteractor implements IInteractor {
    *
    *
    * @memberof FeedInteractor
+   */
+  focusCustomLocation = async (locationId: string) => {
+    const customLocation = findItemByKeyValue(this.mMap.customLocations, locationId, 'id');
+    if (!customLocation) return;
+    if (
+      this.mMap.isLocationFocused('customLocation', customLocation.coordinates, {
+        address: customLocation.address,
+      })
+    )
+      return;
+    Taro.showLoading({
+      mask: true,
+      title: 'Loading ...',
+    });
+    try {
+      const apartments = await ApartmentClient.queryApartmentsNearbyCoordinates(
+        customLocation.coordinates,
+        500,
+        50,
+      );
+      this.mMap.setApartmentMarkers(apartments);
+    } catch (err) {
+      console.warn(err.message);
+      this.mMap.focusedLocation = undefined;
+      Taro.atMessage({
+        message: '出错啦...',
+        type: 'error',
+      });
+    } finally {
+      Taro.hideLoading();
+    }
+  };
+
+  /**
+   *
+   *
+   * @memberof FeedInteractor
    * when user press metro station
    * check if it's focused already, if not set it as current focused position
    *
    */
-  onPressMetroStation = async (stationId: string) => {
-    if (this.mMap.isStationFocused(stationId)) return;
-
+  focusMetroStation = async (stationId: string) => {
+    if (this.mMap.isLocationFocused('metroStation', stationId)) return;
     Taro.showLoading({
       mask: true,
       title: 'Loading ...',
@@ -103,7 +168,7 @@ class FeedInteractor implements IInteractor {
         500,
         50,
       );
-      this.mMap.setApartments(apartments);
+      this.mMap.setApartmentMarkers(apartments);
     } catch (err) {
       console.warn(err.message);
       this.mMap.focusedLocation = undefined;

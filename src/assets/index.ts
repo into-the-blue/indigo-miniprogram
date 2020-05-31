@@ -24,4 +24,6 @@ export default class Assets {
   static Desc = require('./images/desc.png');
 
   static Search = require('./images/search.png');
+
+  static CustomLocation = require('./images/custom_location.png');
 }

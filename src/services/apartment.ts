@@ -56,6 +56,29 @@ class ApartmentClient {
       })
     ).data.queryApartmentsNearbyStation;
   };
+
+  static queryApartmentsNearbyCoordinates = async (
+    coordinates: [number, number],
+    radius: number = 500,
+    limit: number = 50,
+  ): Promise<IApartment[]> => {
+    return (
+      await gqlClient.query({
+        query: gql`
+          query($coordinates: [Float]!, $radius: Int!, $limit: Int!){
+            queryApartmentsNearbyCoordinates(coordinates: $coordinates, radius: $radius, limit: $limit) {
+              ${apartmentDefaultSchemas}
+            }
+          }
+        `,
+        variables: {
+          coordinates,
+          radius,
+          limit,
+        },
+      })
+    ).data.queryApartmentsNearbyCoordinates;
+  };
 }
 
 export { ApartmentClient };

@@ -10,8 +10,12 @@ import { getStores } from '@/stores';
 import { LocationClient } from '@/services/location';
 import { IPOI } from '@/types';
 import { SearchResultCard } from './SearchResultCard';
+import { injectXeno, XenoComponentProps } from '@/xeno';
+import { XAllEvents } from '@/utils/xeno';
 
-export const SearchBar = () => {
+interface IProps extends XenoComponentProps<XAllEvents> {}
+
+export const SearchBar = injectXeno(({ next }: IProps) => {
   const [inputOpen, setInputOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [showSearchResult, setShowSearchResult] = useState<boolean>(true);
@@ -48,7 +52,18 @@ export const SearchBar = () => {
     setShowSearchResult(true);
   };
 
-  const onPressSearchResult = (result: IPOI) => {};
+  const onPressSearchResult = (result: IPOI) => {
+    setInputOpen(false);
+    next('Feed_setMapFocusedPosition', {
+      data: {
+        type: 'customLocation',
+        coordinates: result.coordinates,
+        city: result.city,
+        address: result.address,
+        payload: result,
+      },
+    });
+  };
 
   return (
     <CoverView
@@ -104,4 +119,4 @@ export const SearchBar = () => {
       )}
     </CoverView>
   );
-};
+});

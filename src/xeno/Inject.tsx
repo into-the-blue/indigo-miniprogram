@@ -25,7 +25,7 @@ export interface XenoComponentProps<T = any> {
   next: <K extends keyof T = keyof T>(eventName: K, payload: T[K]) => void;
 }
 
-export function injectXeno<T = any>(target: React.ComponentClass<any, any>) {
+export function injectXeno<T = any>(target: IReactComponent<any>) {
   function InjectedComp(props, ref) {
     const { xeno } = useContext(XenoProviderContext)!;
     const unsubscribeRef = useRef<(() => void)[]>([]);

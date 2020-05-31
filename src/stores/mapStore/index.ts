@@ -1,20 +1,28 @@
 import { observable, action } from 'mobx';
-import { IStore, nextState, IMarker, IMetroStationClient, IApartment } from '@/types';
+import {
+  IStore,
+  nextState,
+  IMarker,
+  IMetroStationClient,
+  IApartment,
+  ICustomLocationClient,
+} from '@/types';
 import { get } from 'lodash';
 import Assets from '@/assets';
 import { MAP_SETTING } from '@/utils/constants';
+import { findItemByKeyValue } from '@/utils';
 
 type FocusedMetroStation = {
   type: 'metroStation';
   stationId: string;
 };
 
-type FocusedCustomAddr = {
-  type: 'address';
+type FocusedCustomLocation = {
+  type: 'customLocation';
   address: string;
   coordinates: [number, number];
 };
-type TFocusedLocation = FocusedMetroStation | FocusedCustomAddr;
+type TFocusedLocation = FocusedMetroStation | FocusedCustomLocation;
 
 class MapStore implements IStore<MapStore> {
   // user initial location
@@ -22,6 +30,9 @@ class MapStore implements IStore<MapStore> {
     lng: number;
     lat: number;
   };
+
+  //custom locations
+  @observable customLocations: ICustomLocationClient[] = [];
   // center of the map
   @observable currentCoordinate?: {
     lng: number;
@@ -57,7 +68,7 @@ class MapStore implements IStore<MapStore> {
    * set new markers
    */
   @action
-  setMetroStations = (stations: IMetroStationClient[]) => {
+  setMetroStationMarkers = (stations: IMetroStationClient[]) => {
     if (!stations.length) return;
     this.cleanMarkersByType('station');
     const markers: IMarker[] = stations.map(s => ({
@@ -81,6 +92,8 @@ class MapStore implements IStore<MapStore> {
    */
   @action
   cleanFocusedStation = () => {
+    if (!this.focusedLocation) return;
+    if (this.focusedLocation.type === 'customLocation') return;
     if (
       !this.currentMetroStations.some(o => o.stationId === get(this.focusedLocation, 'stationId'))
     ) {
@@ -90,7 +103,23 @@ class MapStore implements IStore<MapStore> {
   };
 
   @action
-  setUserCurrentPosition = (lng: number, lat: number) => {
+  setCustomLocationMarker = (locationId: string) => {
+    const customLocation = this.getCustomLocationById(locationId);
+    if (!customLocation) return;
+    this.cleanMarkersByType('customLocation');
+    this.markers = this.markers.concat({
+      id: 'customLocation ' + locationId,
+      longitude: customLocation.coordinates[0],
+      latitude: customLocation.coordinates[1],
+      type: 'customLocation',
+      width: 30,
+      height: 30,
+      iconPath: Assets.CustomLocation,
+    });
+  };
+
+  @action
+  setUserCurrentPositionMarker = (lng: number, lat: number) => {
     const found = this.markers.findIndex(o => o.type === 'user');
     this.currentCoordinate = {
       lng,
@@ -112,12 +141,12 @@ class MapStore implements IStore<MapStore> {
     }
   };
 
-  @action cleanMarkersByType = (type: 'user' | 'station' | 'apartment') => {
+  @action cleanMarkersByType = (type: 'user' | 'station' | 'apartment' | 'customLocation') => {
     this.markers = this.markers.filter(o => o.type !== type);
   };
 
   @action
-  setApartments = (apartments: IApartment[]) => {
+  setApartmentMarkers = (apartments: IApartment[]) => {
     this.cleanMarkersByType('apartment');
     const markers: IMarker[] = apartments.map(apt => ({
       id: 'apartment ' + apt.houseId,
@@ -142,8 +171,46 @@ class MapStore implements IStore<MapStore> {
     return false;
   };
 
+  isLocationFocused: {
+    (type: 'metroStation', stationId: string): boolean;
+    (
+      type: 'customLocation',
+      coordinates: [number, number],
+      payloads?: { address: string },
+    ): boolean;
+  } = (
+    type: 'metroStation' | 'customLocation',
+    data: string | [number, number],
+    payload?: { address: string },
+  ) => {
+    if (type === 'metroStation') {
+      return this.isStationFocused(data as string);
+    }
+
+    const focusedCoordinates = get(this.focusedLocation, 'coordinates');
+    if (focusedCoordinates && focusedCoordinates.join(',') === (data as [number, number]).join(','))
+      return true;
+    this.focusedLocation = {
+      type: 'customLocation',
+      coordinates: data as any,
+      ...payload!,
+    };
+    return false;
+  };
+
+  get focusedCustomLocation() {
+    return this.focusedLocation as FocusedCustomLocation;
+  }
+
   get focusedMetroStation() {
     return this.focusedLocation as FocusedMetroStation;
   }
+
+  getCustomLocationById = (id: string) => findItemByKeyValue(this.customLocations, id, 'id');
+
+  @action addCustomLocations = (cl: ICustomLocationClient) => {
+    if (this.customLocations.some(o => o.id === cl.id)) return;
+    this.customLocations.push(cl);
+  };
 }
 export { MapStore };

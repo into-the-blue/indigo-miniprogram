@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
-import {} from '@/types';
+import { XExtractData } from '@/types';
 import queryString from 'query-string';
 import { Routes } from '@/utils/constants';
+import { XFeedSetMapFocusedPosition } from '../eventStation';
 
 class FeedPresenter implements IPresenter {
   beginTimeStamp: number = Date.now();
@@ -11,18 +12,38 @@ class FeedPresenter implements IPresenter {
   constructor(public interactor: FeedInteractor, public viewModel: IViewModel) {}
 
   componentDidMount() {
-    console.warn('did mount');
     Taro.hideHomeButton();
     this.init();
+    this.viewModel.getProps.on('Feed_setMapFocusedPosition', this.setFocusedPosition);
   }
-  componentWillUnmount() {
-    console.warn('unmount');
-  }
+  componentWillUnmount() {}
 
   init = async () => {
     this.interactor.queryLastestUserInfo();
     await this.interactor.getUserCurrentLocation();
     this.interactor.queryStationsNearby();
+  };
+
+  setFocusedPosition = async (data: XExtractData<XFeedSetMapFocusedPosition>) => {
+    const { type } = data;
+    console.warn('[setFocusedPosition]', data);
+    if (type === 'metroStation') {
+      // ...
+    }
+    if (type === 'customLocation') {
+      // ...
+      const locationId = await this.interactor.queryCustomLocation(
+        data.coordinates,
+        data.address!,
+        data.city!,
+      );
+      if (!locationId) return;
+      this.interactor.setCustomLocationMarker(locationId);
+      this.interactor.setCurrentCoordinate(data.coordinates[0], data.coordinates[1]);
+      this.interactor.focusCustomLocation(locationId);
+      const mapCtx = Taro.createMapContext('map');
+      setTimeout(mapCtx.moveToLocation, 0);
+    }
   };
 
   onRegionChange = (prop: any) => {
@@ -37,10 +58,13 @@ class FeedPresenter implements IPresenter {
       case 'user':
         break;
       case 'station':
-        this.interactor.onPressMetroStation(id);
+        this.interactor.focusMetroStation(id);
         break;
       case 'apartment':
         this.onPressApartment(id);
+        break;
+      case 'customLocation':
+        this.interactor.focusCustomLocation(id);
         break;
     }
   };
