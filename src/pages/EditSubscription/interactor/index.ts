@@ -44,6 +44,7 @@ class EditSubscriptionInteractor implements IInteractor {
       conditions,
       isUpdating,
       metroPayload,
+      customLocationPayload,
     } = this.editSubscriptionStore;
     const coordinates = targetInfo!.coordinates;
     const city = this.mMap.currentCity;
@@ -51,7 +52,7 @@ class EditSubscriptionInteractor implements IInteractor {
     const payload =
       type === 'metroStation'
         ? pick(metroPayload, ['stationId', 'stationName', 'urls', 'lineIds', 'coordinates'])
-        : { address: targetInfo!.address };
+        : { ...pick(customLocationPayload, ['address', 'city', 'district', 'id', 'name']) };
 
     const body = {
       coordinates,
@@ -62,13 +63,13 @@ class EditSubscriptionInteractor implements IInteractor {
       address: targetInfo!.address,
       payload,
     };
-    console.warn(conditions);
+    console.warn('[onSave]', conditions);
     try {
       const { success, message } = await (isUpdating
         ? this.updateSubscription
         : this.addSubscription)(body);
       if (!success) {
-        console.warn(message);
+        console.warn('[onSave]', message);
         Taro.atMessage({
           message,
           type: 'info',
@@ -100,6 +101,7 @@ class EditSubscriptionInteractor implements IInteractor {
     const { targetInfo } = this.editSubscriptionStore;
     if (!targetInfo) return;
     const exits = this._getExistingSub();
+    console.warn('[getExistingSub]', exits);
     if (exits) return;
     this.queryIfHasExistingSub();
   };
@@ -127,6 +129,7 @@ class EditSubscriptionInteractor implements IInteractor {
     const { coordinates } = this.editSubscriptionStore.targetInfo!;
     try {
       const sub = await SubscriptionClient.querySubscriptionByCoordinates(coordinates);
+      console.warn('[queryIfHasExistingSub]', sub);
       if (!sub) return;
       this.setExistingSubscription(sub);
     } catch (err) {

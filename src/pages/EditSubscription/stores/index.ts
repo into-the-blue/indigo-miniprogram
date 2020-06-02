@@ -48,12 +48,12 @@ class EditSubscriptionStore {
     if (!this.target) return null;
     return this.target?.type === 'metroStation'
       ? {
-          address: (this.target!.payload as IMetroStationClient).stationName,
-          coordinates: (this.target!.payload as IMetroStationClient).coordinates,
+          address: this.metroPayload.stationName,
+          coordinates: this.metroPayload.coordinates,
         }
       : {
-          address: (this.target!.payload as ICustomLocationClient).address,
-          coordinates: (this.target!.payload as ICustomLocationClient).coordinates,
+          address: this.customLocationPayload.address + this.customLocationPayload.name,
+          coordinates: this.customLocationPayload.coordinates,
         };
   }
 
