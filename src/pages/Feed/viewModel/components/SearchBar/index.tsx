@@ -92,7 +92,12 @@ export const SearchBar = injectXeno(({ next }: IProps) => {
         <CoverView className={'search-bar__search-result'}>
           <ScrollView scrollY className={'search-bar__search-result-container'}>
             <FlexView column>
-              {isSearching && <AtActivityIndicator isOpened content={'Searching...'} />}
+              {isSearching && (
+                <FlexView style={{ alignSelf: 'center', marginTop: 5 }}>
+                  <AtActivityIndicator isOpened content={'Searching...'} />
+                </FlexView>
+              )}
+
               {!searchResults.length && !!inputValue.length && (
                 <Text className={'search-bar__search-placeholder'}>{'空空如也...'}</Text>
               )}

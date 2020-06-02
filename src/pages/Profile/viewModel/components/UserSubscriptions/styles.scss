@@ -34,6 +34,9 @@
 }
 
 .subscription-card__ {
+  &wrapper {
+    margin-bottom: 30px;
+  }
   &container {
     padding-left: 60px;
     padding-right: 10px;
@@ -42,6 +45,9 @@
   &address {
     font-size: 50px;
     color: black;
+  }
+  &address-long {
+    font-size: 38px;
   }
 
   &left-text {

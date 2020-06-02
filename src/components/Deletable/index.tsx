@@ -6,11 +6,13 @@ import classNames from 'classnames';
 const Deletable = ({
   onDelete,
   children,
+  style,
   className,
 }: {
   onDelete: () => void;
   children: React.ReactChild;
   className?: string | classNames;
+  style?: React.CSSProperties;
 }) => {
   const [secConfirm, setSecConfirm] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,6 +39,7 @@ const Deletable = ({
   return (
     <AtSwipeAction
       className={className}
+      customStyle={style}
       options={
         secConfirm
           ? [

@@ -4,6 +4,7 @@ import { ISubscriptionClient } from '@/types';
 import Deletable from '@/components/Deletable';
 import { AtDivider } from 'taro-ui';
 import Assets from '@/assets';
+import classNames from 'classnames';
 
 interface IProps {
   subscription: ISubscriptionClient;
@@ -26,7 +27,7 @@ const Info = ({ leftText, rightText }: { leftText: string; rightText: string | n
 
 const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IProps) => {
   return (
-    <Deletable onDelete={onDelete}>
+    <Deletable className={'subscription-card__wrapper'} onDelete={onDelete}>
       <View
         className={'subscription-card__container'}
         onClick={e => {
@@ -36,15 +37,21 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IPro
         }}
       >
         <View className={'flex-row-center'} style={{ justifyContent: 'space-between' }}>
-          <Text className={'subscription-card__address'}>{subscription.address}</Text>
-            <Image
-              src={Assets.More}
-              className={'subscription-card__more-button'}
-              onClick={e => {
-                e.stopPropagation();
-                onPressMore();
-              }}
-            />
+          <Text
+            className={classNames('subscription-card__address', {
+              'subscription-card__address-long': subscription.address.length > 15,
+            })}
+          >
+            {subscription.address}
+          </Text>
+          <Image
+            src={Assets.More}
+            className={'subscription-card__more-button'}
+            onClick={e => {
+              e.stopPropagation();
+              onPressMore();
+            }}
+          />
         </View>
         <AtDivider height={20} />
         <Info leftText={'条件'} rightText={subscription.conditions.length} />

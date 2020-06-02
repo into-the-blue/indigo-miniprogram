@@ -4,6 +4,7 @@ import { MAP_SETTING } from '@/utils/constants';
 import Assets from '@/assets';
 import { Button } from '@/components';
 import './styles.scss';
+import classNames from 'classnames';
 
 interface IProps {
   type: 'metroStation' | 'customLocation' | null;
@@ -20,8 +21,16 @@ const TargetInfo = ({ type, info, isUpdating, onPressSave }: IProps) => {
   return (
     <View className={'target-info__container'}>
       <View>
-        <Text className={'target-info__title'}>{info.address}</Text>
-        <Button onClick={onPressSave}>{isUpdating ? '更新' : '增加'}</Button>
+        <Text
+          className={classNames('target-info__title', {
+            'target-info__title-long': info.address.length > 16,
+          })}
+        >
+          {info.address}
+        </Text>
+        <Button onClick={onPressSave} type={'primary'}>
+          {isUpdating ? '更新' : '增加'}
+        </Button>
       </View>
 
       <Map
