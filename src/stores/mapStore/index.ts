@@ -14,13 +14,12 @@ import { findItemByKeyValue } from '@/utils';
 
 type FocusedMetroStation = {
   type: 'metroStation';
-  stationId: string;
+  payload: Pick<IMetroStationClient, 'stationId'>;
 };
 
 type FocusedCustomLocation = {
   type: 'customLocation';
-  address: string;
-  coordinates: [number, number];
+  payload: ICustomLocationClient;
 };
 type TFocusedLocation = FocusedMetroStation | FocusedCustomLocation;
 
@@ -95,7 +94,9 @@ class MapStore implements IStore<MapStore> {
     if (!this.focusedLocation) return;
     if (this.focusedLocation.type === 'customLocation') return;
     if (
-      !this.currentMetroStations.some(o => o.stationId === get(this.focusedLocation, 'stationId'))
+      !this.currentMetroStations.some(
+        o => o.stationId === get(this.focusedMetroStation, 'payload.stationId'),
+      )
     ) {
       this.cleanMarkersByType('apartment');
       this.focusedLocation = undefined;
@@ -163,37 +164,29 @@ class MapStore implements IStore<MapStore> {
   };
 
   isStationFocused = (stationId: string) => {
-    if (get(this.focusedLocation, 'stationId') === stationId) return true;
+    if (get(this.focusedMetroStation, 'payload.stationId') === stationId) return true;
     this.focusedLocation = {
       type: 'metroStation',
-      stationId,
+      payload: { stationId },
     };
     return false;
   };
 
   isLocationFocused: {
     (type: 'metroStation', stationId: string): boolean;
-    (
-      type: 'customLocation',
-      coordinates: [number, number],
-      payloads?: { address: string },
-    ): boolean;
-  } = (
-    type: 'metroStation' | 'customLocation',
-    data: string | [number, number],
-    payload?: { address: string },
-  ) => {
+    (type: 'customLocation', customLocationId: string, payloads?: ICustomLocationClient): boolean;
+  } = (type: 'metroStation' | 'customLocation', id: string, payload?: ICustomLocationClient) => {
     if (type === 'metroStation') {
-      return this.isStationFocused(data as string);
+      return this.isStationFocused(id);
     }
 
-    const focusedCoordinates = get(this.focusedLocation, 'coordinates');
-    if (focusedCoordinates && focusedCoordinates.join(',') === (data as [number, number]).join(','))
-      return true;
+    const focusedId = get(this.focusedCustomLocation, 'payload.id');
+    if (focusedId && focusedId === id) return true;
     this.focusedLocation = {
       type: 'customLocation',
-      coordinates: data as any,
-      ...payload!,
+      payload: {
+        ...payload!,
+      },
     };
     return false;
   };

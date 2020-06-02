@@ -97,19 +97,14 @@ class EditSubscriptionInteractor implements IInteractor {
    * get existing subscription from local store
    */
   getExistingSub = () => {
-    const { targetType, targetInfo } = this.editSubscriptionStore;
+    const { targetInfo } = this.editSubscriptionStore;
     if (!targetInfo) return;
-    if (targetType === 'metroStation') {
-      const exits = this.getExistingMetroSub();
-      if (exits) return;
-    }
-    if (targetType === 'customLocation') {
-      //
-    }
+    const exits = this._getExistingSub();
+    if (exits) return;
     this.queryIfHasExistingSub();
   };
 
-  getExistingMetroSub = () => {
+  _getExistingSub = () => {
     const { subscriptionStore } = getStores('subscriptionStore');
     const existingSub = subscriptionStore.findSubscriptionByCoordinates(
       this.editSubscriptionStore.targetInfo!.coordinates,

@@ -2,11 +2,11 @@ import { observable, action, computed } from 'mobx';
 import {
   TSetState,
   IMetroStationClient,
-  ICustomLocation,
   TConfigBoolean,
   TConfigRange,
   TSubCondition,
   ISubscription,
+  ICustomLocationClient,
 } from '@/types';
 import { CONFIGURABLE_KEYS } from './data';
 
@@ -17,7 +17,7 @@ export type TEditSubTarget =
     }
   | {
       type: 'customLocation';
-      payload: ICustomLocation;
+      payload: ICustomLocationClient;
     };
 
 const DEFAULT_RADIUS = 1000;
@@ -52,8 +52,8 @@ class EditSubscriptionStore {
           coordinates: (this.target!.payload as IMetroStationClient).coordinates,
         }
       : {
-          address: (this.target!.payload as ICustomLocation).address,
-          coordinates: (this.target!.payload as ICustomLocation).coordinates,
+          address: (this.target!.payload as ICustomLocationClient).address,
+          coordinates: (this.target!.payload as ICustomLocationClient).coordinates,
         };
   }
 
@@ -64,7 +64,7 @@ class EditSubscriptionStore {
 
   @computed
   get customLocationPayload() {
-    return this.target!.payload as ICustomLocation;
+    return this.target!.payload as ICustomLocationClient;
   }
 
   @computed get availableConfigKeys() {

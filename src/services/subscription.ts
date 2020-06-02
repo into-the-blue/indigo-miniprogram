@@ -74,7 +74,7 @@ export class SubscriptionClient {
     coordinates: [number, number],
   ): Promise<ISubscriptionClient | undefined> => {
     const { data } = await apiClient.get('/subscription', {
-      params: { coordinates },
+      params: { lng: coordinates[0], lat: coordinates[1] },
     });
     return data.data[0];
   };

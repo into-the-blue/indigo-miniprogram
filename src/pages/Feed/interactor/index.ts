@@ -4,9 +4,10 @@ import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
-import {} from 'lodash';
+import { get } from 'lodash';
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
+import { IPOI } from '@/types';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -81,9 +82,9 @@ class FeedInteractor implements IInteractor {
    * @memberof FeedInteractor
    * get or create custom location
    */
-  queryCustomLocation = async (coordinates: [number, number], address: string, city: string) => {
+  queryCustomLocationPOI = async (poi: IPOI) => {
     try {
-      const customLocation = await LocationClient.getCustomLOcation(coordinates, address, city);
+      const customLocation = await LocationClient.getCustomLocationFromPOI(poi);
       this.mMap.addCustomLocations(customLocation);
       console.warn('[queryCustomLocation]', customLocation);
       return customLocation.id;
@@ -120,8 +121,8 @@ class FeedInteractor implements IInteractor {
     const customLocation = findItemByKeyValue(this.mMap.customLocations, locationId, 'id');
     if (!customLocation) return;
     if (
-      this.mMap.isLocationFocused('customLocation', customLocation.coordinates, {
-        address: customLocation.address,
+      this.mMap.isLocationFocused('customLocation', customLocation.id, {
+        ...customLocation,
       })
     )
       return;
@@ -208,16 +209,26 @@ class FeedInteractor implements IInteractor {
     this.feed.openApartmentList();
   };
 
-  getEditSubscriptionTarget = (type: 'metroStation') => {
+  getEditSubscriptionTarget = () => {
+    const type = get(this.mMap.focusedLocation, 'type');
     if (type === 'metroStation') {
       const station = findItemByKeyValue(
         this.mMap.currentMetroStations,
-        this.mMap.focusedMetroStation.stationId,
+        this.mMap.focusedMetroStation.payload.stationId,
         'stationId',
       )!;
       return {
         payload: station,
         type,
+      };
+    }
+    if (type === 'customLocation') {
+      const customLocation = this.mMap.getCustomLocationById(
+        this.mMap.focusedCustomLocation.payload.id,
+      )!;
+      return {
+        type,
+        payload: customLocation,
       };
     }
   };

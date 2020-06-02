@@ -13,17 +13,15 @@ export class LocationClient {
     return data.data;
   };
 
-  static getCustomLOcation = async (
-    coordinates: [number, number],
-    address?: string,
-    city?: string,
-  ): Promise<ICustomLocationClient> => {
-    const { data } = await apiClient.get('/location', {
+  static getCustomLocationFromPOI = async (poi: IPOI): Promise<ICustomLocationClient> => {
+    const { data } = await apiClient.get('/location/poi', {
       params: {
-        lng: coordinates[0],
-        lat: coordinates[1],
-        city,
-        address,
+        lng: poi.coordinates[0],
+        lat: poi.coordinates[1],
+        city: poi.city,
+        address: poi.address,
+        name: poi.name,
+        district: poi.district,
       },
     });
     if (!data.success) throw new Error(data.message);

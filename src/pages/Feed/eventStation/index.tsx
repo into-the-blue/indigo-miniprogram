@@ -5,17 +5,11 @@ export type XFeedSetMapFocusedPosition = {
     data:
       | {
           type: 'metroStation';
-          coordinates: [number, number];
-          payload?: IMetroStation;
-          address: undefined;
-          city: undefined;
+          payload: IMetroStation;
         }
       | {
           type: 'customLocation';
-          coordinates: [number, number];
-          address: string;
-          city: string;
-          payload?: IPOI;
+          payload: IPOI;
         };
   };
 };

@@ -57,9 +57,6 @@ export const SearchBar = injectXeno(({ next }: IProps) => {
     next('Feed_setMapFocusedPosition', {
       data: {
         type: 'customLocation',
-        coordinates: result.coordinates,
-        city: result.city,
-        address: result.address,
         payload: result,
       },
     });

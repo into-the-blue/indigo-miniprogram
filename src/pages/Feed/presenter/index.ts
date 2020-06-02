@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
-import { XExtractData } from '@/types';
+import { XExtractData, IPOI } from '@/types';
 import queryString from 'query-string';
 import { Routes } from '@/utils/constants';
 import { XFeedSetMapFocusedPosition } from '../eventStation';
@@ -32,14 +32,13 @@ class FeedPresenter implements IPresenter {
     }
     if (type === 'customLocation') {
       // ...
-      const locationId = await this.interactor.queryCustomLocation(
-        data.coordinates,
-        data.address!,
-        data.city!,
-      );
+      const locationId = await this.interactor.queryCustomLocationPOI(data.payload as IPOI);
       if (!locationId) return;
       this.interactor.setCustomLocationMarker(locationId);
-      this.interactor.setCurrentCoordinate(data.coordinates[0], data.coordinates[1]);
+      this.interactor.setCurrentCoordinate(
+        data.payload.coordinates[0],
+        data.payload.coordinates[1],
+      );
       this.interactor.focusCustomLocation(locationId);
       const mapCtx = Taro.createMapContext('map');
       setTimeout(mapCtx.moveToLocation, 0);
@@ -115,7 +114,7 @@ class FeedPresenter implements IPresenter {
   };
 
   goToSubscription = () => {
-    const target = this.interactor.getEditSubscriptionTarget('metroStation')!;
+    const target = this.interactor.getEditSubscriptionTarget()!;
     this.viewModel.getProps.next('EditSubscription_init', {
       guaranteed: true,
       data: {
