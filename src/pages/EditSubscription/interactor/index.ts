@@ -103,7 +103,7 @@ class EditSubscriptionInteractor implements IInteractor {
     const exits = this._getExistingSub();
     console.warn('[getExistingSub]', exits);
     if (exits) return;
-    this.queryIfHasExistingSub();
+    this.queryExistingSub();
   };
 
   _getExistingSub = () => {
@@ -125,15 +125,15 @@ class EditSubscriptionInteractor implements IInteractor {
     });
   };
 
-  queryIfHasExistingSub = async () => {
+  queryExistingSub = async () => {
     const { coordinates } = this.editSubscriptionStore.targetInfo!;
     try {
       const sub = await SubscriptionClient.querySubscriptionByCoordinates(coordinates);
-      console.warn('[queryIfHasExistingSub]', sub);
+      console.warn('[queryExistingSub]', sub);
       if (!sub) return;
       this.setExistingSubscription(sub);
     } catch (err) {
-      console.warn('[queryIfHasExistingSub]', err.message);
+      console.warn('[queryExistingSub]', err.message);
     }
   };
 

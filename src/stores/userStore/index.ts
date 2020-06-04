@@ -30,6 +30,7 @@ class UserStore {
       });
     }
     const userInfo = await UserClient.queryUserInfo();
+    console.warn('[initUserInfo]', userInfo);
     this.setState({
       userInfo,
     });

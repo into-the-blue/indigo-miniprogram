@@ -18,7 +18,6 @@ class EditSubscriptionPresenter implements IPresenter {
       'EditSubscription_init',
       (data: XExtractData<XEditSubscriptionInit>) => {
         const { target } = data;
-        console.warn(target)
         if (!target) return Taro.navigateBack();
         this.setTarget(target);
         this.checkIfHaveExistingSub();

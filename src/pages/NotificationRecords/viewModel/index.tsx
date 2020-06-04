@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView } from '@tarojs/components';
+import { View, ScrollView, Text } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { NotificationRecordsPresenter } from '../presenter';
-import { BaseView } from '@/components';
+import { BaseView, FlexView } from '@/components';
 import { Records } from './components/Records';
 import { MapComp } from './components/MapComp';
 import { MAP_HEIGHT } from '../constants';
@@ -42,7 +42,7 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
       mapCentralCoordinates,
     } = this.props.notificationRecordsStore!;
     return (
-      <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <FlexView column>
         <BaseView
           isError={isError}
           isLoading={isLoading}
@@ -56,14 +56,19 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
             />
           )}
           <ScrollView style={{ marginTop: MAP_HEIGHT }}>
-            <Records
-              notificationRecords={notificationRecords}
-              onPressRecord={this.presenter.onPressRecord}
-              selectedRecordIds={selectedRecordIds}
-            />
+            <FlexView column>
+              {!isLoading && !notificationRecords.length && (
+                <Text style={{ alignSelf: 'center', marginTop: 10 }}>{'空空如也...'}</Text>
+              )}
+              <Records
+                notificationRecords={notificationRecords}
+                onPressRecord={this.presenter.onPressRecord}
+                selectedRecordIds={selectedRecordIds}
+              />
+            </FlexView>
           </ScrollView>
         </BaseView>
-      </View>
+      </FlexView>
     );
   }
 }

@@ -18,6 +18,16 @@ export const pick = <T, K extends keyof T>(
   return toReturn;
 };
 
+export const Omit = <T, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
+  const toReturn: any = {};
+  Object.keys(key => {
+    if (keys.includes(key)) return;
+    const value = obj[key];
+    toReturn[key] = value;
+  });
+  return toReturn;
+};
+
 export const findItemByKeyValue = <T>(items: T[], value: any, key?: keyof T): T | undefined => {
   return items.find(o => (key ? o[key] : o) === value);
 };
