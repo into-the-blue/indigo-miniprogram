@@ -5,7 +5,8 @@ export default {
     'pages/index/index',
     'pages/EditSubscription/builder/index',
     'pages/NotificationRecords/builder/index',
-    'pages/ApartmentInfo/builder/index'
+    'pages/ApartmentInfo/builder/index',
+    'pages/FreeMembership/builder/index',
   ],
   window: {
     backgroundTextStyle: 'light',

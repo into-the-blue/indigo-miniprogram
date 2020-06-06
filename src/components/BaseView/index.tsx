@@ -2,14 +2,17 @@ import React from 'react';
 import { View, Text } from '@tarojs/components';
 import Button from '../Button';
 import { AtActivityIndicator } from 'taro-ui';
+import { FlexView, IFlexViewProps } from '../FlexView';
 
-interface IProps {
+interface IProps extends IFlexViewProps {
   isLoading?: boolean;
   isError?: boolean;
   onPressRetry?: () => void;
   showPlaceholder?: boolean;
   renderPlaceholder?: () => JSX.Element;
   children: React.ReactChild | (React.ReactChild | null | undefined)[] | null | undefined;
+  className?: string;
+  style?: React.CSSProperties;
 }
 export const BaseView = ({
   isLoading,
@@ -18,6 +21,7 @@ export const BaseView = ({
   onPressRetry,
   showPlaceholder,
   renderPlaceholder,
+  ...restProps
 }: IProps) => {
   if (showPlaceholder) {
     if (renderPlaceholder) return renderPlaceholder();
@@ -40,5 +44,9 @@ export const BaseView = ({
       </View>
     );
   }
-  return <React.Fragment>{children}</React.Fragment>;
+  return (
+    <FlexView column {...restProps}>
+      {children}
+    </FlexView>
+  );
 };

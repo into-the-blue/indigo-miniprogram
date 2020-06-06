@@ -42,4 +42,5 @@ export const Routes = {
   Feed: '/pages/Feed/builder/index',
   NotificationRecords: '/pages/NotificationRecords/builder/index',
   Profile: '/pages/Profile/builder/index',
+  FreeMembership: '/pages/FreeMembership/builder/index',
 };

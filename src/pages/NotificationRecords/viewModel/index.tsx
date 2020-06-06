@@ -42,33 +42,27 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
       mapCentralCoordinates,
     } = this.props.notificationRecordsStore!;
     return (
-      <FlexView column>
-        <BaseView
-          isError={isError}
-          isLoading={isLoading}
-          onPressRetry={this.presenter.initialQuerys}
-        >
-          {subscription && (
-            <MapComp
-              selectedRecords={selectedRecords}
-              subscriptionCoordinates={subscription!.coordinates}
-              centralCoordinates={mapCentralCoordinates!}
+      <BaseView isError={isError} isLoading={isLoading} onPressRetry={this.presenter.initialQuerys}>
+        {subscription && (
+          <MapComp
+            selectedRecords={selectedRecords}
+            subscriptionCoordinates={subscription!.coordinates}
+            centralCoordinates={mapCentralCoordinates!}
+          />
+        )}
+        <ScrollView style={{ marginTop: MAP_HEIGHT }}>
+          <FlexView column>
+            {!isLoading && !notificationRecords.length && (
+              <Text style={{ alignSelf: 'center', marginTop: 10 }}>{'空空如也...'}</Text>
+            )}
+            <Records
+              notificationRecords={notificationRecords}
+              onPressRecord={this.presenter.onPressRecord}
+              selectedRecordIds={selectedRecordIds}
             />
-          )}
-          <ScrollView style={{ marginTop: MAP_HEIGHT }}>
-            <FlexView column>
-              {!isLoading && !notificationRecords.length && (
-                <Text style={{ alignSelf: 'center', marginTop: 10 }}>{'空空如也...'}</Text>
-              )}
-              <Records
-                notificationRecords={notificationRecords}
-                onPressRecord={this.presenter.onPressRecord}
-                selectedRecordIds={selectedRecordIds}
-              />
-            </FlexView>
-          </ScrollView>
-        </BaseView>
-      </FlexView>
+          </FlexView>
+        </ScrollView>
+      </BaseView>
     );
   }
 }

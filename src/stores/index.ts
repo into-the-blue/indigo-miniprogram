@@ -7,6 +7,7 @@ import { EditSubscriptionStore } from '@/pages/EditSubscription/stores';
 import { NotificationRecordsStore } from '@/pages/NotificationRecords/stores';
 import { ApartmentInfoStore } from '@/pages/ApartmentInfo/stores';
 import { ModalStore } from './modalStore';
+import { FreeMembershipStore } from '@/pages/FreeMembership/stores';
 
 class RootStore {
   feed: FeedStore;
@@ -18,6 +19,7 @@ class RootStore {
   modalStore: ModalStore;
   notificationRecordsStore: NotificationRecordsStore;
   apartmentInfoStore: ApartmentInfoStore;
+  freeMembershipStore: FreeMembershipStore;
 
   constructor() {
     this.feed = new FeedStore();
@@ -29,6 +31,7 @@ class RootStore {
     this.modalStore = new ModalStore();
     this.notificationRecordsStore = new NotificationRecordsStore();
     this.apartmentInfoStore = new ApartmentInfoStore();
+    this.freeMembershipStore = new FreeMembershipStore();
   }
 }
 const store = new RootStore();

@@ -7,7 +7,7 @@ type ReactChild = React.ReactElement<unknown> | ReactText;
 interface ChildrenArray extends Array<Children> {}
 type ReactFragment = ChildrenArray;
 type Children = ReactChild | ReactFragment | boolean | null | undefined;
-interface IProps {
+export interface IFlexViewProps {
   column?: boolean;
   children?: Children;
   style?: React.CSSProperties;
@@ -74,7 +74,7 @@ export const FlexView = ({
   wrap,
   onClick,
   ...paddingMargin
-}: IProps) => {
+}: IFlexViewProps) => {
   const getStyle = () => {
     const basicStyle: React.CSSProperties = {
       display: 'flex',
