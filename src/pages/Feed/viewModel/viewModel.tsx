@@ -6,6 +6,7 @@ import { FeedPresenter } from '../presenter';
 import classNames from 'classnames';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
 import { SearchBar } from './components/SearchBar';
+import { Banner } from './components/Banner';
 import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
 import './index.scss';
@@ -46,7 +47,8 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
     return (
       <View className={'page-container'}>
         <AtMessage />
-        <View style={{ display: 'flex', flex: 1 }}>
+        <Banner />
+        <View style={{ display: 'flex', position: 'relative', flex: 1 }}>
           {currentCoordinate && (
             <View
               className={classNames('flex', {
