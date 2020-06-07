@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro';
 import { AuthClient } from '@/services/auth';
 import { UserClient } from '@/services/user';
 import { Cache } from '@/utils';
+import dayjs from 'dayjs';
 
 class UserStore {
   @observable userInfo?: IUserInfo;
@@ -20,6 +21,16 @@ class UserStore {
 
   @computed get isLoggedIn() {
     return !!this.userInfo;
+  }
+
+  @computed get isMembershipExpired() {
+    if (!this.memberInfo) return true;
+    return dayjs(this.memberInfo.expireAt).isBefore(dayjs());
+  }
+
+  @computed get isMember() {
+    if (!this.memberInfo) return false;
+    return dayjs().isBefore(dayjs(this.memberInfo.expireAt));
   }
 
   initUserInfo = async () => {

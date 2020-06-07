@@ -43,6 +43,7 @@
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
     "classnames": "^2.2.6",
+    "dayjs": "^1.8.28",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "jwt-decode": "^2.2.0",
