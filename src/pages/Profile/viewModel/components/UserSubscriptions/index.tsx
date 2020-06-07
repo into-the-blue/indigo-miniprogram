@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components';
 import {} from 'mobx-react';
 import SubscriptionCard from './SubscriptionCard';
 import './styles.scss';
-import { ISubscription, ISubscriptionClient } from '@/types';
+import { ISubscriptionClient } from '@/types';
 import PlaceholderView from '@/components/PlaceholderView';
 import { AtActionSheet, AtActionSheetItem, AtModal } from 'taro-ui';
 import { findItemByKeyValue } from '@/utils';
@@ -59,7 +59,9 @@ const UserSubscriptions = ({
   };
   return (
     <View className={'user-subscription__container'}>
-      <Text className={'user-subscription__my-subs'}>{'我的订阅:'}</Text>
+      <Text className={'user-subscription__my-subs'}>{`我的订阅:    ${
+        !!subscriptions.length ? subscriptions.length : ''
+      }`}</Text>
       <PlaceholderView
         showPlaceholder={!subscriptions.length}
         renderPlaceholder={() => {

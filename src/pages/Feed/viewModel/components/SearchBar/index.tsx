@@ -12,6 +12,7 @@ import { IPOI } from '@/types';
 import { SearchResultCard } from './SearchResultCard';
 import { injectXeno, XenoComponentProps } from '@/xeno';
 import { XAllEvents } from '@/utils/xeno';
+import Taro from '@tarojs/taro';
 
 interface IProps extends XenoComponentProps<XAllEvents> {}
 
@@ -23,6 +24,16 @@ export const SearchBar = injectXeno(({ next }: IProps) => {
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const { mMap } = getStores('mMap');
   const toggleInput = () => {
+    const { userStore } = getStores('userStore');
+    if (!inputOpen) {
+      if (!userStore.isMember || userStore.isMembershipExpired) {
+        Taro.atMessage({
+          message: '搜索功能需要会员身份, 快去领取免费会员吧~',
+          type: 'info',
+        });
+        return;
+      }
+    }
     setInputOpen(!inputOpen);
   };
 
