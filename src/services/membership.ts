@@ -1,5 +1,5 @@
 import { apiClient } from '@/utils';
-import { TMemberType, TMemberPurchaseSource } from '@/types';
+import { TMemberType, TMemberPurchaseSource, IMemberInfo } from '@/types';
 
 export class MembershipService {
   static getFreeMembershipInfo = async (): Promise<{
@@ -56,5 +56,10 @@ export class MembershipService {
       message: data.message,
       code: data.code,
     };
+  };
+
+  static getMemberInfo = async (): Promise<IMemberInfo> => {
+    const { data } = await apiClient.get('/member');
+    return data.data;
   };
 }

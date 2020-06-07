@@ -8,6 +8,7 @@ import { get } from 'lodash';
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
 import { IPOI } from '@/types';
+import { MembershipService } from '@/services/membership';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -74,6 +75,26 @@ class FeedInteractor implements IInteractor {
         console.warn(err.message);
       },
     });
+  };
+
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * query user's membership info
+   */
+  queryLatestMemberInfo = async () => {
+    console.warn('[queryLatestMemberInfo]', 'query');
+    try {
+      const info = await MembershipService.getMemberInfo();
+      if (!info) return;
+      console.warn('[queryLatestMemberInfo]', info);
+      this.userStore.setState({
+        memberInfo: info,
+      });
+    } catch (err) {
+      console.warn('[queryLatestMemberInfo]', err);
+    }
   };
 
   /**

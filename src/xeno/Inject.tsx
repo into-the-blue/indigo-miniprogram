@@ -22,7 +22,7 @@ function getInjectName(component: IReactComponent<any>, injectNames?: string): s
 
 export interface XenoComponentProps<T = any> {
   on: <K extends keyof T = keyof T>(eventName: K, callback: (data: any) => void) => () => void;
-  next: <K extends keyof T = keyof T>(eventName: K, payload: T[K]) => void;
+  next: <K extends keyof T = keyof T>(eventName: K, payload?: T[K]) => void;
 }
 
 export function injectXeno<T = any>(target: IReactComponent<any>) {
@@ -46,7 +46,7 @@ export function injectXeno<T = any>(target: IReactComponent<any>) {
     };
 
     const next = <K extends keyof T = keyof T>(eventName: K, payload: T[K]) => {
-      xeno.next(eventName, payload);
+      xeno.next(eventName, payload ? payload : { data: undefined });
     };
     const newProps = {
       ...props,

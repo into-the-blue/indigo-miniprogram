@@ -25,7 +25,7 @@ class FreeMembershipInteractor implements IInteractor {
     }
   };
 
-  redeemFreeMembership = async () => {
+  redeemFreeMembership = async (onSuccess?: () => void) => {
     // if not logged in, guide users to log in
     if (!this.userStore.isLoggedIn) {
       console.warn('aaaa');
@@ -56,13 +56,14 @@ class FreeMembershipInteractor implements IInteractor {
     // do redeem
     try {
       Taro.showLoading();
-      const { code, message, success } = await MembershipService.new('5', 'monthly_activity');
+      const { code, success } = await MembershipService.new('5', 'monthly_activity');
       if (success) {
         Taro.showToast({
           title: '成功',
           icon: 'success',
           duration: 2000,
         });
+        onSuccess && onSuccess();
       } else {
         let msg: string = '';
         if (code === 301) {

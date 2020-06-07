@@ -10,7 +10,9 @@ class FreeMembershipPresenter implements IPresenter {
   componentWillUnmount() {}
 
   onPressRedeem = () => {
-    this.interactor.redeemFreeMembership();
+    this.interactor.redeemFreeMembership(() =>
+      this.viewModel.getProps.next('Feed_queryMemberInfo'),
+    );
   };
 }
 export { FreeMembershipPresenter };

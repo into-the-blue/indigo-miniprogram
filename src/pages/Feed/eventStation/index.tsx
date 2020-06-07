@@ -13,3 +13,9 @@ export type XFeedSetMapFocusedPosition = {
         };
   };
 };
+
+export type XFeedQueryMemberInfo = {
+  Feed_queryMemberInfo: {
+    data: undefined;
+  };
+};

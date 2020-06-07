@@ -7,6 +7,7 @@ import {} from '../interactor';
 import {} from '../stores';
 import { BaseView, Button, FlexView } from '@/components';
 import './styles.scss';
+import { injectXeno } from '@/xeno';
 
 @inject('freeMembershipStore')
 @observer
@@ -24,6 +25,10 @@ class FreeMembershipViewModel extends React.Component<IViewModelProps> implement
   }
 
   componentWillUnmount() {}
+
+  get getProps() {
+    return this.props;
+  }
 
   render() {
     const { isError, isLoading, remainingRedeemTimes } = this.props.freeMembershipStore!;
@@ -53,4 +58,4 @@ class FreeMembershipViewModel extends React.Component<IViewModelProps> implement
   }
 }
 
-export default FreeMembershipViewModel;
+export default injectXeno(FreeMembershipViewModel);

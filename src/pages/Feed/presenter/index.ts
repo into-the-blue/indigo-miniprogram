@@ -2,7 +2,6 @@ import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
 import { XExtractData, IPOI } from '@/types';
-import queryString from 'query-string';
 import { Routes } from '@/utils/constants';
 import { XFeedSetMapFocusedPosition } from '../eventStation';
 
@@ -15,6 +14,7 @@ class FeedPresenter implements IPresenter {
     Taro.hideHomeButton();
     this.init();
     this.viewModel.getProps.on('Feed_setMapFocusedPosition', this.setFocusedPosition);
+    this.viewModel.getProps.on('Feed_queryMemberInfo', this.interactor.queryLatestMemberInfo);
   }
   componentWillUnmount() {}
 
