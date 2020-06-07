@@ -1,0 +1,23 @@
+.free-membership__ {
+  &container {
+    padding: 30px;
+    flex: 1;
+    height: 100vh;
+  }
+
+  &content {
+    font-size: 40px;
+    margin: 10px 0;
+    color: black;
+  }
+
+  &ps {
+    font-size: 24px;
+  }
+
+  &button {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 100px;
+  }
+}

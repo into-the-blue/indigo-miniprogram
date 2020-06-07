@@ -6,7 +6,7 @@ export class MembershipService {
     enable: boolean;
     remainingRedeemTimes: number;
   }> => {
-    const { data } = await apiClient.get('/member');
+    const { data } = await apiClient.get('/member/promo');
     return data.data;
   };
 

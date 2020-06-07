@@ -20,7 +20,7 @@ export const pick = <T, K extends keyof T>(
 
 export const Omit = <T, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
   const toReturn: any = {};
-  Object.keys(key => {
+  Object.keys(obj).forEach((key: any) => {
     if (keys.includes(key)) return;
     const value = obj[key];
     toReturn[key] = value;

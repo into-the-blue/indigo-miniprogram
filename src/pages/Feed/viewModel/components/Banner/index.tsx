@@ -16,7 +16,7 @@ export const Banner = () => {
   const [banners, setBanners] = useState<IBanner[]>([]);
   useEffect(() => {
     queryBanners();
-  });
+  }, []);
   const queryBanners = () => {
     UniversalService.getBanners()
       .then(setBanners)

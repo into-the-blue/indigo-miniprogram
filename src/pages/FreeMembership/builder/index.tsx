@@ -17,8 +17,8 @@ class Builder extends React.Component<IProps> {
   }
   componentDidMount() {}
   buildInteractor = () => {
-    const { freeMembershipStore } = getStores('freeMembershipStore');
-    return new FreeMembershipInteractor(freeMembershipStore);
+    const { freeMembershipStore, userStore } = getStores('freeMembershipStore', 'userStore');
+    return new FreeMembershipInteractor(freeMembershipStore, userStore);
   };
   buildPresenter = (interactor: FreeMembershipInteractor) => (viewModel: IViewModel) => {
     return new FreeMembershipPresenter(interactor, viewModel);

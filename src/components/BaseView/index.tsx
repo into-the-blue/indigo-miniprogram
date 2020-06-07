@@ -36,12 +36,12 @@ export const BaseView = ({
   }
   if (isError) {
     return (
-      <View>
-        <Text>{'出错啦'}</Text>
+      <FlexView column>
+        <Text style={{ alignSelf: 'center' }}>{'出错啦'}</Text>
         <Button onClick={onPressRetry} type={'danger'}>
           {'重试'}
         </Button>
-      </View>
+      </FlexView>
     );
   }
   return (

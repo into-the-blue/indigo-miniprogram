@@ -23,12 +23,12 @@ class UserStore {
   }
 
   initUserInfo = async () => {
-    const cached = await Cache.get('userInfo');
-    if (cached) {
-      this.setState({
-        userInfo: cached,
-      });
-    }
+    // const cached = await Cache.get('userInfo');
+    // if (cached) {
+    //   this.setState({
+    //     userInfo: cached,
+    //   });
+    // }
     const userInfo = await UserClient.queryUserInfo();
     console.warn('[initUserInfo]', userInfo);
     this.setState({
