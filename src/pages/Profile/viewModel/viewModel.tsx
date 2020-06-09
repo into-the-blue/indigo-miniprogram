@@ -4,13 +4,11 @@ import { View, ScrollView } from '@tarojs/components';
 import { AtMessage } from 'taro-ui';
 import { IViewModel, IViewModelProps } from '../types';
 import { ProfilePresenter } from '../presenter';
-import {} from '../interactor';
-import {} from '../stores';
-import {} from '@/services/user';
 import { Button } from '@/components';
 import { UserInfo } from './components/UserInfo';
 import UserSubscriptions from './components/UserSubscriptions';
 import { injectXeno } from '@/xeno';
+import { MemberInfo } from './components/MemberInfo';
 
 @inject('global', 'userStore', 'subscriptionStore')
 @observer
@@ -34,14 +32,17 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
   }
 
   render() {
-    const { userInfo, isLoggedIn } = this.props.userStore!;
+    const { userInfo, isLoggedIn, memberInfo } = this.props.userStore!;
     const { userSubscriptions } = this.props.subscriptionStore!;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
         <AtMessage />
         <ScrollView>
           {isLoggedIn ? (
-            <UserInfo userInfo={userInfo!} />
+            <React.Fragment>
+              <UserInfo userInfo={userInfo!} />
+              <MemberInfo info={memberInfo} />
+            </React.Fragment>
           ) : (
             <Button
               openType={'getUserInfo'}

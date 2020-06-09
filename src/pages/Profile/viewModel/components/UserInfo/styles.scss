@@ -1,0 +1,11 @@
+@import '@/styles/theme.scss';
+
+.user-info__ {
+  &container {
+    margin: 30px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: $shadow-light;
+  }
+}

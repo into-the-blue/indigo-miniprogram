@@ -1,0 +1,37 @@
+@import '@/styles/theme.scss';
+
+.member-info__ {
+  &container {
+    margin: $margin;
+    padding: $margin;
+    border-radius: 16px;
+    box-shadow: $shadow-light;
+    background-color: white;
+    margin-top: 0;
+  }
+
+  &title {
+    font-size: $title-1;
+    font-weight: bold;
+    color: black;
+    margin-bottom: $margin;
+    margin-left: $margin;
+    margin-top: $margin;
+  }
+
+  &member-type {
+    font-size: 44px;
+    color: #ffc107;
+    text-align: center;
+  }
+
+  &placeholder {
+    color: #ff6d00;
+  }
+
+  &divider {
+    width: 1px;
+    background-color: #ccc;
+    height: auto;
+  }
+}
