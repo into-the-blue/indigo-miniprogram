@@ -30,6 +30,21 @@ class FeedInteractor implements IInteractor {
     this.mMap.setCustomLocationMarker(locationId);
   };
 
+  openWxSetting = async (scope: string) => {
+    const res = await Taro.getSetting();
+    if (!res.authSetting[scope]) {
+      const res2 = await Taro.openSetting();
+      if (res2.authSetting[scope]) {
+        this.getUserCurrentLocation();
+      } else {
+        Taro.atMessage({
+          type: 'error',
+          message: 'User denied access to location',
+        });
+      }
+    }
+  };
+
   getUserCurrentLocation = async () => {
     try {
       const res = await Taro.getLocation({
@@ -43,8 +58,14 @@ class FeedInteractor implements IInteractor {
       });
       this.mMap.setUserCurrentPositionMarker(res.longitude, res.latitude);
       this.checkAvailableCitys([res.longitude, res.latitude]);
+      this.feed.setLocationAuthorized(true);
     } catch (err) {
       console.warn('[getUserCurrentLocation]', err);
+      this.feed.setLocationAuthorized(false);
+      Taro.atMessage({
+        type: 'error',
+        message: 'User denied access to location',
+      });
     }
   };
 

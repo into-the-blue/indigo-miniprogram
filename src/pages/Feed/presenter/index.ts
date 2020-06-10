@@ -24,6 +24,10 @@ class FeedPresenter implements IPresenter {
     this.interactor.queryStationsNearby();
   };
 
+  requestLocationPermission = async () => {
+    this.interactor.openWxSetting('scope.userLocation');
+  };
+
   setFocusedPosition = async (data: XExtractData<XFeedSetMapFocusedPosition>) => {
     const { type } = data;
     console.warn('[setFocusedPosition]', data);

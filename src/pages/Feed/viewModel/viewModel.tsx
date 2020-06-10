@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, Map, CoverImage } from '@tarojs/components';
+import { View, Map, CoverImage, Text, Button } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { FeedPresenter } from '../presenter';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ import { AtMessage } from 'taro-ui';
 import './index.scss';
 import { injectXeno } from '@/xeno';
 import { AvailableCities } from './components/AvailableCities';
+import { FlexView } from '@/components';
 
 @inject('global', 'feed', 'mMap')
 @observer
@@ -36,7 +37,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   }
 
   render() {
-    const { showApartmentListModal } = this.props.feed!;
+    const { showApartmentListModal, locationAuthorized } = this.props.feed!;
     const {
       currentCoordinate,
       setting,
@@ -58,6 +59,17 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
         <AtMessage />
         <Banner />
         <View style={{ display: 'flex', position: 'relative', flex: 1 }}>
+          {!locationAuthorized && (
+            <FlexView column style={{ alignItems: 'center', marginTop: 80 }}>
+              <Text style={{ textAlign: 'center' }}>
+                {'We need access to your location to provide service'}
+              </Text>
+
+              <Button type={'primary'} onClick={this.presenter.requestLocationPermission}>
+                {'Grant'}
+              </Button>
+            </FlexView>
+          )}
           {currentCoordinate && (
             <View
               className={classNames('flex', {
@@ -92,20 +104,24 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             onPressSubscribe={this.presenter.goToSubscription}
             onPressApartment={this.presenter.onPressApartment}
           />
-          <SearchBar
-            isSearchBarOpen={isSearchBarOpen}
-            openSearchBar={openSearchBar}
-            closeSearchBar={closeSearchBar}
-          />
-          <AvailableCities
-            availableCities={availableCities}
-            isOpen={cityActionSheetVisible}
-            dismissActionSheet={dismissCityActionSheet}
-            onSelectCity={this.presenter.onSelectCity}
-            showActionSheet={showCityActionSheet}
-            currentCity={currentCity}
-            isSearchBarOpen={isSearchBarOpen}
-          />
+          {locationAuthorized && (
+            <SearchBar
+              isSearchBarOpen={isSearchBarOpen}
+              openSearchBar={openSearchBar}
+              closeSearchBar={closeSearchBar}
+            />
+          )}
+          {locationAuthorized && (
+            <AvailableCities
+              availableCities={availableCities}
+              isOpen={cityActionSheetVisible}
+              dismissActionSheet={dismissCityActionSheet}
+              onSelectCity={this.presenter.onSelectCity}
+              showActionSheet={showCityActionSheet}
+              currentCity={currentCity}
+              isSearchBarOpen={isSearchBarOpen}
+            />
+          )}
         </View>
       </View>
     );

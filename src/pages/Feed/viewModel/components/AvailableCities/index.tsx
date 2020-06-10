@@ -53,9 +53,6 @@ export const AvailableCities = observer(
               </AtActionSheetItem>
             );
           })}
-          {/* <AtActionSheetItem onClick={dismissActionSheet}>
-        <Text style={{ color: 'red' }}>{'取消'}</Text>
-      </AtActionSheetItem> */}
         </AtActionSheet>
       </FlexView>
     );
