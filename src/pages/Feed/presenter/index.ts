@@ -15,11 +15,12 @@ class FeedPresenter implements IPresenter {
     this.init();
     this.viewModel.getProps.on('Feed_setMapFocusedPosition', this.setFocusedPosition);
     this.viewModel.getProps.on('Feed_queryMemberInfo', this.interactor.queryLatestMemberInfo);
+    this.viewModel.getProps.on('Global_userLogIn', this.onUserLogIn);
   }
   componentWillUnmount() {}
 
   init = async () => {
-    this.interactor.queryLastestUserInfo();
+    this.interactor.queryUserInfo();
     await this.interactor.getUserCurrentLocation();
     this.interactor.queryStationsNearby();
   };
@@ -44,6 +45,11 @@ class FeedPresenter implements IPresenter {
       const mapCtx = Taro.createMapContext('map');
       setTimeout(mapCtx.moveToLocation, 0);
     }
+  };
+
+  onUserLogIn = () => {
+    this.interactor.queryUserInfo();
+    this.interactor.getUserCurrentLocation();
   };
 
   onRegionChange = (prop: any) => {

@@ -10,7 +10,14 @@ interface IProps extends IFlexViewProps {
   onPressRetry?: () => void;
   showPlaceholder?: boolean;
   renderPlaceholder?: () => JSX.Element;
-  children: React.ReactChild | (React.ReactChild | null | undefined)[] | null | undefined;
+  children:
+    | React.ReactChild
+    | (React.ReactChild | null | undefined)[]
+    | null
+    | undefined
+    | false
+    | string
+    | any;
   className?: string;
   style?: React.CSSProperties;
 }

@@ -22,6 +22,7 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
   }
 
   componentDidMount() {
+    console.warn('[Profile page]', 'mount');
     this.presenter.componentDidMount();
   }
 
@@ -38,26 +39,27 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
       <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
         <AtMessage />
         <ScrollView>
-          {isLoggedIn ? (
+          {isLoggedIn && (
             <React.Fragment>
               <UserInfo userInfo={userInfo!} />
               <MemberInfo info={memberInfo} />
+              <UserSubscriptions
+                onPressSubscription={this.presenter.onPressSubscription}
+                onDelete={this.presenter.onDeleteSubscription}
+                subscriptions={userSubscriptions}
+                onPressEdit={this.presenter.onPressEdit}
+              />
             </React.Fragment>
-          ) : (
+          )}
+          {!isLoggedIn && (
             <Button
               openType={'getUserInfo'}
               type={'primary'}
-              onGetUserInfo={this.presenter.onGetUserInfo}
+              onGetUserInfo={this.presenter.onGrantWechatInfo}
             >
               {'Get user info'}
             </Button>
           )}
-          <UserSubscriptions
-            onPressSubscription={this.presenter.onPressSubscription}
-            onDelete={this.presenter.onDeleteSubscription}
-            subscriptions={userSubscriptions}
-            onPressEdit={this.presenter.onPressEdit}
-          />
         </ScrollView>
       </View>
     );

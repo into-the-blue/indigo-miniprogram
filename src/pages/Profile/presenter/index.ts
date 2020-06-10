@@ -9,15 +9,18 @@ class ProfilePresenter implements IPresenter {
 
   async componentDidMount() {
     Taro.hideHomeButton();
-    this.queryUserSubscriptions();
+    this.interactor.queryUserSubscriptions();
+    this.viewModel.getProps.on('Global_userLogIn', this.onUserLogIn);
   }
   componentWillUnmount() {}
 
-  onGetUserInfo = async ({ detail: { userInfo, encryptedData, iv } }) => {
-    this.interactor.login(encryptedData, iv);
+  onGrantWechatInfo = async ({ detail: { userInfo, encryptedData, iv } }) => {
+    this.interactor.login(encryptedData, iv, () =>
+      this.viewModel.getProps.next('Global_userLogIn'),
+    );
   };
 
-  queryUserSubscriptions = () => {
+  onUserLogIn = () => {
     this.interactor.queryUserSubscriptions();
   };
 

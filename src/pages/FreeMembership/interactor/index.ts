@@ -10,6 +10,7 @@ class FreeMembershipInteractor implements IInteractor {
   constructor(private viewStore: FreeMembershipStore, private userStore: UserStore) {}
 
   getFreeMembershipInfo = async () => {
+    if (!this.userStore.isLoggedIn) return;
     try {
       this.viewStore.onInitStart();
       const info = await MembershipService.getFreeMembershipInfo();

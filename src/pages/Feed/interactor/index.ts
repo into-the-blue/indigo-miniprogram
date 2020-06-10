@@ -3,7 +3,7 @@ import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
-import { Subscription, from, Subject } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { get } from 'lodash';
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
@@ -17,11 +17,12 @@ class FeedInteractor implements IInteractor {
 
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
 
-  queryLastestUserInfo = async () => {
+  queryUserInfo = async (onSuccess?: () => void) => {
     try {
       await this.userStore.initUserInfo();
+      onSuccess && onSuccess();
     } catch (err) {
-      console.warn('queryLastestUserInfo', err.message);
+      console.warn('queryUserInfo', err.message);
       //
     }
   };
@@ -98,6 +99,7 @@ class FeedInteractor implements IInteractor {
 
   checkAvailableCitys = async (coordinates: [number, number]) => {
     try {
+      if (!this.userStore.isLoggedIn) return;
       const city = await this.queryAndSetUserCurrentCity(coordinates);
       const availableCitys = await LocationClient.getAvailableCities();
       this.mMap.setAvailableCities(availableCitys);

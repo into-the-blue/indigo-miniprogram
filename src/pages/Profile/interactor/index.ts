@@ -8,7 +8,7 @@ import { ISubscriptionClient } from '@/types';
 class ProfileInteractor implements IInteractor {
   constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}
 
-  login = async (encryptedData: string, iv: string) => {
+  login = async (encryptedData: string, iv: string, onSuccess: () => void) => {
     try {
       const { accessToken, refreshToken, isNew, userInfo } = await this.userStore.login(
         encryptedData,
@@ -24,6 +24,7 @@ class ProfileInteractor implements IInteractor {
       if (isNew) {
         // new user...
       }
+      onSuccess();
     } catch (err) {
       Taro.atMessage({
         message: '出错啦...',
@@ -33,6 +34,7 @@ class ProfileInteractor implements IInteractor {
   };
 
   queryUserSubscriptions = async () => {
+    if (!this.userStore.isLoggedIn) return;
     const subscriptions = await SubscriptionClient.queryUserSubscriptions();
     console.warn(subscriptions);
     this.subscriptionStore.setUserSubscriptions(subscriptions);
