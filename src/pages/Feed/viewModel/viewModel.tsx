@@ -11,6 +11,7 @@ import Assets from '@/assets';
 import { AtMessage } from 'taro-ui';
 import './index.scss';
 import { injectXeno } from '@/xeno';
+import { AvailableCities } from './components/AvailableCities';
 
 @inject('global', 'feed', 'mMap')
 @observer
@@ -43,7 +44,11 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       scale,
       mapDragged,
       currentApartments,
+      cityActionSheetVisible,
+      dismissCityActionSheet,
+      availableCities,
     } = this.props.mMap;
+    console.warn(cityActionSheetVisible);
     return (
       <View className={'page-container'}>
         <AtMessage />
@@ -59,8 +64,8 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               <Map
                 id={'map'}
                 style={{ width: '100%', height: '100%' }}
-                longitude={currentCoordinate.lng}
-                latitude={currentCoordinate.lat}
+                longitude={currentCoordinate[0]}
+                latitude={currentCoordinate[1]}
                 setting={setting}
                 scale={scale}
                 // @ts-ignore
@@ -85,6 +90,12 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
           />
           <SearchBar />
         </View>
+        <AvailableCities
+          availableCities={availableCities}
+          isOpen={cityActionSheetVisible}
+          dismissActionSheet={dismissCityActionSheet}
+          onSelectCity={this.presenter.onSelectCity}
+        />
       </View>
     );
   }

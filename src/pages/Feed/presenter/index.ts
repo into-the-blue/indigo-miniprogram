@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
-import { XExtractData, IPOI } from '@/types';
+import { XExtractData, IPOI, IAvailableCity } from '@/types';
 import { Routes } from '@/utils/constants';
 import { XFeedSetMapFocusedPosition } from '../eventStation';
 
@@ -35,10 +35,7 @@ class FeedPresenter implements IPresenter {
       const locationId = await this.interactor.queryCustomLocationPOI(data.payload as IPOI);
       if (!locationId) return;
       this.interactor.setCustomLocationMarker(locationId);
-      this.interactor.setCurrentCoordinate(
-        data.payload.coordinates[0],
-        data.payload.coordinates[1],
-      );
+      this.interactor.setCurrentCoordinate(...data.payload.coordinates);
       this.interactor.focusCustomLocation(locationId);
       const mapCtx = Taro.createMapContext('map');
       setTimeout(mapCtx.moveToLocation, 0);
@@ -82,6 +79,13 @@ class FeedPresenter implements IPresenter {
     });
   };
 
+  onSelectCity = (city: IAvailableCity) => {
+    this.interactor.onDragMap();
+    this.interactor.setCurrentCity(city);
+    // const mapCtx = Taro.createMapContext('map');
+    // setTimeout(mapCtx.moveToLocation, 0);
+  };
+
   /**
    * causedBy: update: (map init, pinch ) | "gesture" (drag) |
    *
@@ -102,7 +106,6 @@ class FeedPresenter implements IPresenter {
   onEndDrag = async (e: any) => {
     if (e.causedBy !== 'drag') return;
     // console.warn('on end', e.timeStamp - this.beginTimeStamp, e);
-    this.interactor.cancelQueryStations();
     const mapCtx = Taro.createMapContext('map');
     const { longitude, latitude } = await mapCtx.getCenterLocation({});
     this.interactor.setCurrentCoordinate(longitude, latitude);

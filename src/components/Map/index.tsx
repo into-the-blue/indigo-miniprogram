@@ -8,14 +8,14 @@ interface IProps {
   style?: React.CSSProperties;
 }
 const IMap = ({ mMap, style }: IProps) => {
-  const { currentCoordinate, setting, setState } = mMap!;
+  const { currentCoordinate, setting } = mMap!;
   if (!currentCoordinate) return null;
   return (
     <View style={style}>
       <Map
         style={{ width: '100%', height: '100%' }}
-        longitude={currentCoordinate.lng}
-        latitude={currentCoordinate.lat}
+        longitude={currentCoordinate[0]}
+        latitude={currentCoordinate[1]}
         setting={setting}
       />
     </View>

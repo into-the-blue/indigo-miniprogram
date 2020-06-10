@@ -7,7 +7,7 @@ import { Subscription, from } from 'rxjs';
 import { get } from 'lodash';
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
-import { IPOI } from '@/types';
+import { IPOI, IAvailableCity } from '@/types';
 import { MembershipService } from '@/services/membership';
 
 class FeedInteractor implements IInteractor {
@@ -39,19 +39,50 @@ class FeedInteractor implements IInteractor {
           lat: res.latitude,
         },
       });
-      this.mMap.setUserCurrentPositionMarker(121.44045, 31.22524);
-      // console.warn(res);
-      // this.mMap.setState({
-      //   currentCoordinate: {
-      //     lat: res.latitude,
-      //     lng: res.longitude,
-      //   },
-      // });
+      this.mMap.setUserCurrentPositionMarker(res.longitude, res.latitude);
+      this.checkAvailableCitys([res.longitude, res.latitude]);
     } catch (err) {
-      console.warn(err);
+      console.warn('[getUserCurrentLocation]', err);
     }
   };
 
+  checkAvailableCitys = async (coordinates: [number, number]) => {
+    try {
+      const decoded = await LocationClient.decodeCoordinates(coordinates);
+      const availableCitys = await LocationClient.getAvailableCities();
+      this.mMap.setAvailableCities(availableCitys);
+      console.warn('[checkAvailableCitys]', decoded);
+      if (decoded) {
+        const city = decoded.regeocode.addressComponent.city;
+        this.mMap.setCurrentCity(city);
+        if (!this.mMap.inAvailableCities(city)) {
+          Taro.showModal({
+            title: '当前位置不在服务区',
+            content: '选择一个提供服务的城市?',
+            confirmText: '好的',
+            cancelText: '算了',
+            success: res => {
+              if (res.confirm) {
+                this.showCityActionSheet();
+              }
+            },
+          });
+        }
+      }
+    } catch (err) {
+      //
+    }
+  };
+
+  setCurrentCity = (city: IAvailableCity) => {
+    this.mMap.setCurrentCity(city.name);
+    this.setCurrentCoordinate(...city.defaultCoordinates);
+    this.mMap.dismissCityActionSheet();
+    this.queryStationsNearby(...city.defaultCoordinates);
+  };
+  showCityActionSheet = async () => {
+    this.mMap.showCityActionSheet();
+  };
   /**
    *
    *
@@ -59,16 +90,12 @@ class FeedInteractor implements IInteractor {
    * query metro stations nearby coordiantes
    */
   queryStationsNearby = async (lng?: number, lat?: number) => {
-    if (!this.mMap.currentCoordinate) return;
+    this.cancelQueryStations();
+    if (!this.mMap.currentCoordinate && !(lng && lat)) return;
     const args: [number, number, number] = [
-      this.mMap.currentCoordinate!.lng,
-      this.mMap.currentCoordinate!.lat,
+      ...(lng && lat ? [lng, lat] : this.mMap.currentCoordinate!),
       1000,
-    ];
-    if (lng && lat) {
-      args[0] = lng;
-      args[1] = lat;
-    }
+    ] as any;
     this.$queryStationsSub = from(ApartmentClient.queryStationsNearby(...args)).subscribe({
       next: stationsNearby => this.mMap.setMetroStationMarkers(stationsNearby),
       error: err => {
@@ -117,12 +144,7 @@ class FeedInteractor implements IInteractor {
   cancelQueryStations = () => this.$queryStationsSub && this.$queryStationsSub.unsubscribe();
 
   setCurrentCoordinate = (lng: number, lat: number) => {
-    this.mMap.setState({
-      currentCoordinate: {
-        lng,
-        lat,
-      },
-    });
+    this.mMap.setCurrentCoordinates(lng, lat);
   };
 
   onDragMap = () => {

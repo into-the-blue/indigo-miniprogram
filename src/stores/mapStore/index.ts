@@ -6,11 +6,13 @@ import {
   IMetroStationClient,
   IApartment,
   ICustomLocationClient,
+  IAvailableCity,
 } from '@/types';
 import { get } from 'lodash';
 import Assets from '@/assets';
 import { MAP_SETTING } from '@/utils/constants';
 import { findItemByKeyValue } from '@/utils';
+import { removeShi } from './helper';
 
 type FocusedMetroStation = {
   type: 'metroStation';
@@ -33,10 +35,7 @@ class MapStore implements IStore<MapStore> {
   //custom locations
   @observable customLocations: ICustomLocationClient[] = [];
   // center of the map
-  @observable currentCoordinate?: {
-    lng: number;
-    lat: number;
-  };
+  @observable currentCoordinate?: [number, number];
   // if map has been dragged
   @observable mapDragged: boolean = false;
   // map scale
@@ -54,10 +53,17 @@ class MapStore implements IStore<MapStore> {
   // city
   @observable currentCity: string = 'shanghai';
 
+  @observable availableCities: IAvailableCity[] = [];
+
+  @observable cityActionSheetVisible: boolean = false;
+
   @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = next => {
     Object.assign(this, next);
   };
 
+  @action setCurrentCoordinates = (lng: number, lat: number) => {
+    this.currentCoordinate = [lng, lat];
+  };
   /**
    *
    *
@@ -119,13 +125,16 @@ class MapStore implements IStore<MapStore> {
     });
   };
 
+  /**
+   *
+   *
+   * @memberof MapStore
+   * set current coordinates and add marker
+   */
   @action
   setUserCurrentPositionMarker = (lng: number, lat: number) => {
     const found = this.markers.findIndex(o => o.type === 'user');
-    this.currentCoordinate = {
-      lng,
-      lat,
-    };
+    this.currentCoordinate = [lng, lat];
     const marker: IMarker = {
       id: 'user -1',
       longitude: lng,
@@ -204,6 +213,28 @@ class MapStore implements IStore<MapStore> {
   @action addCustomLocations = (cl: ICustomLocationClient) => {
     if (this.customLocations.some(o => o.id === cl.id)) return;
     this.customLocations.push(cl);
+  };
+
+  @action setAvailableCities = (cities: IAvailableCity[]) => {
+    this.availableCities = cities;
+  };
+
+  @action setCurrentCity = (city: string) => {
+    this.currentCity = city;
+  };
+
+  @action showCityActionSheet = () => {
+    this.cityActionSheetVisible = true;
+  };
+
+  @action dismissCityActionSheet = () => {
+    this.cityActionSheetVisible = false;
+  };
+
+  inAvailableCities = (city: string) => {
+    const normailized = city.toLowerCase();
+    const key = /^[a-z]+$/.test(normailized) ? 'value' : 'name';
+    return this.availableCities.some(item => removeShi(item[key]) === removeShi(normailized));
   };
 }
 export { MapStore };
