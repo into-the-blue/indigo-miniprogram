@@ -1,0 +1,39 @@
+@import '@/styles/theme.scss';
+
+.available-cities__ {
+  &container {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+  }
+  &text-container {
+    box-shadow: $shadow;
+    background-color: white;
+    border-radius: 60px;
+    height: 60px;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &container-hide {
+    animation-name: text-container-hide;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+  }
+
+  &text {
+    font-size: 32px;
+  }
+}
+
+@keyframes text-container-hide {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -200px;
+  }
+}

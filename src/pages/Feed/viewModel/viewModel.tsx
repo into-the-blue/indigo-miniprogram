@@ -47,8 +47,12 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       cityActionSheetVisible,
       dismissCityActionSheet,
       availableCities,
+      currentCity,
+      showCityActionSheet,
+      isSearchBarOpen,
+      openSearchBar,
+      closeSearchBar,
     } = this.props.mMap;
-    console.warn(cityActionSheetVisible);
     return (
       <View className={'page-container'}>
         <AtMessage />
@@ -88,14 +92,21 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             onPressSubscribe={this.presenter.goToSubscription}
             onPressApartment={this.presenter.onPressApartment}
           />
-          <SearchBar />
+          <SearchBar
+            isSearchBarOpen={isSearchBarOpen}
+            openSearchBar={openSearchBar}
+            closeSearchBar={closeSearchBar}
+          />
+          <AvailableCities
+            availableCities={availableCities}
+            isOpen={cityActionSheetVisible}
+            dismissActionSheet={dismissCityActionSheet}
+            onSelectCity={this.presenter.onSelectCity}
+            showActionSheet={showCityActionSheet}
+            currentCity={currentCity}
+            isSearchBarOpen={isSearchBarOpen}
+          />
         </View>
-        <AvailableCities
-          availableCities={availableCities}
-          isOpen={cityActionSheetVisible}
-          dismissActionSheet={dismissCityActionSheet}
-          onSelectCity={this.presenter.onSelectCity}
-        />
       </View>
     );
   }

@@ -57,6 +57,15 @@ class MapStore implements IStore<MapStore> {
 
   @observable cityActionSheetVisible: boolean = false;
 
+  @observable isSearchBarOpen: boolean = false;
+
+  @action openSearchBar = () => {
+    this.isSearchBarOpen = true;
+  };
+  @action closeSearchBar = () => {
+    this.isSearchBarOpen = false;
+  };
+
   @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = next => {
     Object.assign(this, next);
   };

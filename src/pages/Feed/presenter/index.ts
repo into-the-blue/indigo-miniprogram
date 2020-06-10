@@ -96,6 +96,8 @@ class FeedPresenter implements IPresenter {
     // console.warn('on begin', e);
     this.interactor.onDragMap();
     this.beginTimeStamp = e.timeStamp;
+    this.interactor.cancelQueryStations();
+    this.interactor.cancelQueryUserCurrentCity();
   };
 
   /**
@@ -110,6 +112,7 @@ class FeedPresenter implements IPresenter {
     const { longitude, latitude } = await mapCtx.getCenterLocation({});
     this.interactor.setCurrentCoordinate(longitude, latitude);
     this.interactor.queryStationsNearby(longitude, latitude);
+    this.interactor.$queryAndSetUserCurrentCity(longitude, latitude);
   };
 
   showApartmentList = () => {

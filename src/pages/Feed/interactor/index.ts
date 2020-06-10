@@ -3,15 +3,17 @@ import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
-import { Subscription, from } from 'rxjs';
+import { Subscription, from, Subject } from 'rxjs';
 import { get } from 'lodash';
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
 import { IPOI, IAvailableCity } from '@/types';
 import { MembershipService } from '@/services/membership';
+import { filter } from 'rxjs/operators';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
+  $queryCurrentCitySub?: Subscription;
 
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
 
@@ -46,14 +48,39 @@ class FeedInteractor implements IInteractor {
     }
   };
 
-  checkAvailableCitys = async (coordinates: [number, number]) => {
+  cancelQueryUserCurrentCity = () => {
+    this.$queryCurrentCitySub && this.$queryCurrentCitySub.unsubscribe();
+  };
+  $queryAndSetUserCurrentCity = (lng: number, lat: number) => {
+    this.cancelQueryUserCurrentCity();
+    this.$queryCurrentCitySub = from(this.queryAndSetUserCurrentCity([lng, lat]))
+      .pipe(filter(_ => !!_))
+      .subscribe({
+        next: city => this.mMap.setCurrentCity(city!),
+      });
+  };
+
+  queryAndSetUserCurrentCity = async (coordinates: [number, number]) => {
     try {
       const decoded = await LocationClient.decodeCoordinates(coordinates);
-      const availableCitys = await LocationClient.getAvailableCities();
-      this.mMap.setAvailableCities(availableCitys);
-      console.warn('[checkAvailableCitys]', decoded);
       if (decoded) {
         const city = decoded.regeocode.addressComponent.city;
+        this.mMap.setCurrentCity(city);
+        return city;
+      }
+      return null;
+    } catch (err) {
+      console.warn('[queryAndSetUserCurrentCity]', err.message);
+      return null;
+    }
+  };
+
+  checkAvailableCitys = async (coordinates: [number, number]) => {
+    try {
+      const city = await this.queryAndSetUserCurrentCity(coordinates);
+      const availableCitys = await LocationClient.getAvailableCities();
+      this.mMap.setAvailableCities(availableCitys);
+      if (city) {
         this.mMap.setCurrentCity(city);
         if (!this.mMap.inAvailableCities(city)) {
           Taro.showModal({
@@ -75,9 +102,16 @@ class FeedInteractor implements IInteractor {
   };
 
   setCurrentCity = (city: IAvailableCity) => {
+    this.mMap.dismissCityActionSheet();
+    if (city.name === this.mMap.currentCity) {
+      Taro.atMessage({
+        type: 'info',
+        message: '你已处于 ' + city.name,
+      });
+      return;
+    }
     this.mMap.setCurrentCity(city.name);
     this.setCurrentCoordinate(...city.defaultCoordinates);
-    this.mMap.dismissCityActionSheet();
     this.queryStationsNearby(...city.defaultCoordinates);
   };
   showCityActionSheet = async () => {
@@ -89,7 +123,7 @@ class FeedInteractor implements IInteractor {
    * @memberof FeedInteractor
    * query metro stations nearby coordiantes
    */
-  queryStationsNearby = async (lng?: number, lat?: number) => {
+  queryStationsNearby = (lng?: number, lat?: number) => {
     this.cancelQueryStations();
     if (!this.mMap.currentCoordinate && !(lng && lat)) return;
     const args: [number, number, number] = [

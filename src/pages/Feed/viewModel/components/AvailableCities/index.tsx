@@ -2,34 +2,62 @@ import React from 'react';
 import { AtActionSheet, AtActionSheetItem } from 'taro-ui';
 import { IAvailableCity } from '@/types';
 import { observer } from 'mobx-react';
+import { FlexView } from '@/components';
+import { Text } from '@tarojs/components';
+import './styles.scss';
+import classNames from 'classnames';
 
 interface IProps {
   availableCities: IAvailableCity[];
   onSelectCity: (city: IAvailableCity) => void;
   dismissActionSheet: () => void;
   isOpen: boolean;
+  currentCity: string | null;
+  showActionSheet: () => void;
+  isSearchBarOpen: boolean;
 }
 
 export const AvailableCities = observer(
-  ({ availableCities, onSelectCity, isOpen, dismissActionSheet }: IProps) => {
+  ({
+    availableCities,
+    onSelectCity,
+    isOpen,
+    dismissActionSheet,
+    currentCity,
+    showActionSheet,
+    isSearchBarOpen,
+  }: IProps) => {
     return (
-      <AtActionSheet
-        isOpened={isOpen}
-        onCancel={dismissActionSheet}
-        onClose={dismissActionSheet}
-        cancelText={'取消'}
-      >
-        {availableCities.map(city => {
-          return (
-            <AtActionSheetItem key={city.name} onClick={() => onSelectCity(city)}>
-              {city.name}
-            </AtActionSheetItem>
-          );
+      <FlexView
+        className={classNames('available-cities__container', {
+          'available-cities__container-hide': isSearchBarOpen,
         })}
-        {/* <AtActionSheetItem onClick={dismissActionSheet}>
+      >
+        <FlexView
+          onClick={showActionSheet}
+          className={classNames('available-cities__text-container')}
+        >
+          <Text className={'available-cities__text'}>{currentCity || '未知'}</Text>
+        </FlexView>
+
+        <AtActionSheet
+          isOpened={isOpen}
+          onCancel={dismissActionSheet}
+          onClose={dismissActionSheet}
+          cancelText={'取消'}
+        >
+          {availableCities.map(city => {
+            return (
+              <AtActionSheetItem key={city.name} onClick={() => onSelectCity(city)}>
+                {city.name}
+              </AtActionSheetItem>
+            );
+          })}
+          {/* <AtActionSheetItem onClick={dismissActionSheet}>
         <Text style={{ color: 'red' }}>{'取消'}</Text>
       </AtActionSheetItem> */}
-      </AtActionSheet>
+        </AtActionSheet>
+      </FlexView>
     );
   },
 );
