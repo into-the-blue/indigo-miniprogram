@@ -61,19 +61,32 @@ class ProfileInteractor implements IInteractor {
     }
   };
 
-  getEditSubscriptionTarget = (
-    type: 'metroStation' | 'customLocation',
-    subscription: ISubscriptionClient,
-  ) => {
-    if (type === 'metroStation') {
-      return {
-        type,
-        payload: {
-          coordinates: subscription.coordinates,
-          ...subscription.payload,
-        },
-      };
+  getEditSubscriptionTarget = (subscription: ISubscriptionClient) => {
+    return {
+      type: subscription.type,
+      payload: {
+        coordinates: subscription.coordinates,
+        ...subscription.payload,
+      },
+    };
+  };
+
+  isValidMember = () => {
+    if (!this.userStore.isMember) {
+      Taro.atMessage({
+        message: '你还不是会员, 快去领取免费会员吧',
+        type: 'warning',
+      });
+      return false;
     }
+    if (this.userStore.isMembershipExpired) {
+      Taro.atMessage({
+        message: '你的会员已过期',
+        type: 'warning',
+      });
+      return false;
+    }
+    return true;
   };
 }
 

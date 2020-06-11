@@ -132,6 +132,7 @@ class FeedPresenter implements IPresenter {
 
   goToSubscription = () => {
     if (!this.interactor.isLoggedIn()) return;
+    if (!this.interactor.isValidMember()) return;
     const target = this.interactor.getEditSubscriptionTarget()!;
     this.viewModel.getProps.next('EditSubscription_init', {
       guaranteed: true,

@@ -45,8 +45,8 @@ class ProfilePresenter implements IPresenter {
   };
 
   onPressEdit = (subscription: ISubscriptionClient) => {
-    console.warn(subscription.payload);
-    const target = this.interactor.getEditSubscriptionTarget('metroStation', subscription)!;
+    if (!this.interactor.isValidMember()) return;
+    const target = this.interactor.getEditSubscriptionTarget(subscription)!;
     this.viewModel.getProps.next('EditSubscription_init', {
       guaranteed: true,
       data: {

@@ -23,10 +23,8 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
   }
 
   componentDidMount() {
-    console.warn('[Profile page]', 'mount');
     this.presenter.componentDidMount();
   }
-
   componentWillUnmount() {}
 
   get getProps() {

@@ -47,6 +47,7 @@ class FeedInteractor implements IInteractor {
   };
 
   getUserCurrentLocation = async () => {
+    console.warn('[getUserCurrentLocation]');
     try {
       const res = await Taro.getLocation({
         type: 'gcj02',
@@ -107,6 +108,8 @@ class FeedInteractor implements IInteractor {
       if (city) {
         this.mMap.setCurrentCity(city);
         if (!this.mMap.inAvailableCities(city)) {
+          const pages = Taro.getCurrentPages();
+          console.warn('[checkAvailableCitys]', pages[pages.length - 1].route);
           Taro.showModal({
             title: '当前位置不在服务区',
             content: '选择一个提供服务的城市?',
@@ -339,6 +342,24 @@ class FeedInteractor implements IInteractor {
       Taro.atMessage({
         type: 'info',
         message: '请先登录!',
+      });
+      return false;
+    }
+    return true;
+  };
+
+  isValidMember = () => {
+    if (!this.userStore.isMember) {
+      Taro.atMessage({
+        message: '你还不是会员, 快去领取免费会员吧',
+        type: 'warning',
+      });
+      return false;
+    }
+    if (this.userStore.isMembershipExpired) {
+      Taro.atMessage({
+        message: '你的会员已过期',
+        type: 'warning',
       });
       return false;
     }
