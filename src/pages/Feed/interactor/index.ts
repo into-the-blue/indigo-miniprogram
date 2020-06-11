@@ -4,7 +4,7 @@ import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
-import get from 'lodash.get'
+import get from 'lodash.get';
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
 import { IPOI, IAvailableCity } from '@/types';
@@ -291,7 +291,7 @@ class FeedInteractor implements IInteractor {
    */
   getApartmentInfoData = (houseId: string) => {
     const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
-    console.warn(apartment);
+    console.warn('[getApartmentInfoData]', houseId, apartment);
     if (!apartment) return null;
 
     return {

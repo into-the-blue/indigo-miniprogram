@@ -10,7 +10,7 @@ import { injectXeno } from '@/xeno';
 import { ApartmentDetail } from '@/components/ApartmentDetail';
 import { BaseView, FlexView } from '@/components';
 import { ApartmentList } from '@/components/ApartmentList';
-import get from 'lodash.get'
+import get from 'lodash.get';
 
 @inject('global', 'apartmentInfoStore')
 @observer
@@ -37,6 +37,7 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
     const { selectedApartment, apartments } = this.props.apartmentInfoStore!;
     return (
       <BaseView style={{ flex: 1, backgroundColor: '#f5f5f5' }} isLoading={!selectedApartment}>
+        {/* <AtMessage /> */}
         <ApartmentDetail apartment={selectedApartment!} />
         <ScrollView style={{ marginTop: 15, height: '45vh' }} scrollY>
           <FlexView column>

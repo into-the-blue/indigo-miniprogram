@@ -75,8 +75,8 @@ class FeedPresenter implements IPresenter {
     }
   };
 
-  onPressApartment = (apartment: IApartment) => {
-    const data = this.interactor.getApartmentInfoData(apartment.houseId);
+  onPressApartment = (arg: IApartment | string) => {
+    const data = this.interactor.getApartmentInfoData(typeof arg === 'string' ? arg : arg.houseId);
     if (!data) return;
     this.viewModel.getProps.next('ApartmentInfo_init', {
       guaranteed: true,
