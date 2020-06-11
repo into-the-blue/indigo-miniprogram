@@ -10,7 +10,7 @@ import { injectXeno } from '@/xeno';
 import { ApartmentDetail } from '@/components/ApartmentDetail';
 import { BaseView, FlexView } from '@/components';
 import { ApartmentList } from '@/components/ApartmentList';
-import { get } from 'lodash';
+import get from 'lodash.get'
 
 @inject('global', 'apartmentInfoStore')
 @observer

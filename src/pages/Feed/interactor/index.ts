@@ -4,7 +4,7 @@ import { FeedStore } from '../stores';
 import { MapStore, UserStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
-import { get } from 'lodash';
+import get from 'lodash.get'
 import { findItemByKeyValue } from '@/utils';
 import { LocationClient } from '@/services/location';
 import { IPOI, IAvailableCity } from '@/types';

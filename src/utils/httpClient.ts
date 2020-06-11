@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, AxiosInstance } from 'taro-axios';
-import Taro from '@tarojs/taro';
 import { createHttpLink } from 'apollo-link-http';
 import WXApolloFetcher from 'wx-apollo-fetcher';
 import ApolloClient from 'apollo-client';

@@ -33,7 +33,7 @@ export default {
       {
         pagePath: 'pages/Feed/builder/index',
         iconPath: './assets/images/home.png',
-        selectedIconPath: './assets/images/home.png',
+        selectedIconPath: './assets/images/home_active.png',
         text: '首页',
       },
 
@@ -42,7 +42,7 @@ export default {
 
         iconPath: './assets/images/profile.png',
 
-        selectedIconPath: './assets/images/profile.png',
+        selectedIconPath: './assets/images/profile_active.png',
 
         text: '我的',
       },

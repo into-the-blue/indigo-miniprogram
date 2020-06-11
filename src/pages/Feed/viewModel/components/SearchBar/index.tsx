@@ -5,7 +5,7 @@ import Assets from '@/assets';
 import classNames from 'classnames';
 import { FlexView } from '@/components';
 import { AtInput, AtActivityIndicator } from 'taro-ui';
-import { debounce } from 'lodash';
+import debounce from 'lodash.debounce'
 import { getStores } from '@/stores';
 import { LocationClient } from '@/services/location';
 import { IPOI } from '@/types';

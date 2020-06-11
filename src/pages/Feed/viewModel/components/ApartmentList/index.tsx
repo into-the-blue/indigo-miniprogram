@@ -2,7 +2,6 @@ import React from 'react';
 import { CoverView, View, Text, ScrollView } from '@tarojs/components';
 import { IApartment } from '@/types';
 import classNames from 'classnames';
-import { get } from 'lodash';
 import './styles.scss';
 
 interface IProps {

@@ -8,7 +8,7 @@ import {
   ICustomLocationClient,
   IAvailableCity,
 } from '@/types';
-import { get } from 'lodash';
+import get from 'lodash.get'
 import Assets from '@/assets';
 import { MAP_SETTING } from '@/utils/constants';
 import { findItemByKeyValue } from '@/utils';

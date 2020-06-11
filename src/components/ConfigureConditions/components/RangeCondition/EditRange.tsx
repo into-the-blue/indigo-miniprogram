@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from '@tarojs/components';
 import { EditThreshold } from './EditThreshold';
-import { get } from 'lodash';
+import get from 'lodash.get'
 
 export const EditRange = ({
   // range,
