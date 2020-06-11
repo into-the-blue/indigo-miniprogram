@@ -6,6 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { API_ENDPOINT, GRAPHQL_ENDPOINT } from './constants';
 import { Cache } from './Cache';
 import { THttpResponse } from '@/types';
+import Taro from '@tarojs/taro';
 
 const link = createHttpLink({
   fetch: WXApolloFetcher,
@@ -45,10 +46,12 @@ const errorHanlder = (instance: AxiosInstance) => async (err: any) => {
       return instance(config);
     }
   }
-  // Taro.showToast({
-  //   title: 'Network error',
-  //   icon: 'none',
-  // });
+  if (err.response.status === 429) {
+    Taro.showToast({
+      title: '前方拥挤, 休息一下',
+      icon: 'none',
+    });
+  }
   return Promise.reject(err);
 };
 

@@ -12,11 +12,6 @@ class EditSubscriptionInteractor implements IInteractor {
     public editSubscriptionStore: EditSubscriptionStore,
     public mMap: MapStore,
   ) {}
-
-  addSubscription = (body: any) => {
-    return SubscriptionClient.addSubscription(body);
-  };
-
   updateSubscription = (body: any) => {
     return SubscriptionClient.updateSubscription(
       this.editSubscriptionStore.originSubscription!.id!,
@@ -29,6 +24,12 @@ class EditSubscriptionInteractor implements IInteractor {
       return Taro.atMessage({
         message: '请先登录',
         type: 'warning',
+      });
+    }
+    if (!this.userStore.isMember || this.userStore.isMembershipExpired) {
+      return Taro.atMessage({
+        message: '无效会员',
+        type: 'error',
       });
     }
     if (this.editSubscriptionStore.hasError) {
@@ -65,9 +66,9 @@ class EditSubscriptionInteractor implements IInteractor {
     };
     console.warn('[onSave]', conditions);
     try {
-      const { success, message } = await (isUpdating
+      const { success, message, code } = await (isUpdating
         ? this.updateSubscription
-        : this.addSubscription)(body);
+        : SubscriptionClient.addSubscription)(body);
       if (!success) {
         console.warn('[onSave]', message);
         Taro.atMessage({
@@ -83,7 +84,7 @@ class EditSubscriptionInteractor implements IInteractor {
       Taro.navigateBack();
       setTimeout(this.editSubscriptionStore.resetStore, 0);
     } catch (err) {
-      console.warn('addSubscription', err);
+      console.warn('[onSave]', err);
       Taro.atMessage({
         message: '前方拥挤...',
         type: 'error',
