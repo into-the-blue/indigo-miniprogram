@@ -32,7 +32,7 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
   }
 
   render() {
-    const { userInfo, isLoggedIn, memberInfo } = this.props.userStore!;
+    const { userInfo, isLoggedIn, memberInfo, messageGranted } = this.props.userStore!;
     const { userSubscriptions } = this.props.subscriptionStore!;
     return (
       <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
@@ -40,7 +40,11 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
         <ScrollView>
           {isLoggedIn && (
             <React.Fragment>
-              <UserInfo userInfo={userInfo!} />
+              <UserInfo
+                userInfo={userInfo!}
+                onPressOpenNotification={this.presenter.onPressOpenNotification}
+                messageGranted={messageGranted}
+              />
               <MemberInfo info={memberInfo} />
               <UserSubscriptions
                 onPressSubscription={this.presenter.onPressSubscription}

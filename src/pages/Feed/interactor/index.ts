@@ -10,6 +10,7 @@ import { LocationClient } from '@/services/location';
 import { IPOI, IAvailableCity } from '@/types';
 import { MembershipService } from '@/services/membership';
 import { filter } from 'rxjs/operators';
+import { WX_TEMPLATE_ID } from '@/utils/constants';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;

@@ -44,3 +44,4 @@ export const Routes = {
   Profile: '/pages/Profile/builder/index',
   FreeMembership: '/pages/FreeMembership/builder/index',
 };
+export const WX_TEMPLATE_ID = process.env.WX_TEMPLATE_ID;

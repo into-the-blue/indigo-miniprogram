@@ -78,4 +78,16 @@ export class SubscriptionClient {
     });
     return data.data[0];
   };
+
+  static viewtNotifications = async (ids: string[]) => {
+    return apiClient.post('/subscription/view_notification', {
+      ids,
+    });
+  };
+
+  static viewApartment = async (apartment_id: string) => {
+    return apiClient.post('/subscription/view_apartment', {
+      apartment_id,
+    });
+  };
 }

@@ -8,6 +8,15 @@ class ProfilePresenter implements IPresenter {
   constructor(public interactor: ProfileInteractor, public viewModel: IViewModel) {}
 
   async componentDidMount() {
+    const source = Taro.Current.router?.params['source'];
+    if (source === 'notification') {
+      // do something
+      Taro.atMessage({
+        type: 'success',
+        message: '请继续授权发送通知哦~~',
+        duration: 5000,
+      });
+    }
     Taro.hideHomeButton();
     this.interactor.queryUserSubscriptions();
     this.viewModel.getProps.on('Global_userLogIn', this.onUserLogIn);
@@ -60,6 +69,10 @@ class ProfilePresenter implements IPresenter {
 
   onDeleteSubscription = async (subscriptionId: string) => {
     this.interactor.deleteSubscription(subscriptionId);
+  };
+
+  onPressOpenNotification = () => {
+    this.interactor.requestAccessToSubscribeMessage();
   };
 }
 export { ProfilePresenter };

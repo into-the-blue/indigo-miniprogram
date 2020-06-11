@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const envs = require('../constants/appEnv');
+
 const SRC_DIR = path.join(__dirname, '..', 'src');
 // NOTE 在 sass 中通过别名（@ 或 ~）引用需要指定路径
 const sassImporter = function(url) {
@@ -27,6 +29,9 @@ dirs.forEach(dirname => {
 // };
 
 const config = {
+  env: {
+    WX_TEMPLATE_ID: envs.WX_TEMPLATE_ID,
+  },
   projectName: 'indigo-mp',
   date: '2020-2-13',
   designWidth: 750,

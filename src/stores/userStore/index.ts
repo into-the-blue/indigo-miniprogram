@@ -9,9 +9,16 @@ import dayjs from 'dayjs';
 class UserStore {
   @observable userInfo?: IUserInfo;
   @observable memberInfo: IMemberInfo | null = null;
+  @observable messageGranted: boolean = false;
+  
   @action setState: <K extends keyof UserStore>(next: nextState<UserStore, K>) => void = next => {
     Object.assign(this, next);
   };
+
+
+  @action grantMessage=()=>{
+    this.messageGranted = true
+  }
 
   login = async (encryptedData: string, iv: string) => {
     const res = await Taro.login();

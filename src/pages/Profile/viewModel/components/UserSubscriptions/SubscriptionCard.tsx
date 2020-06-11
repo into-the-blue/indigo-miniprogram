@@ -5,6 +5,7 @@ import Deletable from '@/components/Deletable';
 import { AtDivider } from 'taro-ui';
 import Assets from '@/assets';
 import classNames from 'classnames';
+import { FlexView } from '@/components';
 
 interface IProps {
   subscription: ISubscriptionClient;
@@ -54,8 +55,18 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IPro
           />
         </View>
         <AtDivider height={20} />
+
         <Info leftText={'条件'} rightText={subscription.conditions.length} />
-        <Info leftText={'推送数量'} rightText={subscription.numOfNotificationRecords} />
+        <FlexView column style={{ position: 'relative' }}>
+          {!!subscription.numOfUnreadNotificationRecords && (
+            <FlexView className={'subscription-card__unread-container'}>
+              <Text className={'subscription-card__unread-text strong-danger'}>
+                {'New!  ' + subscription.numOfUnreadNotificationRecords}
+              </Text>
+            </FlexView>
+          )}
+          <Info leftText={'推送数量'} rightText={subscription.numOfNotificationRecords} />
+        </FlexView>
         <Info leftText={'热度'} rightText={subscription.popuparity} />
       </View>
     </Deletable>

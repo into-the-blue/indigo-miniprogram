@@ -19,25 +19,33 @@ class EditSubscriptionInteractor implements IInteractor {
     );
   };
 
-  onSave = async () => {
+  checkIfAbleToSave = () => {
     if (!this.userStore!.isLoggedIn) {
-      return Taro.atMessage({
+      Taro.atMessage({
         message: '请先登录',
         type: 'warning',
       });
+      return false;
     }
     if (!this.userStore.isMember || this.userStore.isMembershipExpired) {
-      return Taro.atMessage({
+      Taro.atMessage({
         message: '无效会员',
         type: 'error',
       });
+      return false;
     }
     if (this.editSubscriptionStore.hasError) {
-      return Taro.atMessage({
+      Taro.atMessage({
         message: '无效条件',
         type: 'error',
       });
+      return false;
     }
+    return true;
+  };
+
+  onSave = async () => {
+    if (!this.checkIfAbleToSave()) return;
     const {
       targetInfo,
       radius,

@@ -1,16 +1,35 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { Text } from '@tarojs/components';
 import { AtAvatar } from 'taro-ui';
 import { IUserInfo } from '@/types';
-import get from 'lodash.get'
-import { FlexView } from '@/components';
+import get from 'lodash.get';
+import { FlexView, Button } from '@/components';
 import './styles.scss';
 
-const UserInfo = ({ userInfo }: { userInfo: IUserInfo }) => {
+const UserInfo = ({
+  userInfo,
+  onPressOpenNotification,
+  messageGranted,
+}: {
+  userInfo: IUserInfo;
+  onPressOpenNotification: () => void;
+  messageGranted: boolean;
+}) => {
   return (
     <FlexView className={'user-info__container'}>
-      <AtAvatar image={get(userInfo, 'avatar')} size={'normal'} />
-      <Text style={{ marginLeft: 10 }}>{get(userInfo, 'username')}</Text>
+      <FlexView>
+        <AtAvatar image={get(userInfo, 'avatar')} size={'normal'} />
+        <Text style={{ marginLeft: 10 }}>{get(userInfo, 'username')}</Text>
+      </FlexView>
+      {!messageGranted && (
+        <Button
+          className={'user-info__message-button'}
+          onClick={onPressOpenNotification}
+          type={'primary'}
+        >
+          {'允许通知'}
+        </Button>
+      )}
     </FlexView>
   );
 };

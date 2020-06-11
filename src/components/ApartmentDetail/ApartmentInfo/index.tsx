@@ -10,6 +10,7 @@ import './styles.scss';
 import { Button } from '../../';
 import Taro from '@tarojs/taro';
 import classNames from 'classnames';
+import { SubscriptionClient } from '@/services/subscription';
 
 interface IProps {
   apartment: IApartment;
@@ -17,19 +18,28 @@ interface IProps {
 }
 
 export const ApartmentInfo = ({ apartment, additionalInfo }: IProps) => {
+  const viewApartment = (id: string) => {
+    SubscriptionClient.viewApartment(id).catch(err => {
+      console.warn('[viewApartment]', err.message);
+    });
+  };
   const copyUrl = () => {
     Taro.setClipboardData({
       data: apartment.houseUrl,
     });
-    Taro.atMessage({
-      message: '请打开浏览器粘贴查看哦~',
-      type: 'success',
-      duration: 3000,
-    });
+    try {
+      Taro.atMessage({
+        message: '请打开浏览器粘贴查看哦~',
+        type: 'success',
+        duration: 3000,
+      });
+    } catch (err) {
+      // at message not exists
+    }
+    viewApartment(apartment.id);
   };
   return (
     <View>
-      <AtMessage />
       <FlexView justifyContent={'space-between'} paddingHorizontal={'10px'} marginBottom={10}>
         <Text
           className={classNames('apartment-info__title', {

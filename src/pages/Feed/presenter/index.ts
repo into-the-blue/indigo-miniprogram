@@ -20,7 +20,7 @@ class FeedPresenter implements IPresenter {
   componentWillUnmount() {}
 
   init = async () => {
-    this.interactor.queryUserInfo();
+    await this.interactor.queryUserInfo();
     await this.interactor.getUserCurrentLocation();
     this.interactor.queryStationsNearby();
   };
@@ -47,9 +47,9 @@ class FeedPresenter implements IPresenter {
     }
   };
 
-  onUserLogIn = () => {
-    this.interactor.queryUserInfo();
-    this.interactor.getUserCurrentLocation();
+  onUserLogIn = async () => {
+    await this.interactor.queryUserInfo();
+    await this.interactor.getUserCurrentLocation();
   };
 
   onRegionChange = (prop: any) => {

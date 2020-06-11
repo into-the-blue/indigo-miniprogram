@@ -4,6 +4,7 @@ import { Cache } from '@/utils';
 import Taro from '@tarojs/taro';
 import { SubscriptionClient } from '@/services/subscription';
 import { ISubscriptionClient } from '@/types';
+import { WX_TEMPLATE_ID } from '@/utils/constants';
 
 class ProfileInteractor implements IInteractor {
   constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}
@@ -69,6 +70,45 @@ class ProfileInteractor implements IInteractor {
         ...subscription.payload,
       },
     };
+  };
+
+  requestAccessToSubscribeMessage = () => {
+    if (!this.userStore.isLoggedIn) return;
+    if (this.userStore.messageGranted) return;
+    Taro.requestSubscribeMessage({
+      tmplIds: [WX_TEMPLATE_ID],
+      success: data => {
+        const state = data[WX_TEMPLATE_ID];
+        if (state === 'accept') {
+          //
+          Taro.atMessage({
+            type: 'success',
+            message: '耐心等待房源通知吧~',
+          });
+          this.userStore.grantMessage();
+        }
+        if (state === 'reject') {
+          //
+          Taro.atMessage({
+            type: 'error',
+            message: '不开启通知, 将错过合适房源~',
+            duration: 5000,
+          });
+        }
+
+        if (state === 'ban') {
+          //
+          Taro.atMessage({
+            type: 'error',
+            message: '不开启通知, 将错过合适房源~',
+            duration: 5000,
+          });
+        }
+      },
+      fail: data => {
+        console.warn(data);
+      },
+    });
   };
 
   isValidMember = () => {

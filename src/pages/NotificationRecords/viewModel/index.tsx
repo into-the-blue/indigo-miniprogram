@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text } from '@tarojs/components';
+import {  ScrollView, Text } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { NotificationRecordsPresenter } from '../presenter';
 import { BaseView, FlexView } from '@/components';
@@ -8,6 +8,7 @@ import { Records } from './components/Records';
 import { MapComp } from './components/MapComp';
 import { MAP_HEIGHT } from '../constants';
 import { injectXeno } from '@/xeno';
+import { AtMessage } from 'taro-ui';
 
 @inject('notificationRecordsStore')
 @observer
@@ -43,6 +44,7 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
     } = this.props.notificationRecordsStore!;
     return (
       <BaseView isError={isError} isLoading={isLoading} onPressRetry={this.presenter.initialQuerys}>
+        <AtMessage />
         {subscription && (
           <MapComp
             selectedRecords={selectedRecords}

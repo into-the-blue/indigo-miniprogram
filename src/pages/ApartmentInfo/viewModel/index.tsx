@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text } from '@tarojs/components';
-// import {} from 'taro-ui';
+import { ScrollView } from '@tarojs/components';
+import { AtMessage } from 'taro-ui';
 import { IViewModel, IViewModalProps } from '../types';
 import { ApartmentInfoPresenter } from '../presenter';
 import {} from '../interactor';
@@ -37,7 +37,7 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
     const { selectedApartment, apartments } = this.props.apartmentInfoStore!;
     return (
       <BaseView style={{ flex: 1, backgroundColor: '#f5f5f5' }} isLoading={!selectedApartment}>
-        {/* <AtMessage /> */}
+        <AtMessage />
         <ApartmentDetail apartment={selectedApartment!} />
         <ScrollView style={{ marginTop: 15, height: '45vh' }} scrollY>
           <FlexView column>

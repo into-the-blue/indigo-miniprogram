@@ -7,5 +7,11 @@
     background-color: white;
     border-radius: 16px;
     box-shadow: $shadow-light;
+    justify-content: space-between;
+  }
+
+  &message-button {
+    height: 90px;
+    border-radius: 45px;
   }
 }

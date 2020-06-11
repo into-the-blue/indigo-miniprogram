@@ -84,4 +84,16 @@
     bottom: -10px;
     left: -10px;
   }
+
+  &unread-container {
+    position: absolute;
+    right: 80px;
+    rotate: -20deg;
+  }
+
+  &unread-text {
+    color: $danger-color;
+    font-size: 38px;
+    font-weight: bold;
+  }
 }

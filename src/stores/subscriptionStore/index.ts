@@ -1,4 +1,4 @@
-import { action, observable, computed } from 'mobx';
+import { action, observable } from 'mobx';
 import { ISubscriptionClient } from '@/types';
 import { removeItemByKeyValue } from '@/utils';
 
@@ -22,6 +22,16 @@ class SubscriptionStore {
 
   getSubscriptionById = (subscriptionId: string) => {
     return this.userSubscriptions.find(o => o.id === subscriptionId);
+  };
+
+  @action readNotifications = (subscriptionId: string) => {
+    this.userSubscriptions = this.userSubscriptions.map(s => {
+      if (s.id !== subscriptionId) return s;
+      return {
+        ...s,
+        numOfUnreadNotificationRecords: 0,
+      };
+    });
   };
 }
 

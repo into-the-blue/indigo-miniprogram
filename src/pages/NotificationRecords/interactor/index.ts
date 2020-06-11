@@ -1,13 +1,14 @@
 import { IInteractor } from '../types';
 import { NotificationRecordsStore } from '../stores';
 import { SubscriptionClient } from '@/services/subscription';
-import { SubscriptionStore } from '@/stores';
 import Taro from '@tarojs/taro';
 import { ISubscriptionClient } from '@/types';
+import { SubscriptionStore } from '@/stores';
 
 class NotificationRecordsInteractor implements IInteractor {
   constructor(
     private notificationRecordsStore: NotificationRecordsStore,
+    private subscriptionStore: SubscriptionStore,
   ) {}
 
   saveSubscription = (subscription: ISubscriptionClient) => {
@@ -32,10 +33,21 @@ class NotificationRecordsInteractor implements IInteractor {
         notificationRecords: records,
         isLoading: false,
       });
+      const unread = records.filter(o => !o.viewed).map(o => o.id);
+      if (unread.length) {
+        this.viewNotifications(unread);
+      }
     } catch (err) {
       //
       this.notificationRecordsStore.onInitError();
     }
+  };
+
+  viewNotifications = (ids: string[]) => {
+    SubscriptionClient.viewtNotifications(ids).catch(err => {
+      console.warn('[viewNotifications]', err.message);
+    });
+    this.subscriptionStore.readNotifications(this.notificationRecordsStore.subscriptionId!);
   };
 
   queryMoreNotificationRecords = async () => {
