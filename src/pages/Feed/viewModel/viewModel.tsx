@@ -54,75 +54,87 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       closeSearchBar,
     } = this.props.mMap;
     return (
-      <View className={'page-container'}>
+      <FlexView column style={{ height: '100vh', width: '100%' }}>
         <AtMessage />
-        <Banner />
-        <View style={{ display: 'flex', position: 'relative', flex: 1 }}>
-          {!locationAuthorized && (
-            <FlexView column style={{ alignItems: 'center', marginTop: 80 }}>
-              <Text style={{ textAlign: 'center' }}>
-                {'We need access to your location to provide service'}
-              </Text>
+        <FlexView column style={{ flex: 1, position: 'relative' }}>
+          <FlexView
+            className={classNames({
+              'blur-container': showApartmentListModal,
+            })}
+          >
+            <Banner />
+          </FlexView>
+          <FlexView
+            className={classNames({
+              'blur-container': showApartmentListModal,
+            })}
+            column
+            style={{ position: 'relative', flex: 1 }}
+          >
+            {!locationAuthorized && (
+              <FlexView column style={{ alignItems: 'center', marginTop: 80 }}>
+                <Text style={{ textAlign: 'center' }}>
+                  {'We need access to your location to provide service'}
+                </Text>
 
-              <Button type={'primary'} onClick={this.presenter.requestLocationPermission}>
-                {'Grant'}
-              </Button>
-            </FlexView>
-          )}
-          {currentCoordinate && (
-            <View
-              className={classNames('flex', {
-                'map-container': showApartmentListModal,
-              })}
-              style={{ flex: 1 }}
-            >
-              <Map
-                id={'map'}
-                style={{ width: '100%', height: '100%' }}
-                longitude={currentCoordinate[0]}
-                latitude={currentCoordinate[1]}
-                setting={setting}
-                scale={scale}
-                // @ts-ignore
-                markers={markers}
-                onMarkerTap={this.presenter.onPressMarker}
-                onBegin={this.presenter.onBeginDrag}
-                onEnd={this.presenter.onEndDrag}
+                <Button type={'primary'} onClick={this.presenter.requestLocationPermission}>
+                  {'Grant'}
+                </Button>
+              </FlexView>
+            )}
+            {currentCoordinate && (
+              <FlexView style={{ flex: 1 }}>
+                <Map
+                  id={'map'}
+                  style={{ width: '100%', height: '100%' }}
+                  longitude={currentCoordinate[0]}
+                  latitude={currentCoordinate[1]}
+                  setting={setting}
+                  scale={scale}
+                  // @ts-ignore
+                  markers={markers}
+                  onMarkerTap={this.presenter.onPressMarker}
+                  onBegin={this.presenter.onBeginDrag}
+                  onEnd={this.presenter.onEndDrag}
+                />
+              </FlexView>
+            )}
+            {mapDragged && !showApartmentListModal && (
+              <CoverImage className={'map-pin'} src={Assets.CenterPin} />
+            )}
+
+            {locationAuthorized && (
+              <SearchBar
+                isSearchBarOpen={isSearchBarOpen}
+                openSearchBar={openSearchBar}
+                closeSearchBar={closeSearchBar}
               />
-            </View>
-          )}
-          {mapDragged && !showApartmentListModal && (
-            <CoverImage className={'map-pin'} src={Assets.CenterPin} />
+            )}
+            {locationAuthorized && (
+              <AvailableCities
+                availableCities={availableCities}
+                isOpen={cityActionSheetVisible}
+                dismissActionSheet={dismissCityActionSheet}
+                onSelectCity={this.presenter.onSelectCity}
+                showActionSheet={this.presenter.onPressShowCityList}
+                currentCity={currentCity}
+                isSearchBarOpen={isSearchBarOpen}
+              />
+            )}
+          </FlexView>
+          {showApartmentListModal && (
+            <FlexView style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }} />
           )}
           <FocusedLocationConsole
             mMap={this.props.mMap}
             showApartmentList={showApartmentListModal}
-            // currentApartment={currentApartment}
             apartments={currentApartments}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
             onPressApartment={this.presenter.onPressApartment}
           />
-          {locationAuthorized && (
-            <SearchBar
-              isSearchBarOpen={isSearchBarOpen}
-              openSearchBar={openSearchBar}
-              closeSearchBar={closeSearchBar}
-            />
-          )}
-          {locationAuthorized && (
-            <AvailableCities
-              availableCities={availableCities}
-              isOpen={cityActionSheetVisible}
-              dismissActionSheet={dismissCityActionSheet}
-              onSelectCity={this.presenter.onSelectCity}
-              showActionSheet={this.presenter.onPressShowCityList}
-              currentCity={currentCity}
-              isSearchBarOpen={isSearchBarOpen}
-            />
-          )}
-        </View>
-      </View>
+        </FlexView>
+      </FlexView>
     );
   }
 }
