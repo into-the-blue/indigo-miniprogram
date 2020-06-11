@@ -1,0 +1,30 @@
+@import '@/styles/theme.scss';
+.search-result__ {
+  &container {
+    border: 0 solid $border-color;
+    border-bottom-width: 1px;
+    margin: 0 10px;
+    padding: 10px 10px;
+  }
+
+  &district {
+    color: black;
+    font-size: 32px;
+  }
+
+  &dot {
+    margin: 0 5px;
+    font-weight: 900;
+    font-size: 32px;
+    color: black;
+  }
+  &name {
+    color: black;
+    font-size: 32px;
+  }
+
+  &address {
+    margin-top: 10px;
+    font-size: 26px;
+  }
+}

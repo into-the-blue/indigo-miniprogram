@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text } from '@tarojs/components';
 import { IPOI } from '@/types';
-import { FlexView } from '@/components';
+import { FlexView } from '@/components'
+import './styles.scss';
 
 export const SearchResultCard = ({ result, onPress }: { result: IPOI; onPress: () => void }) => {
   return (

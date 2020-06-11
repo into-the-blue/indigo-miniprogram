@@ -7,12 +7,12 @@ $animation-duration: 0.5s;
     width: 55px;
     height: 55px;
   }
-  &icon-open {
-    animation-name: icon-open;
-    animation-duration: 0.3s;
-    animation-delay: 0.2s;
-    animation-fill-mode: forwards;
-  }
+  // &icon-open {
+  //   animation-name: icon-open;
+  //   animation-duration: 0.3s;
+  //   animation-delay: 0.2s;
+  //   animation-fill-mode: forwards;
+  // }
 
   &icon-container {
     width: 90px;
@@ -21,24 +21,26 @@ $animation-duration: 0.5s;
     background-color: $primary-color;
     align-items: center;
     justify-content: center;
-  }
-
-  &input {
-    width: 0;
-    height: 0;
-    display: none;
-    color: white;
-    background-color: transparent;
-    margin: 0;
-  }
-
-  &input-open {
-    flex: 1;
-    width: auto;
-    height: 45px;
     display: flex;
-    color: white;
+    flex-direction: row;
   }
+
+  // &input {
+  //   width: 0;
+  //   height: 0;
+  //   display: none;
+  //   color: white;
+  //   background-color: transparent;
+  //   margin: 0;
+  // }
+
+  // &input-open {
+  //   flex: 1;
+  //   width: auto;
+  //   height: 45px;
+  //   display: flex;
+  //   color: white;
+  // }
 
   &wrapper {
     position: absolute;
@@ -53,96 +55,67 @@ $animation-duration: 0.5s;
     overflow: visible;
   }
 
-  &wrapper-open {
-    animation: wrapper-open;
-    animation-duration: $animation-duration;
-    animation-fill-mode: forwards;
-  }
+  // &wrapper-open {
+  //   animation: wrapper-open;
+  //   animation-duration: $animation-duration;
+  //   animation-fill-mode: forwards;
+  // }
 
-  &search-result {
-    position: absolute;
-    top: 90px;
-    // width: calc(100vw - 80px - 45px);
-    left: 22.5px;
-    right: 22.5px;
-    background-color: white;
-    box-shadow: $shadow;
-    display: flex;
-    flex-direction: column;
-  }
+  // &search-result {
+  //   position: absolute;
+  //   top: 90px;
+  //   // width: calc(100vw - 80px - 45px);
+  //   left: 22.5px;
+  //   right: 22.5px;
+  //   background-color: white;
+  //   box-shadow: $shadow;
+  //   display: flex;
+  //   flex-direction: column;
+  // }
 
-  &search-result-container {
-    min-height: 300px;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
-  }
+  // &search-result-container {
+  //   min-height: 300px;
+  //   max-height: 500px;
+  //   display: flex;
+  //   flex-direction: column;
+  // }
 
-  &search-placeholder {
-    align-self: center;
-    margin-top: 30px;
-    font-size: 34px;
-  }
+  // &search-placeholder {
+  //   align-self: center;
+  //   margin-top: 30px;
+  //   font-size: 34px;
+  // }
 }
-@keyframes input-open {
-  from {
-    display: flex;
-    width: 0%;
-  }
+// @keyframes input-open {
+//   from {
+//     display: flex;
+//     width: 0%;
+//   }
 
-  to {
-    display: flex;
-    width: 100%;
-  }
-}
+//   to {
+//     display: flex;
+//     width: 100%;
+//   }
+// }
 
-@keyframes wrapper-open {
-  from {
-    width: 90px;
-  }
-  to {
-    width: calc(100vw - 80px);
-  }
-}
+// @keyframes wrapper-open {
+//   from {
+//     width: 90px;
+//   }
+//   to {
+//     width: calc(100vw - 80px);
+//   }
+// }
 
-@keyframes icon-open {
-  from {
-    transform: rotate(0deg);
-  }
+// @keyframes icon-open {
+//   from {
+//     transform: rotate(0deg);
+//   }
 
-  to {
-    transform: rotate(90deg);
-    margin-right: 9px;
-    margin-bottom: 2px;
-  }
-}
+//   to {
+//     transform: rotate(90deg);
+//     margin-right: 9px;
+//     margin-bottom: 2px;
+//   }
+// }
 
-.search-result__ {
-  &container {
-    border: 0 solid $border-color;
-    border-bottom-width: 1px;
-    margin: 0 10px;
-    padding: 10px 10px;
-  }
-
-  &district {
-    color: black;
-    font-size: 32px;
-  }
-
-  &dot {
-    margin: 0 5px;
-    font-weight: 900;
-    font-size: 32px;
-    color: black;
-  }
-  &name {
-    color: black;
-    font-size: 32px;
-  }
-
-  &address {
-    margin-top: 10px;
-    font-size: 26px;
-  }
-}

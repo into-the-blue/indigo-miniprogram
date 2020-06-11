@@ -4,7 +4,7 @@ export type XApartmentInfoInit = {
   ApartmentInfo_init: {
     guaranteed: true;
     data: {
-      apartment: IApartment;
+      apartment?: IApartment;
       apartments?: IApartment[];
     };
   };

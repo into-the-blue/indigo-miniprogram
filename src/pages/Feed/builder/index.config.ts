@@ -1,8 +1,7 @@
-
 import { Config } from '@tarojs/taro';
 
 const config: Config = {
-  navigationBarTitleText: '青鸟',
+  navigationBarTitleText: '安隅',
   // navigationBarBackgroundColor: 'rgba(0,0,0,0)',
 };
 

@@ -7,11 +7,12 @@ export default {
     'pages/NotificationRecords/builder/index',
     'pages/ApartmentInfo/builder/index',
     'pages/FreeMembership/builder/index',
+    'pages/Search/builder/index',
   ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: '青鸟',
+    navigationBarTitleText: '安隅',
     navigationBarTextStyle: 'black',
   },
   permission: {

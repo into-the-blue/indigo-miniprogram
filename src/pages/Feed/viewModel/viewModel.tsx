@@ -49,9 +49,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       dismissCityActionSheet,
       availableCities,
       currentCity,
-      isSearchBarOpen,
-      openSearchBar,
-      closeSearchBar,
     } = this.props.mMap;
     return (
       <FlexView column style={{ height: '100vh', width: '100%' }}>
@@ -105,9 +102,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
 
             {locationAuthorized && (
               <SearchBar
-                isSearchBarOpen={isSearchBarOpen}
-                openSearchBar={openSearchBar}
-                closeSearchBar={closeSearchBar}
+                onPress={this.presenter.onPressSearch}
               />
             )}
             {locationAuthorized && (
@@ -118,7 +113,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
                 onSelectCity={this.presenter.onSelectCity}
                 showActionSheet={this.presenter.onPressShowCityList}
                 currentCity={currentCity}
-                isSearchBarOpen={isSearchBarOpen}
               />
             )}
           </FlexView>
@@ -131,10 +125,8 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
           <FocusedLocationConsole
             mMap={this.props.mMap}
             showApartmentList={showApartmentListModal}
-            apartments={currentApartments}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
-            onPressApartment={this.presenter.onPressApartment}
           />
         </FlexView>
       </FlexView>

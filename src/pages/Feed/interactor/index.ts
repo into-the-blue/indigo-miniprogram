@@ -225,6 +225,9 @@ class FeedInteractor implements IInteractor {
   focusCustomLocation = async (locationId: string) => {
     const customLocation = findItemByKeyValue(this.mMap.customLocations, locationId, 'id');
     if (!customLocation) return;
+    Taro.setNavigationBarTitle({
+      title: customLocation.name,
+    });
     if (
       this.mMap.isLocationFocused('customLocation', customLocation.id, {
         ...customLocation,
@@ -264,6 +267,11 @@ class FeedInteractor implements IInteractor {
    */
   focusMetroStation = async (stationId: string) => {
     if (this.mMap.isLocationFocused('metroStation', stationId)) return;
+    const station = this.mMap.getMetroStationById(stationId);
+    station &&
+      Taro.setNavigationBarTitle({
+        title: station!.stationName,
+      });
     Taro.showLoading({
       mask: true,
       title: 'Loading ...',
@@ -293,10 +301,10 @@ class FeedInteractor implements IInteractor {
    * @memberof FeedInteractor
    * show detail modal
    */
-  getApartmentInfoData = (houseId: string) => {
-    const apartment = this.mMap.currentApartments.find(o => o.houseId === houseId);
-    console.warn('[getApartmentInfoData]', houseId, apartment);
-    if (!apartment) return null;
+  getApartmentInfoData = (houseId: string | undefined) => {
+    const apartment = houseId
+      ? this.mMap.currentApartments.find(o => o.houseId === houseId)
+      : undefined;
 
     return {
       apartment,

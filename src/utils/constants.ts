@@ -43,5 +43,6 @@ export const Routes = {
   NotificationRecords: '/pages/NotificationRecords/builder/index',
   Profile: '/pages/Profile/builder/index',
   FreeMembership: '/pages/FreeMembership/builder/index',
+  Search: '/pages/Search/builder/index',
 };
 export const WX_TEMPLATE_ID = process.env.WX_TEMPLATE_ID;

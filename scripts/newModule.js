@@ -56,7 +56,7 @@ const composePresenter = async (modulePath, moduleName) => {
   console.log('Presenter ready');
 };
 const composeViewModel = async (modulePath, moduleName) => {
-  const viewModelPth = 'viewModel/viewModel.tsx';
+  const viewModelPth = 'viewModel/index.tsx';
   const componentsPth = 'viewModel/components/functional.tsx';
   let templateFile = await readFile(path.join(TEMPLATE_PATH, viewModelPth));
   templateFile = templateFile.replace(/Template/g, moduleName);

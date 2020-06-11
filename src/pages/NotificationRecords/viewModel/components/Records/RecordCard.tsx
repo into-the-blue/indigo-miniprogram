@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, Swiper, SwiperItem } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { ISubscriptionNotificationRecordClient } from '@/types';
-import { TextBar } from '@/components';
 import './styles.scss';
 import classNames from 'classnames';
 import { ApartmentDetail } from '@/components/ApartmentDetail';
@@ -33,19 +32,6 @@ export const RecordCard = ({ record, onPressRecord, isSelected }: IProps) => {
           apartment={apartment as any}
           additionalInfo={[{ title: '距离', content: distance + 'm' }]}
         />
-        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', display: 'flex' }}>
-          <Text className={'record-card__title'}>{title}</Text>
-          {isApartment(tags) && (
-            <AtTag className={'record-card__tag'} active>
-              {'公寓'}
-            </AtTag>
-          )}
-        </View>
-        <TextBar title={'距离'} content={distance + '米'} />
-        <TextBar title={'价格'} content={price + '¥'} />
-        <TextBar title={'面积'} content={area + '㎡'} />
-        <TextBar title={'每平米价格'} content={pricePerSquareMeter + '¥/㎡'} />
-        <TextBar title={'户型'} content={houseType} /> */}
       </View>
     </View>
   );

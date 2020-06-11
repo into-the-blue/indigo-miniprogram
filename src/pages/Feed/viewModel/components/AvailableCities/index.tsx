@@ -14,7 +14,6 @@ interface IProps {
   isOpen: boolean;
   currentCity: string | null;
   showActionSheet: () => void;
-  isSearchBarOpen: boolean;
 }
 
 export const AvailableCities = observer(
@@ -25,14 +24,9 @@ export const AvailableCities = observer(
     dismissActionSheet,
     currentCity,
     showActionSheet,
-    isSearchBarOpen,
   }: IProps) => {
     return (
-      <FlexView
-        className={classNames('available-cities__container', {
-          'available-cities__container-hide': isSearchBarOpen,
-        })}
-      >
+      <FlexView className={classNames('available-cities__container')}>
         <FlexView
           onClick={showActionSheet}
           className={classNames('available-cities__text-container')}

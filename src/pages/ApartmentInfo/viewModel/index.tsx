@@ -36,17 +36,18 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
   render() {
     const { selectedApartment, apartments } = this.props.apartmentInfoStore!;
     return (
-      <BaseView style={{ flex: 1, backgroundColor: '#f5f5f5' }} isLoading={!selectedApartment}>
+      <BaseView
+        style={{ flex: 1, backgroundColor: '#f5f5f5' }}
+        isLoading={!apartments.length && !selectedApartment}
+      >
         <AtMessage />
         <ApartmentDetail apartment={selectedApartment!} />
-        <ScrollView style={{ marginTop: 15, height: '45vh' }} scrollY>
-          <FlexView column>
-            <ApartmentList
-              apartments={apartments}
-              onPressApartment={this.presenter.onPressApartment}
-              selectedApartmentHouseId={get(selectedApartment, 'houseId')}
-            />
-          </FlexView>
+        <ScrollView style={{ marginTop: 15, height: '50vh' }} scrollY>
+          <ApartmentList
+            apartments={apartments}
+            onPressApartment={this.presenter.onPressApartment}
+            selectedApartmentHouseId={get(selectedApartment, 'houseId')}
+          />
         </ScrollView>
       </BaseView>
     );

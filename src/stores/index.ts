@@ -8,6 +8,7 @@ import { NotificationRecordsStore } from '@/pages/NotificationRecords/stores';
 import { ApartmentInfoStore } from '@/pages/ApartmentInfo/stores';
 import { ModalStore } from './modalStore';
 import { FreeMembershipStore } from '@/pages/FreeMembership/stores';
+import { SearchStore } from '@/pages/Search/stores';
 
 class RootStore {
   feed: FeedStore;
@@ -20,6 +21,7 @@ class RootStore {
   notificationRecordsStore: NotificationRecordsStore;
   apartmentInfoStore: ApartmentInfoStore;
   freeMembershipStore: FreeMembershipStore;
+  searchStore: SearchStore;
 
   constructor() {
     this.feed = new FeedStore();
@@ -32,6 +34,7 @@ class RootStore {
     this.notificationRecordsStore = new NotificationRecordsStore();
     this.apartmentInfoStore = new ApartmentInfoStore();
     this.freeMembershipStore = new FreeMembershipStore();
+    this.searchStore = new SearchStore();
   }
 }
 const store = new RootStore();

@@ -1,0 +1,31 @@
+@import '@/styles/theme.scss';
+
+.search__ {
+  &input {
+    background-color: white !important;
+    // position: fixed;
+    // top: 0;
+    // left: 20px;
+    // right: 20px;
+    margin: 0 20px;
+  }
+
+  &search-result {
+    background-color: white;
+    // box-shadow: $shadow;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &search-result-container {
+    height: calc(100vh-100px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &search-placeholder {
+    align-self: center;
+    margin-top: 30px;
+    font-size: 34px;
+  }
+}

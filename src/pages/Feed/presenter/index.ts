@@ -4,6 +4,7 @@ import { FeedInteractor } from '../interactor';
 import { XExtractData, IPOI, IAvailableCity, IApartment } from '@/types';
 import { Routes } from '@/utils/constants';
 import { XFeedSetMapFocusedPosition } from '../eventStation';
+import get from 'lodash.get';
 
 class FeedPresenter implements IPresenter {
   beginTimeStamp: number = Date.now();
@@ -79,8 +80,10 @@ class FeedPresenter implements IPresenter {
     }
   };
 
-  onPressApartment = (arg: IApartment | string) => {
-    const data = this.interactor.getApartmentInfoData(typeof arg === 'string' ? arg : arg.houseId);
+  onPressApartment = (arg?: IApartment | string) => {
+    const data = this.interactor.getApartmentInfoData(
+      typeof arg === 'string' ? arg : get(arg, 'houseId'),
+    );
     if (!data) return;
     this.viewModel.getProps.next('ApartmentInfo_init', {
       guaranteed: true,
@@ -123,6 +126,7 @@ class FeedPresenter implements IPresenter {
     if (e.causedBy !== 'drag') return;
     // console.warn('on end', e.timeStamp - this.beginTimeStamp, e);
     const mapCtx = Taro.createMapContext('map');
+    Taro.vibrateShort();
     const { longitude, latitude } = await mapCtx.getCenterLocation({});
     this.interactor.setCurrentCoordinate(longitude, latitude);
     this.interactor.queryStationsNearby(longitude, latitude);
@@ -130,8 +134,7 @@ class FeedPresenter implements IPresenter {
   };
 
   showApartmentList = () => {
-    if (!this.interactor.isLoggedIn()) return;
-    this.interactor.toggleApartmentList();
+    this.onPressApartment();
   };
 
   goToSubscription = () => {
@@ -152,6 +155,14 @@ class FeedPresenter implements IPresenter {
   onPressShowCityList = () => {
     if (!this.interactor.isLoggedIn()) return;
     this.interactor.showCityActionSheet();
+  };
+
+  onPressSearch = () => {
+    if (!this.interactor.isLoggedIn()) return;
+    if (!this.interactor.isValidMember()) return;
+    Taro.navigateTo({
+      url: Routes.Search,
+    });
   };
 }
 export { FeedPresenter };

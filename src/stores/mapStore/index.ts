@@ -8,7 +8,7 @@ import {
   ICustomLocationClient,
   IAvailableCity,
 } from '@/types';
-import get from 'lodash.get'
+import get from 'lodash.get';
 import Assets from '@/assets';
 import { MAP_SETTING } from '@/utils/constants';
 import { findItemByKeyValue } from '@/utils';
@@ -56,15 +56,6 @@ class MapStore implements IStore<MapStore> {
   @observable availableCities: IAvailableCity[] = [];
 
   @observable cityActionSheetVisible: boolean = false;
-
-  @observable isSearchBarOpen: boolean = false;
-
-  @action openSearchBar = () => {
-    this.isSearchBarOpen = true;
-  };
-  @action closeSearchBar = () => {
-    this.isSearchBarOpen = false;
-  };
 
   @action setState: <K extends keyof MapStore>(next: nextState<MapStore, K>) => void = next => {
     Object.assign(this, next);
@@ -219,6 +210,8 @@ class MapStore implements IStore<MapStore> {
 
   getCustomLocationById = (id: string) => findItemByKeyValue(this.customLocations, id, 'id');
 
+  getMetroStationById = (stationId: string) =>
+    findItemByKeyValue(this.currentMetroStations, stationId, 'stationId');
   @action addCustomLocations = (cl: ICustomLocationClient) => {
     if (this.customLocations.some(o => o.id === cl.id)) return;
     this.customLocations.push(cl);

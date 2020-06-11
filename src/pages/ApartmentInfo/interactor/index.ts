@@ -5,7 +5,7 @@ import { IApartment } from '@/types';
 class ApartmentInfoInteractor implements IInteractor {
   constructor(private apartmentInfoStore: ApartmentInfoStore) {}
 
-  setInitialData = (apartment: IApartment, apartments?: IApartment[]) => {
+  setInitialData = (apartment?: IApartment, apartments?: IApartment[]) => {
     this.apartmentInfoStore.setState({
       apartments: apartments || [],
       initialApartment: apartment,
@@ -14,7 +14,10 @@ class ApartmentInfoInteractor implements IInteractor {
   };
 
   onPressApartment = (apartment: IApartment) => {
-    if (apartment.houseId === this.apartmentInfoStore.selectedApartment!.houseId) {
+    if (
+      this.apartmentInfoStore.selectedApartment &&
+      apartment.houseId === this.apartmentInfoStore.selectedApartment!.houseId
+    ) {
       return this.apartmentInfoStore.setState({
         selectedApartment: this.apartmentInfoStore.initialApartment!,
       });
