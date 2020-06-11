@@ -25,7 +25,7 @@ export default {
 
     borderStyle: 'white',
 
-    selectedColor: '#00b38b',
+    selectedColor: '#ffc107',
 
     color: '#666666',
 

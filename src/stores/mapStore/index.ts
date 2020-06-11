@@ -51,7 +51,7 @@ class MapStore implements IStore<MapStore> {
   // map default setting
   setting: any = MAP_SETTING;
   // city
-  @observable currentCity: string = 'unknown';
+  @observable currentCity: string | null = null;
 
   @observable availableCities: IAvailableCity[] = [];
 

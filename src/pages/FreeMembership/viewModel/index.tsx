@@ -37,7 +37,15 @@ class FreeMembershipViewModel extends React.Component<IViewModelProps> implement
     console.warn(isLoading);
     return (
       <BaseView className={'free-membership__container'} isLoading={isLoading} isError={isError}>
-        {!isLoggedIn && <Text>{'请先登录!'}</Text>}
+        {!isLoggedIn && (
+          <Button
+            type={'primary'}
+            customStyle={{ width: '100%' }}
+            onClick={this.presenter.goToLogin}
+          >
+            {'点击前往登录'}
+          </Button>
+        )}
         {isLoggedIn && (
           <React.Fragment>
             <Text
@@ -47,7 +55,7 @@ class FreeMembershipViewModel extends React.Component<IViewModelProps> implement
             <FlexView column marginTop={40}>
               <Text className={'free-membership__ps'}>
                 {
-                  '* 此项目为爱心驱动, 开发者一人承担服务器和相关费用, 若有意赞助, 请联系我~\n* 谢过各位大爷~'
+                  '* 此项目为爱心驱动, 开发者一人承担服务器和相关费用, 若有意赞助或提供技术支持, 请联系我~(nagua1_)\n* 谢过各位大爷~'
                 }
               </Text>
             </FlexView>

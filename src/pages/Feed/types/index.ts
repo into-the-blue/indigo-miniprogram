@@ -1,5 +1,5 @@
 import { FeedStore } from '../stores';
-import { GlobalStore, MapStore } from '@/stores';
+import { GlobalStore, MapStore, UserStore } from '@/stores';
 import { FeedPresenter } from '../presenter';
 import { XenoComponentProps } from '@/xeno';
 import { XAllEvents } from '@/utils/xeno';
@@ -21,4 +21,5 @@ export interface IViewModelProps extends XenoComponentProps<XAllEvents> {
   global: GlobalStore;
   buildPresenter: (viewModel: IViewModel) => FeedPresenter;
   mMap: MapStore;
+  userStore: UserStore;
 }

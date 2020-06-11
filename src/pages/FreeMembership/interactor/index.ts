@@ -26,6 +26,12 @@ class FreeMembershipInteractor implements IInteractor {
     }
   };
 
+  goToProfileTab = () => {
+    Taro.switchTab({
+      url: Routes.Profile,
+    });
+  };
+
   redeemFreeMembership = async (onSuccess?: () => void) => {
     // if not logged in, guide users to log in
     if (!this.userStore.isLoggedIn) {
@@ -35,9 +41,7 @@ class FreeMembershipInteractor implements IInteractor {
         content: '前往登录?',
         success: res => {
           if (res.confirm) {
-            Taro.switchTab({
-              url: Routes.Profile,
-            });
+            this.goToProfileTab();
           }
           if (res.cancel) {
             Taro.navigateBack();

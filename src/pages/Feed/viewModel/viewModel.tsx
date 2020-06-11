@@ -14,7 +14,7 @@ import { injectXeno } from '@/xeno';
 import { AvailableCities } from './components/AvailableCities';
 import { FlexView } from '@/components';
 
-@inject('global', 'feed', 'mMap')
+@inject('global', 'feed', 'mMap', 'userStore')
 @observer
 class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   presenter: FeedPresenter;
@@ -49,7 +49,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       dismissCityActionSheet,
       availableCities,
       currentCity,
-      showCityActionSheet,
       isSearchBarOpen,
       openSearchBar,
       closeSearchBar,
@@ -117,7 +116,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               isOpen={cityActionSheetVisible}
               dismissActionSheet={dismissCityActionSheet}
               onSelectCity={this.presenter.onSelectCity}
-              showActionSheet={showCityActionSheet}
+              showActionSheet={this.presenter.onPressShowCityList}
               currentCity={currentCity}
               isSearchBarOpen={isSearchBarOpen}
             />

@@ -74,6 +74,7 @@ class FeedInteractor implements IInteractor {
     this.$queryCurrentCitySub && this.$queryCurrentCitySub.unsubscribe();
   };
   $queryAndSetUserCurrentCity = (lng: number, lat: number) => {
+    if (!this.userStore.isLoggedIn) return;
     this.cancelQueryUserCurrentCity();
     this.$queryCurrentCitySub = from(this.queryAndSetUserCurrentCity([lng, lat]))
       .pipe(filter(_ => !!_))
@@ -137,7 +138,7 @@ class FeedInteractor implements IInteractor {
     this.setCurrentCoordinate(...city.defaultCoordinates);
     this.queryStationsNearby(...city.defaultCoordinates);
   };
-  showCityActionSheet = async () => {
+  showCityActionSheet = () => {
     this.mMap.showCityActionSheet();
   };
   /**
@@ -331,6 +332,17 @@ class FeedInteractor implements IInteractor {
         payload: customLocation,
       };
     }
+  };
+
+  isLoggedIn = () => {
+    if (!this.userStore.isLoggedIn) {
+      Taro.atMessage({
+        type: 'info',
+        message: '请先登录!',
+      });
+      return false;
+    }
+    return true;
   };
 }
 

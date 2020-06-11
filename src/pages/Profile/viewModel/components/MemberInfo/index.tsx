@@ -28,7 +28,7 @@ export const MemberInfo = ({ info }: IProps) => {
             <FlexView className={'member-info__divider'} />
             <FlexView column style={{ flex: 1 }}>
               <TextBar
-                title={'有效期'}
+                title={'有效期至'}
                 content={dayjs(info.expireAt).format('YYYY MM DD') + (expired ? ' 已过期' : '')}
                 contentStyle={expired ? { color: '#Ef5350' } : undefined}
               />

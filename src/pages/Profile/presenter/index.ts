@@ -14,7 +14,15 @@ class ProfilePresenter implements IPresenter {
   }
   componentWillUnmount() {}
 
-  onGrantWechatInfo = async ({ detail: { userInfo, encryptedData, iv } }) => {
+  onGrantWechatInfo = async ({ detail: { userInfo, encryptedData, iv, errMsg } }) => {
+    if (errMsg !== 'getUserInfo:ok') {
+      Taro.atMessage({
+        type: 'error',
+        message: '授权失败...',
+      });
+      return;
+    }
+
     this.interactor.login(encryptedData, iv, () =>
       this.viewModel.getProps.next('Global_userLogIn'),
     );

@@ -17,7 +17,9 @@
 
   &-primary {
     background-color: $primary-color;
-    color: white;
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   &-danger {

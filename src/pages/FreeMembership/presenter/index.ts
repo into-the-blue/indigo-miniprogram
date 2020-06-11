@@ -14,5 +14,9 @@ class FreeMembershipPresenter implements IPresenter {
       this.viewModel.getProps.next('Feed_queryMemberInfo'),
     );
   };
+
+  goToLogin = () => {
+    this.interactor.goToProfileTab();
+  };
 }
 export { FreeMembershipPresenter };

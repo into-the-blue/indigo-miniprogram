@@ -9,6 +9,7 @@ import { UserInfo } from './components/UserInfo';
 import UserSubscriptions from './components/UserSubscriptions';
 import { injectXeno } from '@/xeno';
 import { MemberInfo } from './components/MemberInfo';
+import { LoginPrompt } from './components/LoginPrompt';
 
 @inject('global', 'userStore', 'subscriptionStore')
 @observer
@@ -51,15 +52,7 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
               />
             </React.Fragment>
           )}
-          {!isLoggedIn && (
-            <Button
-              openType={'getUserInfo'}
-              type={'primary'}
-              onGetUserInfo={this.presenter.onGrantWechatInfo}
-            >
-              {'Get user info'}
-            </Button>
-          )}
+          {!isLoggedIn && <LoginPrompt onGrantWechatInfo={this.presenter.onGrantWechatInfo} />}
         </ScrollView>
       </View>
     );

@@ -126,10 +126,12 @@ class FeedPresenter implements IPresenter {
   };
 
   showApartmentList = () => {
+    if (!this.interactor.isLoggedIn()) return;
     this.interactor.toggleApartmentList();
   };
 
   goToSubscription = () => {
+    if (!this.interactor.isLoggedIn()) return;
     const target = this.interactor.getEditSubscriptionTarget()!;
     this.viewModel.getProps.next('EditSubscription_init', {
       guaranteed: true,
@@ -140,6 +142,11 @@ class FeedPresenter implements IPresenter {
     Taro.navigateTo({
       url: Routes.EditSubscription,
     });
+  };
+
+  onPressShowCityList = () => {
+    if (!this.interactor.isLoggedIn()) return;
+    this.interactor.showCityActionSheet();
   };
 }
 export { FeedPresenter };

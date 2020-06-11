@@ -30,6 +30,12 @@ export const SearchBar = injectXeno(
     const toggleInput = () => {
       const { userStore } = getStores('userStore');
       if (!isSearchBarOpen) {
+        if (!userStore.isLoggedIn) {
+          return Taro.atMessage({
+            message: '请先登录',
+            type: 'warning',
+          });
+        }
         if (!userStore.isMember || userStore.isMembershipExpired) {
           Taro.atMessage({
             message: '搜索功能需要会员身份, 快去领取免费会员吧~',
@@ -48,7 +54,7 @@ export const SearchBar = injectXeno(
         if (!text.length) return;
         try {
           setIsSearching(true);
-          const result = await LocationClient.searchAddress(text, mMap.currentCity);
+          const result = await LocationClient.searchAddress(text, mMap.currentCity!);
           setSearchResults(result);
         } catch (err) {
           //
@@ -70,7 +76,7 @@ export const SearchBar = injectXeno(
     };
 
     const onPressSearchResult = (result: IPOI) => {
-      closeSearchBar()
+      closeSearchBar();
       next('Feed_setMapFocusedPosition', {
         data: {
           type: 'customLocation',
