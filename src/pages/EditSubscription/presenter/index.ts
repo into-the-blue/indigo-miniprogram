@@ -25,6 +25,7 @@ class EditSubscriptionPresenter implements IPresenter {
     );
   };
   setTarget = (target: TEditSubTarget) => {
+    console.warn('[setTarget]', target);
     this.interactor.setTarget(target);
   };
   checkIfHaveExistingSub = () => {

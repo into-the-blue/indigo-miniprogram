@@ -42,8 +42,12 @@ class FeedPresenter implements IPresenter {
       this.interactor.setCustomLocationMarker(locationId);
       this.interactor.setCurrentCoordinate(...data.payload.coordinates);
       this.interactor.focusCustomLocation(locationId);
-      const mapCtx = Taro.createMapContext('map');
-      setTimeout(mapCtx.moveToLocation, 0);
+      try {
+        // const mapCtx = Taro.createMapContext('map');
+        // setTimeout(mapCtx.moveToLocation, 0);
+      } catch (err) {
+        //
+      }
     }
   };
 

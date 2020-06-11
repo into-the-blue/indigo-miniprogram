@@ -10,7 +10,7 @@ interface IProps {
   onPressApartment: (apartment: IApartment) => void;
   selectedApartmentHouseId?: string;
   visible?: boolean;
-  textStyle?:React.CSSProperties
+  textStyle?: React.CSSProperties;
 }
 
 export const ApartmentList = ({
@@ -18,13 +18,13 @@ export const ApartmentList = ({
   onPressApartment,
   selectedApartmentHouseId,
   visible = true,
-  textStyle
+  textStyle,
 }: IProps) => {
   const [sortedKeys, setSortedKeys] = useState<TActiveKey[]>([]);
   const [sortedApartments, setSortedApartments] = useState<IApartment[]>([]);
 
   useEffect(() => {
-    console.warn('ApartmentList', apartments);
+    console.warn('[ApartmentList]', apartments.length);
     setSortedApartments([...apartments]);
   }, [apartments]);
 
