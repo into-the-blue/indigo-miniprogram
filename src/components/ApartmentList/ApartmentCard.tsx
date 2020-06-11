@@ -10,10 +10,12 @@ export const ApartmentCard = ({
   apartment,
   onPressApartment,
   isSelected,
+  textStyle,
 }: {
   apartment: IApartment;
   onPressApartment: () => void;
   isSelected: boolean;
+  textStyle?: React.CSSProperties;
 }) => {
   return (
     <View onClick={onPressApartment}>
@@ -26,7 +28,7 @@ export const ApartmentCard = ({
           className={classNames('apartment-card__text', {
             'apartment-card__text-selected': isSelected,
           })}
-          style={{ flex: 0.3 }}
+          style={{ flex: 0.3, ...textStyle }}
         >
           {apartment.houseType}
         </Text>
@@ -34,7 +36,7 @@ export const ApartmentCard = ({
           className={classNames('apartment-card__text', {
             'apartment-card__text-selected': isSelected,
           })}
-          style={{ flex: 0.25 }}
+          style={{ flex: 0.25, ...textStyle }}
         >
           {apartment.price + UNITS.CNY}
         </Text>
@@ -42,7 +44,7 @@ export const ApartmentCard = ({
           className={classNames('apartment-card__text', {
             'apartment-card__text-selected': isSelected,
           })}
-          style={{ flex: 0.2 }}
+          style={{ flex: 0.2, ...textStyle }}
         >
           {apartment.area + UNITS.squreMeter}
         </Text>
@@ -50,7 +52,7 @@ export const ApartmentCard = ({
           className={classNames('apartment-card__text', {
             'apartment-card__text-selected': isSelected,
           })}
-          style={{ flex: 0.25 }}
+          style={{ flex: 0.25, ...textStyle }}
         >
           {apartment.pricePerSquareMeter + UNITS.pricePerSquareMeter}
         </Text>

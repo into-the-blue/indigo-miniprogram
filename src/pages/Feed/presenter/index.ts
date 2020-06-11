@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IPresenter, IViewModel } from '../types';
 import { FeedInteractor } from '../interactor';
-import { XExtractData, IPOI, IAvailableCity } from '@/types';
+import { XExtractData, IPOI, IAvailableCity, IApartment } from '@/types';
 import { Routes } from '@/utils/constants';
 import { XFeedSetMapFocusedPosition } from '../eventStation';
 
@@ -75,8 +75,8 @@ class FeedPresenter implements IPresenter {
     }
   };
 
-  onPressApartment = (houseId: string) => {
-    const data = this.interactor.getApartmentInfoData(houseId);
+  onPressApartment = (apartment: IApartment) => {
+    const data = this.interactor.getApartmentInfoData(apartment.houseId);
     if (!data) return;
     this.viewModel.getProps.next('ApartmentInfo_init', {
       guaranteed: true,

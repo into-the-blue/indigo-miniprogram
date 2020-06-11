@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, CoverView, Image, CoverImage } from '@tarojs/components';
-import { observer, inject } from 'mobx-react';
+import { View, Text, CoverView, Image, CoverImage, ScrollView } from '@tarojs/components';
 import {} from 'taro-ui';
 import { MapStore } from '@/stores';
 import './styles.scss';
 import Assets from '@/assets';
-import ApartmentList from '../ApartmentList';
+import { ApartmentList } from '@/components/ApartmentList';
 import { IApartment } from '@/types';
 import classNames from 'classnames';
+import { FlexView } from '@/components';
 
 interface IProps {
   mMap: MapStore;
@@ -16,7 +16,7 @@ interface IProps {
   showApartmentList: boolean;
   // currentApartment?: IApartment;
   apartments: IApartment[];
-  onPressApartment: (houseId: string) => void;
+  onPressApartment: (apartment: IApartment) => void;
 }
 
 const FocusedLocationConsole = ({
@@ -36,12 +36,17 @@ const FocusedLocationConsole = ({
         'location-console__container-list-open': showApartmentList,
       })}
     >
-      <ApartmentList
-        show={showApartmentList}
-        // currentApartment={currentApartment}
-        apartments={apartments}
-        onPressApartment={onPressApartment}
-      />
+      {/* <FlexView> */}
+        <ScrollView scrollY style={{ display: 'flex', flex: 1, height: '50vh' }}>
+          <ApartmentList
+            visible={showApartmentList}
+            // currentApartment={currentApartment}
+            apartments={apartments}
+            textStyle={{ fontSize: 11 }}
+            onPressApartment={onPressApartment}
+          />
+        </ScrollView>
+      {/* </FlexView> */}
       <View className={'location-console__icon-wrapper'}>
         <View
           className={'location-console__icon-container'}

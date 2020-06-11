@@ -9,12 +9,16 @@ interface IProps {
   apartments: IApartment[];
   onPressApartment: (apartment: IApartment) => void;
   selectedApartmentHouseId?: string;
+  visible?: boolean;
+  textStyle?:React.CSSProperties
 }
 
 export const ApartmentList = ({
   apartments,
   onPressApartment,
   selectedApartmentHouseId,
+  visible = true,
+  textStyle
 }: IProps) => {
   const [sortedKeys, setSortedKeys] = useState<TActiveKey[]>([]);
   const [sortedApartments, setSortedApartments] = useState<IApartment[]>([]);
@@ -41,7 +45,7 @@ export const ApartmentList = ({
     const nextSortedApartments = [...sortedApartments].sort(sortApartment(nextSortedKeys));
     setSortedApartments(nextSortedApartments);
   };
-
+  if (!visible) return null;
   return (
     <FlexView column style={{ backgroundColor: 'white' }}>
       <FlexView>
@@ -57,8 +61,8 @@ export const ApartmentList = ({
       {sortedApartments.map((apartment, idx) => (
         <ApartmentCard
           apartment={apartment}
+          textStyle={textStyle}
           key={'apt' + idx}
-          // key={apartment.houseId}
           onPressApartment={() => onPressApartment(apartment)}
           isSelected={apartment.houseId === selectedApartmentHouseId}
         />

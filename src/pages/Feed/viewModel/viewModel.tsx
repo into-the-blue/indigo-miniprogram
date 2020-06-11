@@ -123,7 +123,10 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             )}
           </FlexView>
           {showApartmentListModal && (
-            <FlexView style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }} />
+            <FlexView
+              onClick={this.presenter.showApartmentList}
+              style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}
+            />
           )}
           <FocusedLocationConsole
             mMap={this.props.mMap}
