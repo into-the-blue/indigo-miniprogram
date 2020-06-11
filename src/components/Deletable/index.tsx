@@ -17,7 +17,6 @@ const Deletable = ({
   const [secConfirm, setSecConfirm] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const onClickOption = (item: SwipeActionOption, index: number) => {
-    console.warn('index', index);
     if (item.text === '删除') {
       setSecConfirm(true);
       return;
@@ -25,15 +24,13 @@ const Deletable = ({
     if (item.text === '确认删除') {
       setIsOpen(false);
       setSecConfirm(false);
-      onDelete();
+      setTimeout(onDelete, 0);
     }
   };
   const onSwipeClose = () => {
-    console.warn('on close', isOpen);
     setIsOpen(false);
   };
   const onSwipeOpen = () => {
-    console.warn('on open', isOpen);
     setIsOpen(true);
   };
   return (

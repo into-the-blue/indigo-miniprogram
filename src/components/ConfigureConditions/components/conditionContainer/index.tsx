@@ -19,7 +19,7 @@ const Wrapper: <P extends object>(
     if (item.text === '确认删除') {
       setIsOpen(false);
       setSecConfirm(false);
-      onDeleteCondition();
+      setTimeout(onDeleteCondition, 0);
       // delete condition
     }
   };

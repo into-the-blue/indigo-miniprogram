@@ -10,15 +10,18 @@ class UserStore {
   @observable userInfo?: IUserInfo;
   @observable memberInfo: IMemberInfo | null = null;
   @observable messageGranted: boolean = false;
-  
+  @observable messageDeined: boolean = false;
+
   @action setState: <K extends keyof UserStore>(next: nextState<UserStore, K>) => void = next => {
     Object.assign(this, next);
   };
 
-
-  @action grantMessage=()=>{
-    this.messageGranted = true
-  }
+  @action grantMessage = () => {
+    this.messageGranted = true;
+  };
+  @action denyMessage = () => {
+    this.messageDeined = true;
+  };
 
   login = async (encryptedData: string, iv: string) => {
     const res = await Taro.login();

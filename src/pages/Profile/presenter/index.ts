@@ -42,6 +42,8 @@ class ProfilePresenter implements IPresenter {
   };
 
   onPressSubscription = (sub: ISubscriptionClient) => {
+    if (!this.interactor.requestAccessToSubscribeMessage(() => this.onPressSubscription(sub)))
+      return;
     this.viewModel.getProps.next('NotificationRecords_init', {
       guaranteed: true,
       data: {

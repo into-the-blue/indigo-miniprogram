@@ -28,7 +28,7 @@ class NotificationRecordsInteractor implements IInteractor {
       const records = await SubscriptionClient.querySubscriptionNotificationRecords(
         this.notificationRecordsStore.subscriptionId!,
       );
-      console.warn('[queryNotificationRecords]', records);
+      console.warn('[queryNotificationRecords]', records.length);
       this.notificationRecordsStore.setState({
         notificationRecords: records,
         isLoading: false,

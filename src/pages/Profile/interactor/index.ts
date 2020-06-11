@@ -72,9 +72,9 @@ class ProfileInteractor implements IInteractor {
     };
   };
 
-  requestAccessToSubscribeMessage = () => {
+  requestAccessToSubscribeMessage = (callback?: () => void) => {
     if (!this.userStore.isLoggedIn) return;
-    if (this.userStore.messageGranted) return;
+    if (this.userStore.messageGranted) return true;
     Taro.requestSubscribeMessage({
       tmplIds: [WX_TEMPLATE_ID],
       success: data => {
@@ -86,6 +86,8 @@ class ProfileInteractor implements IInteractor {
             message: '耐心等待房源通知吧~',
           });
           this.userStore.grantMessage();
+
+          callback && setTimeout(callback, 0);
         }
         if (state === 'reject') {
           //
@@ -94,6 +96,7 @@ class ProfileInteractor implements IInteractor {
             message: '不开启通知, 将错过合适房源~',
             duration: 5000,
           });
+          this.userStore.denyMessage();
         }
 
         if (state === 'ban') {
@@ -103,6 +106,7 @@ class ProfileInteractor implements IInteractor {
             message: '不开启通知, 将错过合适房源~',
             duration: 5000,
           });
+          this.userStore.denyMessage();
         }
       },
       fail: data => {
