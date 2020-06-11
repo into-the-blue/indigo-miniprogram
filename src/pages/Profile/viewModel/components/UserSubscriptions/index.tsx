@@ -59,7 +59,7 @@ const UserSubscriptions = ({
   };
   return (
     <View className={'user-subscription__container'}>
-      <Text className={'user-subscription__my-subs'}>{`我的订阅:    ${
+      <Text className={'user-subscription__my-subs strong'}>{`我的订阅:    ${
         !!subscriptions.length ? subscriptions.length : ''
       }`}</Text>
       <PlaceholderView
@@ -67,7 +67,7 @@ const UserSubscriptions = ({
         renderPlaceholder={() => {
           return (
             <View className={'user-subscription__placeholder'}>
-              <Text className={'user-subscription__placeholder-text'}>{'这里空空如也...'}</Text>
+              <Text className={'user-subscription__placeholder-text strong'}>{'这里空空如也...'}</Text>
             </View>
           );
         }}

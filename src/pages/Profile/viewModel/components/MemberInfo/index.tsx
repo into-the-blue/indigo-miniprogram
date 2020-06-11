@@ -14,7 +14,7 @@ export const MemberInfo = ({ info }: IProps) => {
   const expired = info ? dayjs().isAfter(dayjs(info.expireAt)) : false;
   return (
     <FlexView column>
-      <Text className={'member-info__title'}>{'会员:'}</Text>
+      <Text className={'member-info__title strong'}>{'会员:'}</Text>
 
       <FlexView className={'member-info__container'}>
         {!info && (
