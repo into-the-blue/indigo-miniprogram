@@ -2,27 +2,47 @@
 
 本项目旨在帮助大家更好的找到出租房. ~~目前主要是爬取房源, 如果用户量大, 有机会的话也希望做自己的房源发布平台~~
 
-
 ### 技术栈
 
 这是一个全栈项目, 使用到的技术有且不限于
 
-- 基于Taro的小程序
-- node后端
-- python爬虫
+- 基于 Taro 的小程序
+- node 后端
+- python 爬虫
 - mongoDb
 - docker/docker-compose
 - nginx
 
-
-
-
 ### 小程序预览
 
-![img_1](./readme/img_1.jpeg)![img_2](./readme/img_2.jpeg)![img_3](./readme/img_3.jpeg)![img_4](./readme/img_4.jpeg)
-![img_5](./readme/img_5.jpeg)![img_6](./readme/img_6.jpeg)![img_7](./readme/img_7.jpeg)
-
-
+<img
+src='./readme/img_1.jpeg'
+width='150'
+/>
+<img
+src='./readme/img_2.jpeg'
+width='150'
+/>
+<img
+src='./readme/img_3.jpeg'
+width='150'
+/>
+<img
+src='./readme/img_4.jpeg'
+width='150'
+/>
+<img
+src='./readme/img_5.jpeg'
+width='150'
+/>
+<img
+src='./readme/img_6.jpeg'
+width='150'
+/>
+<img
+src='./readme/img_7.jpeg'
+width='150'
+/>
 
 ### 已实现的功能
 
@@ -32,10 +52,9 @@
 
 我对这个项目想了很多, 想做的功能也很多, 但是心有余而力不足... 平时也很忙, 需要学习...
 
-- 搭建IM系统, 允许用户发布合租请求 `这个功能是很有必要的, 可以帮助刚毕业的大学生以较低的价格, 租到更好的房子`
-- 重构爬虫, 动态创建container `目前的爬虫还是比较简单的, 有的时候链接多了爬不过来`
+- 搭建 IM 系统, 允许用户发布合租请求 `这个功能是很有必要的, 可以帮助刚毕业的大学生以较低的价格, 租到更好的房子`
+- 重构爬虫, 动态创建 container `目前的爬虫还是比较简单的, 有的时候链接多了爬不过来`
 - ...多的不说了,来不及做了
-
 
 ### 最好
 
