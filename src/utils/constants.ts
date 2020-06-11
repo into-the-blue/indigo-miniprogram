@@ -4,7 +4,7 @@ const systemInfo = Taro.getSystemInfoSync();
 export const SCREEN_WIDTH = systemInfo.screenWidth;
 export const SCREEN_HEIGHT = systemInfo.screenHeight;
 
-let host = 'https://indigo.timvel.com';
+let host = 'https://api.indigo.timvel.com';
 
 if (process.env.NODE_ENV === 'development') {
   host = 'http://localhost:7000';
