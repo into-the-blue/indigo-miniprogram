@@ -12,7 +12,7 @@ import get from 'lodash.get';
 import Assets from '@/assets';
 import { MAP_SETTING } from '@/utils/constants';
 import { findItemByKeyValue } from '@/utils';
-import { removeShi } from './helper';
+import { removeShi, mapMetroIcon } from './helper';
 
 type FocusedMetroStation = {
   type: 'metroStation';
@@ -80,7 +80,16 @@ class MapStore implements IStore<MapStore> {
       id: 'station ' + s.stationId,
       longitude: s.coordinates[0],
       latitude: s.coordinates[1],
-      iconPath: Assets.MetroSH,
+      iconPath: mapMetroIcon(s),
+      // callout: { content: s.stationName },
+      label: {
+        content: s.stationName,
+        bgColor: '#fff',
+        padding: '2px',
+        textAlign: 'center',
+        anchorX: '-25px',
+        anchorY: '3px',
+      },
       type: 'station',
       width: 40,
       height: 40,

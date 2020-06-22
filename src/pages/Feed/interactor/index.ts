@@ -282,6 +282,11 @@ class FeedInteractor implements IInteractor {
         500,
         50,
       );
+      if (!apartments.length)
+        return Taro.atMessage({
+          message: '没有找到房源... 正在努力寻找中',
+          duration: 4000,
+        });
       this.mMap.setApartmentMarkers(apartments);
     } catch (err) {
       console.warn(err.message);

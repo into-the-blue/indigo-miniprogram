@@ -30,7 +30,7 @@ export const RecordCard = ({ record, onPressRecord, isSelected }: IProps) => {
       >
         <ApartmentDetail
           apartment={apartment as any}
-          additionalInfo={[{ title: '距离', content: distance + 'm' }]}
+          additionalInfo={[{ title: '距离', content: distance.toFixed(0) + '米' }]}
         />
       </View>
     </View>
