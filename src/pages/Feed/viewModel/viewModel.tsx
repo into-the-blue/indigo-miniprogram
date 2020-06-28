@@ -59,6 +59,13 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             })}
           > */}
           <Banner />
+          {noticeMessage && (
+            <FlexView style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
+              <AtNoticebar marquee close>
+                {noticeMessage}
+              </AtNoticebar>
+            </FlexView>
+          )}
           {/* </FlexView> */}
           <FlexView
             // className={classNames({
@@ -98,11 +105,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
               <CoverImage className={'map-pin'} src={Assets.CenterPin} />
             )}
-            {noticeMessage && (
-              <CoverView style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                <AtNoticebar marquee>{noticeMessage}</AtNoticebar>
-              </CoverView>
-            )}
             {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
             {locationAuthorized && (
               <AvailableCities
@@ -121,12 +123,12 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}
             />
           )} */}
-          {/* <FocusedLocationConsole
+          <FocusedLocationConsole
             mMap={this.props.mMap}
             showApartmentList={showApartmentListModal}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
-          /> */}
+          />
         </FlexView>
       </FlexView>
     );
