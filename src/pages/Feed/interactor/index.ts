@@ -10,7 +10,6 @@ import { LocationClient } from '@/services/location';
 import { IPOI, IAvailableCity } from '@/types';
 import { MembershipService } from '@/services/membership';
 import { filter } from 'rxjs/operators';
-import { WX_TEMPLATE_ID } from '@/utils/constants';
 
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
@@ -282,11 +281,16 @@ class FeedInteractor implements IInteractor {
         500,
         50,
       );
-      if (!apartments.length)
+      if (!apartments.length) {
         return Taro.atMessage({
           message: '没有找到房源... 正在努力寻找中',
           duration: 4000,
         });
+      }
+      Taro.atMessage({
+        message: `附近 500 米内, 找到${apartments.length}套房源`,
+      });
+
       this.mMap.setApartmentMarkers(apartments);
     } catch (err) {
       console.warn(err.message);

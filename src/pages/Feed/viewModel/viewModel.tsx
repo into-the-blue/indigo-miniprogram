@@ -96,15 +96,11 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
                 />
               </FlexView>
             )}
-            {mapDragged && !showApartmentListModal && (
+            {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
               <CoverImage className={'map-pin'} src={Assets.CenterPin} />
             )}
 
-            {locationAuthorized && (
-              <SearchBar
-                onPress={this.presenter.onPressSearch}
-              />
-            )}
+            {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
             {locationAuthorized && (
               <AvailableCities
                 availableCities={availableCities}

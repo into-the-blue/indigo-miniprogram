@@ -40,14 +40,17 @@ export const ApartmentInfo = ({ apartment, additionalInfo }: IProps) => {
   };
   return (
     <View>
-      <FlexView justifyContent={'space-between'} paddingHorizontal={'10px'} marginBottom={10}>
-        <Text
-          className={classNames('apartment-info__title', {
-            'apartment-info__title-long': apartment.title.length >= 20,
-          })}
-        >
-          {apartment.title}
-        </Text>
+      <FlexView justifyContent={'space-between'} paddingHorizontal={'10px'}>
+        <FlexView column>
+          <Text
+            className={classNames('apartment-info__title', {
+              'apartment-info__title-long': apartment.title.length >= 20,
+            })}
+          >
+            {apartment.title}
+          </Text>
+          <Text style={{ fontSize: 12, marginLeft: 10 }}>{'上架日期: ' + apartment.createdAt}</Text>
+        </FlexView>
 
         {isApartment(apartment.tags) && (
           <AtTag className={'apartment-info__tag'} active>

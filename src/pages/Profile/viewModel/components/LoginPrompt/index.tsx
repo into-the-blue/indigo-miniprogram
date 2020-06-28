@@ -14,9 +14,6 @@ export const LoginPrompt = ({ onGrantWechatInfo }: IProps) => {
       <AtNoticebar customStyle={{ marginTop: 10 }} marquee speed={150}>
         {'点啊, 此时不点更待何时??'}
       </AtNoticebar>
-      <AtNoticebar customStyle={{ marginTop: 10 }} marquee speed={200}>
-        {'林北辛辛苦苦开发出的app,还免费使用, 这都不登录?'}
-      </AtNoticebar>
       <AtNoticebar customStyle={{ marginTop: 10 }} marquee speed={100}>
         {'app提供的服务均可免费使用'}
       </AtNoticebar>
