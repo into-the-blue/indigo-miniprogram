@@ -59,13 +59,13 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             })}
           > */}
           <Banner />
-          {noticeMessage && (
+          {/* {noticeMessage && (
             <FlexView style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
               <AtNoticebar marquee close>
                 {noticeMessage}
               </AtNoticebar>
             </FlexView>
-          )}
+          )} */}
           {/* </FlexView> */}
           <FlexView
             // className={classNames({
