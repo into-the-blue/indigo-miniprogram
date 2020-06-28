@@ -90,6 +90,9 @@ class EditSubscriptionStore {
     this.conditions = [];
     this.radius = DEFAULT_RADIUS;
     this.edited = false;
+    this.hasError = false;
+    this.originSubscription = undefined;
+    this.target = undefined;
   };
 
   @action setRadius = (value: string) => {

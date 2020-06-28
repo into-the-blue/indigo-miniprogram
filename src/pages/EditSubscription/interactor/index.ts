@@ -151,6 +151,10 @@ class EditSubscriptionInteractor implements IInteractor {
       target,
     });
   };
+
+  resetState=()=>{
+    this.editSubscriptionStore.resetStore()
+  }
 }
 
 export { EditSubscriptionInteractor };

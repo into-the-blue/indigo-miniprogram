@@ -11,7 +11,9 @@ class EditSubscriptionPresenter implements IPresenter {
   componentDidMount() {
     this.getInitialProps();
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.interactor.resetState()
+  }
 
   getInitialProps = () => {
     this.viewModel.getProps.on(

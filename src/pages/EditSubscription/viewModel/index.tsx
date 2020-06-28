@@ -26,7 +26,9 @@ class EditSubscriptionViewModel extends React.Component<IViewModelProps> impleme
     this.presenter.componentDidMount();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.presenter.componentWillUnmount();
+  }
 
   get getProps() {
     return this.props;
@@ -42,20 +44,20 @@ class EditSubscriptionViewModel extends React.Component<IViewModelProps> impleme
       target,
     } = this.props.editSubscriptionStore!;
     return (
-        <BaseView isLoading={!target}>
+      <BaseView isLoading={!target}>
         <AtMessage />
-          <ScrollView style={{ flex: 1 }}>
-            <TargetInfo
-              type={targetType}
-              info={targetInfo}
-              isUpdating={isUpdating}
-              onPressSave={this.presenter.onPressSave}
-            />
+        <ScrollView style={{ flex: 1 }}>
+          <TargetInfo
+            type={targetType}
+            info={targetInfo}
+            isUpdating={isUpdating}
+            onPressSave={this.presenter.onPressSave}
+          />
 
-            <EditRadius radius={radius} setRadius={setRadius} />
-            <ConfigureConditions />
-          </ScrollView>
-        </BaseView>
+          <EditRadius radius={radius} setRadius={setRadius} />
+          <ConfigureConditions />
+        </ScrollView>
+      </BaseView>
     );
   }
 }
