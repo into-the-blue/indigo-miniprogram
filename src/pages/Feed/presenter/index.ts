@@ -18,7 +18,9 @@ class FeedPresenter implements IPresenter {
     this.viewModel.getProps.on('Feed_queryMemberInfo', this.interactor.queryLatestMemberInfo);
     this.viewModel.getProps.on('Global_userLogIn', this.onUserLogIn);
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.interactor.cleanNotice();
+  }
 
   init = async () => {
     await this.interactor.queryUserInfo();

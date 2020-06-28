@@ -4,6 +4,7 @@ import { nextState } from '@/types';
 class FeedStore {
   @observable showApartmentListModal: boolean = false;
   @observable locationAuthorized: boolean = true;
+  @observable noticeMessage: string | null = null;
 
   @action setLocationAuthorized = (bool: boolean) => {
     this.locationAuthorized = bool;
@@ -19,6 +20,10 @@ class FeedStore {
 
   @action dismissApartmentList = () => {
     this.showApartmentListModal = false;
+  };
+
+  @action setNotice = (msg: string | null) => {
+    this.noticeMessage = msg;
   };
 }
 export { FeedStore };

@@ -14,6 +14,7 @@ import { filter } from 'rxjs/operators';
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
   $queryCurrentCitySub?: Subscription;
+  cleanNoticeTimer?: NodeJS.Timeout;
 
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
 
@@ -71,6 +72,20 @@ class FeedInteractor implements IInteractor {
     }
   };
 
+  showNotice = (msg: string) => {
+    this.feed.setNotice(msg);
+    this.cleanNotice();
+    this.cleanNoticeTimer = setTimeout(this.dismissNotice, 30 * 1000);
+  };
+
+  cleanNotice = () => {
+    this.cleanNoticeTimer && clearTimeout(this.cleanNoticeTimer);
+  };
+
+  dismissNotice = () => {
+    this.feed.setNotice(null);
+  };
+
   cancelQueryUserCurrentCity = () => {
     this.$queryCurrentCitySub && this.$queryCurrentCitySub.unsubscribe();
   };
@@ -105,6 +120,9 @@ class FeedInteractor implements IInteractor {
       const city = await this.queryAndSetUserCurrentCity(coordinates);
       const availableCitys = await LocationClient.getAvailableCities();
       this.mMap.setAvailableCities(availableCitys);
+      this.showNotice(
+        '24小时内新增: ' + availableCitys.map(o => `${o.name}新增: ${o.count}套`).join(', '),
+      );
       if (city) {
         this.mMap.setCurrentCity(city);
         if (!this.mMap.inAvailableCities(city)) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, Map, CoverImage, Text, Button } from '@tarojs/components';
+import { Map, CoverImage, Text, Button, CoverView } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { FeedPresenter } from '../presenter';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ import FocusedLocationConsole from './components/FocusedLocationConsole';
 import { SearchBar } from './components/SearchBar';
 import { Banner } from './components/Banner';
 import Assets from '@/assets';
-import { AtMessage } from 'taro-ui';
+import { AtMessage, AtNoticebar } from 'taro-ui';
 import './index.scss';
 import { injectXeno } from '@/xeno';
 import { AvailableCities } from './components/AvailableCities';
@@ -37,14 +37,13 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   }
 
   render() {
-    const { showApartmentListModal, locationAuthorized } = this.props.feed!;
+    const { showApartmentListModal, locationAuthorized, noticeMessage } = this.props.feed!;
     const {
       currentCoordinate,
       setting,
       markers,
       scale,
       mapDragged,
-      currentApartments,
       cityActionSheetVisible,
       dismissCityActionSheet,
       availableCities,
@@ -54,17 +53,17 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       <FlexView column style={{ height: '100vh', width: '100%' }}>
         <AtMessage />
         <FlexView column style={{ flex: 1, position: 'relative' }}>
-          <FlexView
+          {/* <FlexView
             className={classNames({
               'blur-container': showApartmentListModal,
             })}
-          >
-            <Banner />
-          </FlexView>
+          > */}
+          <Banner />
+          {/* </FlexView> */}
           <FlexView
-            className={classNames({
-              'blur-container': showApartmentListModal,
-            })}
+            // className={classNames({
+            //   'blur-container': showApartmentListModal,
+            // })}
             column
             style={{ position: 'relative', flex: 1 }}
           >
@@ -99,7 +98,11 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
               <CoverImage className={'map-pin'} src={Assets.CenterPin} />
             )}
-
+            {noticeMessage && (
+              <CoverView style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
+                <AtNoticebar marquee>{noticeMessage}</AtNoticebar>
+              </CoverView>
+            )}
             {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
             {locationAuthorized && (
               <AvailableCities
@@ -112,18 +115,18 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               />
             )}
           </FlexView>
-          {showApartmentListModal && (
+          {/* {showApartmentListModal && (
             <FlexView
               onClick={this.presenter.showApartmentList}
               style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}
             />
-          )}
-          <FocusedLocationConsole
+          )} */}
+          {/* <FocusedLocationConsole
             mMap={this.props.mMap}
             showApartmentList={showApartmentListModal}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
-          />
+          /> */}
         </FlexView>
       </FlexView>
     );
