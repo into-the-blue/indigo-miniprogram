@@ -35,15 +35,36 @@ class NotificationRecordsStore extends BaseViewStore {
     return false;
   };
 
+  @action setNotificationRecords = (
+    records: ISubscriptionNotificationRecordClient[],
+    concat: boolean = false,
+  ) => {
+    if (concat) {
+      this.notificationRecords = this.notificationRecords.concat(records);
+    } else {
+      this.notificationRecords = records;
+    }
+  };
+
   setRecordAsMapCentral = (recordId: string) => {
     const record = this.getRecordById(recordId);
-    this.setMapCentral(record?.apartment!.coordinates);
+    this.setMapCentral(record?.apartment!.coordinates!);
   };
 
   getRecordById = (id: string) => {
     return findItemByKeyValue(this.notificationRecords, id, 'id');
   };
 
+  @observable resetStore = () => {
+    this.notificationRecords = [];
+    this.subscription = undefined;
+    this.subscriptionId = undefined;
+    this.selectedRecordIds = [];
+    this.mapCentralCoordinates = undefined;
+    this.noRecordsFound = false;
+    this.isError = false;
+    this.isLoading = false;
+  };
   @computed get selectedRecords() {
     return this.selectedRecordIds.map(id => this.notificationRecords.find(r => r.id === id)!);
   }

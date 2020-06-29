@@ -2,8 +2,10 @@ import { IInteractor } from '../types';
 import { NotificationRecordsStore } from '../stores';
 import { SubscriptionClient } from '@/services/subscription';
 import Taro from '@tarojs/taro';
-import { ISubscriptionClient } from '@/types';
+import { ISubscriptionClient, ISubscriptionNotificationRecordClient } from '@/types';
 import { SubscriptionStore } from '@/stores';
+import { from, timer } from 'rxjs';
+import { bufferCount, concatMap } from 'rxjs/operators';
 
 class NotificationRecordsInteractor implements IInteractor {
   constructor(
@@ -22,6 +24,10 @@ class NotificationRecordsInteractor implements IInteractor {
     });
   };
 
+  resetState=()=>{
+    this.notificationRecordsStore.resetStore()
+  }
+
   queryNotificationRecords = async () => {
     try {
       this.notificationRecordsStore.onInitStart();
@@ -29,8 +35,8 @@ class NotificationRecordsInteractor implements IInteractor {
         this.notificationRecordsStore.subscriptionId!,
       );
       console.warn('[queryNotificationRecords]', records.length);
+      this._setNotificationRecordsProgressively(records);
       this.notificationRecordsStore.setState({
-        notificationRecords: records,
         isLoading: false,
       });
       const unread = records.filter(o => !o.viewed).map(o => o.id);
@@ -41,6 +47,18 @@ class NotificationRecordsInteractor implements IInteractor {
       //
       this.notificationRecordsStore.onInitError();
     }
+  };
+
+  _setNotificationRecordsProgressively = (records: ISubscriptionNotificationRecordClient[]) => {
+    from(records)
+      .pipe(
+        bufferCount(10),
+        concatMap(rs => {
+          this.notificationRecordsStore.setNotificationRecords(rs, true);
+          return timer(300);
+        }),
+      )
+      .subscribe();
   };
 
   viewNotifications = (ids: string[]) => {
