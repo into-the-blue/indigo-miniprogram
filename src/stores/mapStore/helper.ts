@@ -33,9 +33,25 @@ export const mapMetroIcon = (station: IMetroStationClient) => {
 
     case 'shenzhen':
       return Assets.MetroShenzhen;
-      
+
     default: {
       return Assets.MetroSH;
     }
   }
+};
+
+/**
+ *
+ *
+ * @param {number} coor
+ *  (1 ~ 10)/10000
+ * + - 0.001 ~ 0.0001
+ * @returns
+ */
+export const addCoordinatesBias = (coor: number) => {
+  const ran = Math.round(Math.random() * 10) / 10000;
+  if (ran > 0.5) {
+    return coor + ran;
+  }
+  return coor - ran;
 };

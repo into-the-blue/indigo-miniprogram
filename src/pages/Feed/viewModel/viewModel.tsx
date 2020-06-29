@@ -50,7 +50,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
     } = this.props.mMap;
     return (
       <FlexView column style={{ height: '100vh', width: '100%' }}>
-        <AtMessage />
         <FlexView column style={{ flex: 1, position: 'relative' }}>
           {/* <FlexView
             className={classNames({
@@ -102,7 +101,13 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               </FlexView>
             )}
             {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
-              <CoverImage className={'map-pin'} src={Assets.CenterPin} />
+              <CoverImage
+                onClick={e => {
+                  e.preventDefault();
+                }}
+                className={'map-pin'}
+                src={Assets.CenterPin}
+              />
             )}
             {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
             {locationAuthorized && (
@@ -129,6 +134,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             onPressSubscribe={this.presenter.goToSubscription}
           />
         </FlexView>
+        <AtMessage />
       </FlexView>
     );
   }

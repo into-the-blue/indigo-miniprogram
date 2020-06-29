@@ -23,7 +23,13 @@ class FeedInteractor implements IInteractor {
       await this.userStore.initUserInfo();
       onSuccess && onSuccess();
     } catch (err) {
-      console.warn('queryUserInfo', err.message);
+      console.warn('queryUserInfo', err.message, err.response);
+      if (err.response.status === 401) {
+        Taro.atMessage({
+          message: '你还没有登录呢,快去登录吧~',
+          duration: 5000,
+        });
+      }
       //
     }
   };

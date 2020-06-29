@@ -12,7 +12,7 @@ import get from 'lodash.get';
 import Assets from '@/assets';
 import { MAP_SETTING } from '@/utils/constants';
 import { findItemByKeyValue } from '@/utils';
-import { removeShi, mapMetroIcon } from './helper';
+import { removeShi, mapMetroIcon, addCoordinatesBias } from './helper';
 
 type FocusedMetroStation = {
   type: 'metroStation';
@@ -169,8 +169,8 @@ class MapStore implements IStore<MapStore> {
     this.cleanMarkersByType('apartment');
     const markers: IMarker[] = apartments.map(apt => ({
       id: 'apartment ' + apt.houseId,
-      longitude: apt.coordinates[0],
-      latitude: apt.coordinates[1],
+      longitude: addCoordinatesBias(apt.coordinates[0]),
+      latitude: addCoordinatesBias(apt.coordinates[1]),
       iconPath: Assets.ApartmentMarker,
       type: 'apartment',
       width: 30,
