@@ -1,12 +1,22 @@
 @import '@/styles/theme.scss';
 
 .sortable-header__ {
+  &wrapper {
+    box-shadow: $shadow;
+    margin: 30px 20px;
+    // padding: 0 20px;
+    height: 80px;
+    border-radius: 40px;
+    overflow: hidden;
+  }
   &title {
-    font-size: 32px;
+    font-size: 26px;
     color: black;
+    text-align: center;
+    transition: all 0.5 ease-out;
   }
   &title-active {
-    color: $primary-color;
+    transform: scale(0.9);
   }
 
   &icon {
@@ -15,24 +25,63 @@
     object-fit: contain;
   }
 
+  &container-active {
+    box-shadow: $shadow-inset;
+    border-radius: 40px;
+  }
+
   &container {
-    padding: 15px 0;
+    // padding: 15px 0;
+    // margin: 10px 0px;
+    justify-content: center;
+    flex: 1;
   }
 }
 
 .apartment-card__ {
+  &wrapper {
+    width: calc((100vw - 30px - 30px - 30px) / 2);
+    margin: 15px;
+    border-radius: 30px;
+    // background: $raised-bk;
+  }
+
+  &tag {
+    color: $primary-color !important;
+    border: none !important;
+    background: transparent !important;
+    // box-shadow: ;
+    font-size: 24px !important;
+    font-weight: bold;
+    // border-radius: 40px;
+  }
+
   &container {
-    padding: 10px 0;
-    border: 0px solid $border-color;
-    border-bottom-width: 1px;
+    padding: 10px 20px;
+    background-color: transparent;
+    flex: 1;
   }
 
   &container-selected {
     background-color: $primary-color;
   }
 
+  &text-bar-container {
+    background-color: transparent;
+    padding: 5px 0px;
+    width: auto;
+  }
+
   &text {
-    font-size: 34px;
+    font-size: 24px;
+  }
+
+  &content {
+    font-size: 22px;
+  }
+
+  &text-highlight {
+    color: $primary-color;
   }
 
   &text-selected {

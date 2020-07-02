@@ -1,16 +1,28 @@
 @import '@/styles/theme.scss';
 
 .apartment-info__ {
+  &container {
+    // box-shadow: $shadow;
+    margin: 40px 30px;
+    // border-radius: 50px;
+    padding: 30px;
+    flex: 1;
+  }
   &title {
     color: black;
   }
 
   &title-long {
-    font-size: 32px;
+    font-size: 30px;
   }
 
   &tag {
-    color: $primary-color;
-    border-color: $primary-color;
+    color: $primary-color !important;
+    border: none !important;
+    background: transparent !important;
+    // box-shadow: ;
+    font-size: 24px !important;
+    font-weight: bold;
+    // border-radius: 40px;
   }
 }

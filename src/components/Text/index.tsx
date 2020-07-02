@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import './styles.scss';
 
 interface IProps extends TextProps {
-  children?: React.ReactChild;
+  children?: React.ReactChild | any;
 }
 
 const MText = ({ className, ...restProps }: IProps) => {

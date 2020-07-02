@@ -4,11 +4,16 @@
     background-color: $bk-color;
   }
 
-  &concave {
+  &neumorphism {
+    box-shadow: $shadow;
+    border-radius: 50px;
+  }
+
+  &inset {
     box-shadow: $shadow-inset;
   }
 
-  &concave-active:active {
+  &inset-active:active {
     box-shadow: $shadow-inset;
   }
 }

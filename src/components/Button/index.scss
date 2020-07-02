@@ -8,7 +8,7 @@
   transition: font-size 0.2s ease-out;
 
   &-default {
-    border-radius: $border-radius;
+    border-radius: 50px !important;
     // border-color: $primary-color;
     border: none !important;
     color: $text-color;

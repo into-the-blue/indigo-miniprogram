@@ -7,6 +7,7 @@ import Assets from '@/assets';
 import { observer } from 'mobx-react';
 import { MAP_HEIGHT } from '@/pages/NotificationRecords/constants';
 import { addCoordinatesBias } from '@/stores/mapStore/helper';
+import { FlexView } from '@/components';
 
 interface IProps {
   subscriptionCoordinates: [number, number];
@@ -46,7 +47,10 @@ export const MapComp = observer(
       height: 40,
     } as any;
     return (
-      <View style={{ width: '100vw', height: MAP_HEIGHT, position: 'fixed', top: 0, zIndex: 1 }}>
+      <FlexView
+        column
+        style={{ width: '100vw', height: MAP_HEIGHT, position: 'fixed', top: 0, zIndex: 1 }}
+      >
         <Map
           style={{ width: '100%', height: '100%' }}
           longitude={centralCoordinates[0]}
@@ -55,7 +59,7 @@ export const MapComp = observer(
           setting={MAP_SETTING}
           scale={13}
         />
-      </View>
+      </FlexView>
     );
   },
 );

@@ -4,6 +4,8 @@ import { FlexView } from '../FlexView';
 import { IApartment } from '@/types';
 import { SortableHeader } from './SortableHeader';
 import { ApartmentCard } from './ApartmentCard';
+import get from 'lodash.get';
+import { TActiveKey, TSortableKeys } from './types';
 
 interface IProps {
   apartments: IApartment[];
@@ -20,7 +22,7 @@ export const ApartmentList = ({
   visible = true,
   textStyle,
 }: IProps) => {
-  const [sortedKeys, setSortedKeys] = useState<TActiveKey[]>([]);
+  const [sortedKey, setSortedKey] = useState<TActiveKey | null>(null);
   const [sortedApartments, setSortedApartments] = useState<IApartment[]>([]);
 
   useEffect(() => {
@@ -29,63 +31,65 @@ export const ApartmentList = ({
   }, [apartments]);
 
   const onSort = (key: TSortableKeys) => (mode: null | 'asc' | 'desc') => {
-    let nextSortedKeys = [...sortedKeys];
+    let nextSortedKeys: TActiveKey | null = { key, mode: mode! };
     if (mode === null) {
-      nextSortedKeys = sortedKeys.filter(o => o.key !== key);
-    } else {
-      const idx = sortedKeys.findIndex(o => o.key === key);
-      if (idx === -1) {
-        nextSortedKeys = sortedKeys.concat({ key, mode: mode! });
-      } else {
-        nextSortedKeys = sortedKeys.map((o, i) => (i === idx ? { key, mode: mode! } : o));
-      }
+      nextSortedKeys = null;
     }
-    setSortedKeys(nextSortedKeys);
-    if (!nextSortedKeys.length) return setSortedApartments(apartments);
-    const nextSortedApartments = [...sortedApartments].sort(sortApartment(nextSortedKeys));
+    // if (mode === null) {
+    //   nextSortedKeys = sortedKeys.filter(o => o.key !== key);
+    // }
+    // else {
+    // const idx = sortedKeys.findIndex(o => o.key === key);
+    // if (idx === -1) {
+    //   nextSortedKeys = sortedKeys.concat({ key, mode: mode! });
+    // } else {
+    //   nextSortedKeys = sortedKeys.map((o, i) => (i === idx ? { key, mode: mode! } : o));
+    // }
+    // }
+    setSortedKey(nextSortedKeys);
+    if (!nextSortedKeys) return setSortedApartments(apartments);
+    const nextSortedApartments = [...sortedApartments].sort(sortApartment([nextSortedKeys]));
     setSortedApartments(nextSortedApartments);
   };
   if (!visible) return null;
   return (
-    <FlexView column style={{ backgroundColor: 'white' }}>
-      <FlexView>
+    <FlexView column style={{ overflow: 'visible' }}>
+      <FlexView className={'sortable-header__wrapper'}>
         {KEYS.map(item => (
           <SortableHeader
             style={item.style}
             key={item.key}
             title={item.title}
             onSort={onSort(item.key)}
+            activeKey={get(sortedKey, 'key') === item.key ? sortedKey : null}
           />
         ))}
       </FlexView>
-      {sortedApartments.map((apartment, idx) => (
-        <ApartmentCard
-          apartment={apartment}
-          textStyle={textStyle}
-          key={'apt' + idx}
-          onPressApartment={() => onPressApartment(apartment)}
-          isSelected={apartment.houseId === selectedApartmentHouseId}
-        />
-      ))}
+      <FlexView wrap style={{ padding: '0 7.5px' }}>
+        {sortedApartments.map((apartment, idx) => (
+          <ApartmentCard
+            apartment={apartment}
+            textStyle={textStyle}
+            key={'apt' + idx}
+            activeKey={get(sortedKey, 'key')}
+            onPressApartment={() => onPressApartment(apartment)}
+            isSelected={apartment.houseId === selectedApartmentHouseId}
+          />
+        ))}
+      </FlexView>
     </FlexView>
   );
-};
-
-type TSortableKeys = 'houseType' | 'price' | 'area' | 'pricePerSquareMeter';
-type TActiveKey = {
-  key: TSortableKeys;
-  mode: 'asc' | 'desc';
 };
 
 const KEYS: { title: string; key: TSortableKeys; style: React.CSSProperties }[] = [
   {
     title: '户型',
     key: 'houseType',
-    style: { flex: 0.3 },
+    style: { flex: 1 },
   },
-  { title: '价格', key: 'price', style: { flex: 0.25 } },
-  { title: '面积', key: 'area', style: { flex: 0.2 } },
-  { title: '每平米价格', key: 'pricePerSquareMeter', style: { flex: 0.25 } },
+  { title: '价格', key: 'price', style: { flex: 1 } },
+  { title: '面积', key: 'area', style: { flex: 1 } },
+  { title: '每平米价格', key: 'pricePerSquareMeter', style: { flex: 1 } },
 ];
 
 const _compare = (a: string | number, b: string | number) => {

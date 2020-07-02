@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from '@tarojs/components';
 import { TApartmentComputed } from '@/types';
 import { UNITS } from '@/utils/constants';
 import { Unit } from './Unit';
@@ -7,11 +6,17 @@ import './styles.scss';
 import { FlexView } from '../../FlexView';
 import { Text } from '@/components';
 
-export const ComputedInfo = ({ computed }: { computed?: TApartmentComputed }) => {
+export const ComputedInfo = ({
+  computed,
+  inset,
+}: {
+  computed?: TApartmentComputed;
+  inset?: boolean;
+}) => {
   if (!computed) return <Text>{'对比信息正在努力计算中 ~'}</Text>;
 
   return (
-    <FlexView column className={'computed-info__container'}>
+    <FlexView inset={inset} neumorphism column className={'computed-info__container'}>
       <Text
         className={'computed-info__title'}
       >{`与附近 ${computed.range} 米内 ${computed.total} 套房源相比:`}</Text>
@@ -44,8 +49,8 @@ export const ComputedInfo = ({ computed }: { computed?: TApartmentComputed }) =>
           />
         </FlexView>
       </FlexView>
-
-      <View></View>
+      {/* 
+      <View></View> */}
     </FlexView>
   );
 };

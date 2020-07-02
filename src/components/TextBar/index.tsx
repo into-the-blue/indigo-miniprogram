@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from '@tarojs/components';
 import classNames from 'classnames';
 import './style.scss';
 import Text from '../Text';
+import { FlexView } from '../FlexView';
 
 interface IProps {
   title: string;
@@ -11,6 +11,8 @@ interface IProps {
   contentClassName?: string;
   titleStyle?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export const TextBar = ({
@@ -20,9 +22,11 @@ export const TextBar = ({
   titleStyle,
   contentClassName,
   contentStyle,
+  className,
+  style,
 }: IProps) => {
   return (
-    <View className={'text-bar__container'}>
+    <FlexView className={classNames('text-bar__container', className)} style={style}>
       <Text className={classNames('text-bar__title', titleClassName)} style={titleStyle}>
         {title}
       </Text>
@@ -30,6 +34,6 @@ export const TextBar = ({
       <Text className={classNames('text-bar__content', contentClassName)} style={contentStyle}>
         {content}
       </Text>
-    </View>
+    </FlexView>
   );
 };

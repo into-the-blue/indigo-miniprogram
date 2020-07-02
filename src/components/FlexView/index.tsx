@@ -18,8 +18,11 @@ export interface IFlexViewProps {
   justifyContent?: 'start' | 'end' | 'space-between' | 'space-evenly' | 'space-around';
   wrap?: boolean;
   onClick?: (e: ITouchEvent) => void;
-  concave?: boolean;
-  concaveWhenActive?: boolean;
+
+  neumorphism?: boolean;
+  inset?: boolean;
+  insetWhenActive?: boolean;
+
   padding?: string;
   paddingLeft?: string | number;
   paddingRight?: string | number;
@@ -76,8 +79,9 @@ export const FlexView = ({
   justifyContent,
   wrap,
   onClick,
-  concave,
-  concaveWhenActive,
+  inset,
+  insetWhenActive,
+  neumorphism,
   ...paddingMargin
 }: IFlexViewProps) => {
   const getStyle = () => {
@@ -107,8 +111,9 @@ export const FlexView = ({
         },
         className,
         {
-          'flex-view__concave-active': concaveWhenActive,
-          'flex-view__concave': concave,
+          'flex-view__neumorphism': neumorphism,
+          'flex-view__inset-active': insetWhenActive,
+          'flex-view__inset': inset,
         },
       )}
       onClick={onClick}

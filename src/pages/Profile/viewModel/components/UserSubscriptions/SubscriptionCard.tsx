@@ -27,7 +27,7 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IPro
   return (
     <Deletable className={'subscription-card__wrapper'} onDelete={onDelete}>
       <FlexView
-        concaveWhenActive
+        insetWhenActive
         column
         className={'subscription-card__container'}
         onClick={e => {

@@ -5,14 +5,18 @@ import { ComputedInfo } from './ComputedInfo';
 import { IApartment } from '@/types';
 import { FlexView } from '../FlexView';
 import { Text } from '@/components';
+import './styles.scss';
+import classNames from 'classnames';
 
 interface IProps {
   apartment: IApartment | null;
   additionalInfo?: { title: string; content: string }[];
   style?: React.CSSProperties;
+  className?: string;
+  inset?: boolean;
 }
 
-export const ApartmentDetail = ({ apartment, additionalInfo, style }: IProps) => {
+export const ApartmentDetail = ({ apartment, additionalInfo, style, className, inset }: IProps) => {
   if (!apartment)
     return (
       <FlexView
@@ -29,13 +33,14 @@ export const ApartmentDetail = ({ apartment, additionalInfo, style }: IProps) =>
   return (
     <Swiper
       indicatorDots
-      style={{ height: 280, padding: '15px 0', backgroundColor: 'white', ...style }}
+      className={classNames('apartment-detail__container', className)}
+      style={{ ...style }}
     >
       <SwiperItem>
-        <ApartmentInfo apartment={apartment as any} additionalInfo={additionalInfo} />
+        <ApartmentInfo inset={inset} apartment={apartment as any} additionalInfo={additionalInfo} />
       </SwiperItem>
       <SwiperItem>
-        <ComputedInfo computed={apartment.computed} />
+        <ComputedInfo inset={inset} computed={apartment.computed} />
       </SwiperItem>
     </Swiper>
   );

@@ -36,7 +36,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   }
 
   render() {
-    const { showApartmentListModal, locationAuthorized, noticeMessage } = this.props.feed!;
+    const { showApartmentListModal, locationAuthorized } = this.props.feed!;
     const {
       currentCoordinate,
       setting,
@@ -129,7 +129,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
           )} */}
           <FocusedLocationConsole
             mMap={this.props.mMap}
-            showApartmentList={showApartmentListModal}
+            showApartmentList={showApartmentListModal && !cityActionSheetVisible}
             onPressList={this.presenter.showApartmentList}
             onPressSubscribe={this.presenter.goToSubscription}
           />

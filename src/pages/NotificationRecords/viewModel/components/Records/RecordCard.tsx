@@ -1,9 +1,9 @@
 import React from 'react';
-import { View } from '@tarojs/components';
 import { ISubscriptionNotificationRecordClient } from '@/types';
 import './styles.scss';
 import classNames from 'classnames';
 import { ApartmentDetail } from '@/components/ApartmentDetail';
+import { FlexView } from '@/components';
 
 interface IProps {
   record: ISubscriptionNotificationRecordClient;
@@ -13,26 +13,18 @@ interface IProps {
 export const RecordCard = ({ record, onPressRecord, isSelected }: IProps) => {
   const { apartment, viewed, distance } = record;
   return (
-    <View
+    <FlexView
+      column
       onClick={onPressRecord}
       className={classNames('record-card__container', {
-        'record-card__container-viewed': viewed && !isSelected,
+        // 'record-card__container-viewed': viewed && !isSelected,
       })}
     >
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-        className={classNames({
-          'record-card__selected': isSelected,
-        })}
-      >
-        <ApartmentDetail
-          apartment={apartment as any}
-          additionalInfo={[{ title: '距离', content: distance.toFixed(0) + '米' }]}
-        />
-      </View>
-    </View>
+      <ApartmentDetail
+        inset={isSelected}
+        apartment={apartment as any}
+        additionalInfo={[{ title: '距离', content: distance.toFixed(0) + '米' }]}
+      />
+    </FlexView>
   );
 };

@@ -2,6 +2,11 @@
 
 .computed-info__ {
   &container {
+    // box-shadow: $shadow;
+    margin: 40px 30px;
+    // border-radius: 50px;
+    padding: 30px;
+    flex: 1;
   }
 
   &title {

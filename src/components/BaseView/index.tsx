@@ -37,9 +37,9 @@ export const BaseView = ({
   }
   if (isLoading) {
     return (
-      <View style={{ flex: 1, position: 'relative', paddingTop: 40 }}>
+      <FlexView style={{ flex: 1, position: 'relative', paddingTop: 40 }}>
         <AtActivityIndicator mode={'center'} isOpened content={'Loading...'} />
-      </View>
+      </FlexView>
     );
   }
   if (isError) {
