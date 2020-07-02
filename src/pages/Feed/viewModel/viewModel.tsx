@@ -12,6 +12,7 @@ import './index.scss';
 import { injectXeno } from '@/xeno';
 import { AvailableCities } from './components/AvailableCities';
 import { FlexView, Text } from '@/components';
+import { Routes } from '@/utils/constants';
 
 @inject('global', 'feed', 'mMap', 'userStore')
 @observer
@@ -29,6 +30,12 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
 
   componentWillUnmount() {
     this.presenter.componentWillUnmount();
+  }
+  onShareAppMessage() {
+    return {
+      title: '我在用安隅找房, 不来看看嘛?',
+      path: Routes.Feed,
+    };
   }
 
   get getProps() {

@@ -1,1 +1,4 @@
-export default {};
+export default {
+  navigationBarTextStyle: 'white',
+  navigationBarBackgroundColor: '#ffd977',
+};
