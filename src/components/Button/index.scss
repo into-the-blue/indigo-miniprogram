@@ -4,17 +4,22 @@
   height: 70px;
   margin: 0;
   line-height: 70px;
-  font-size: 28px;
+  font-size: 36px;
+  transition: font-size 0.2s ease-out;
 
   &-default {
     border-radius: $border-radius;
     // border-color: $primary-color;
-    border-width: 2px;
-    border-style: solid;
+    border: none !important;
     color: $text-color;
-    background-color: white;
-    font-size: 36px;
-    transition: font-size 0.2s ease-out;
+    background: $raised-bk;
+    box-shadow: $shadow;
+  }
+
+  &-default:active {
+    box-shadow: $shadow-inset;
+    background: $raised-bk;
+    font-size: 0.9 * 36px;
   }
 
   &-primary {

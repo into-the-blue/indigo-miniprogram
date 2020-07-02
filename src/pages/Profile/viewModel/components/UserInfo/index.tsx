@@ -24,7 +24,6 @@ const UserInfo = ({
         <Button
           className={'user-info__message-button'}
           onClick={onPressOpenNotification}
-          type={'primary'}
         >
           {'允许通知'}
         </Button>
