@@ -20,6 +20,16 @@ class ProfilePresenter implements IPresenter {
     Taro.hideHomeButton();
     this.interactor.queryUserSubscriptions();
     this.viewModel.getProps.on('Global_userLogIn', this.onUserLogIn);
+    if (!this.interactor.userStore.isLoggedIn) {
+      Taro.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#ffd977',
+        animation: {
+          duration: 400,
+          timingFunc: 'easeIn',
+        },
+      });
+    }
   }
   componentWillUnmount() {}
 
@@ -32,9 +42,17 @@ class ProfilePresenter implements IPresenter {
       return;
     }
 
-    this.interactor.login(encryptedData, iv, () =>
-      this.viewModel.getProps.next('Global_userLogIn'),
-    );
+    this.interactor.login(encryptedData, iv, () => {
+      this.viewModel.getProps.next('Global_userLogIn');
+      Taro.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#eee',
+        animation: {
+          duration: 400,
+          timingFunc: 'easeIn',
+        },
+      });
+    });
   };
 
   onUserLogIn = () => {

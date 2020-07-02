@@ -22,7 +22,7 @@ export default {
   },
 
   tabBar: {
-    backgroundColor: '#white',
+    backgroundColor: 'white',
 
     borderStyle: 'white',
 
