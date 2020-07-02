@@ -21,11 +21,13 @@ export const ApartmentDetail = ({ apartment, additionalInfo, style, className, i
     return (
       <FlexView
         style={{
-          height: 315,
-          backgroundColor: 'white',
+          height: 310,
           alignItems: 'center',
           justifyContent: 'center',
+          borderRadius: '25px',
+          margin: '20px 15px',
         }}
+        neumorphism
       >
         <Text>{'点击房源进行浏览详细信息'}</Text>
       </FlexView>

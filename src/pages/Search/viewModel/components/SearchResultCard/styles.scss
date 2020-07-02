@@ -1,10 +1,9 @@
 @import '@/styles/theme.scss';
 .search-result__ {
   &container {
-    border: 0 solid $border-color;
-    border-bottom-width: 1px;
-    margin: 0 10px;
-    padding: 10px 10px;
+    margin: 20px 30px;
+    padding: 10px 20px;
+    padding-left: 50px;
   }
 
   &district {

@@ -5,7 +5,7 @@ import { createXeno } from './utils/xeno';
 import { Provider as XenoProvider, Xeno } from './xeno';
 import { AtMessage } from 'taro-ui';
 import 'taro-ui/dist/style/index.scss';
-import './styles/theme.scss'
+import './styles/theme.scss';
 import './app.scss';
 import { View } from '@tarojs/components';
 
@@ -28,12 +28,7 @@ class App extends Component {
   render() {
     return (
       <XenoProvider xeno={this.xenoInstance}>
-        <Provider {...store}>
-          <View>
-            <AtMessage />
-            {this.props.children}
-          </View>
-        </Provider>
+        <Provider {...store}>{this.props.children}</Provider>
       </XenoProvider>
     );
   }

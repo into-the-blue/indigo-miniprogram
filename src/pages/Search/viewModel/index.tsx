@@ -34,9 +34,12 @@ class SearchViewModel extends React.Component<IViewModelProps> implements IViewM
   render() {
     const { inputValue, isSearching, searchResults } = this.props.searchStore!;
     return (
-      <FlexView column style={{ flex: 1 }}>
+      <FlexView column style={{ flex: 1, height: searchResults.length ? undefined : '100vh' }}>
         <FlexView column className={'search__input'}>
           <AtInput
+            style={{ backgroundColor: 'transparent' }}
+            customStyle={{ backgroundColor: 'transparent' }}
+            // placeholderStyle={{ backgroundColor: 'transparent' }}
             value={inputValue}
             placeholder={'搜索: ...'}
             name={'search-bar'}
@@ -45,7 +48,7 @@ class SearchViewModel extends React.Component<IViewModelProps> implements IViewM
         </FlexView>
         <FlexView className={'search__search-result'}>
           <ScrollView scrollY className={'search__search-result-container'}>
-            <FlexView style={{ display: 'flex', flexDirection: 'column' }}>
+            <FlexView column>
               <FlexView style={{ alignSelf: 'center', marginTop: 5 }}>
                 <AtActivityIndicator isOpened={isSearching} content={'Searching...'} />
               </FlexView>
