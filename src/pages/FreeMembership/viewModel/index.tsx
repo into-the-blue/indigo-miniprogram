@@ -51,7 +51,7 @@ class FreeMembershipViewModel extends React.Component<IViewModelProps> implement
               className={'free-membership__content'}
             >{`- 每个账号每月可免费兑换2次会员机会\n- 可以基本满足一般用户的需求\n- 剩余可兑换次数 ${remainingRedeemTimes} 次`}</Text>
 
-            <FlexView column marginTop={40}>
+            <FlexView column marginTop={40} style={{ backgroundColor: 'transparent' }}>
               <Text className={'free-membership__ps'}>
                 {
                   '* 此项目为爱心驱动, 开发者一人承担服务器和相关费用, 若有意赞助或提供技术支持, 请联系我~(nagua1_)\n* 谢过各位大爷~'

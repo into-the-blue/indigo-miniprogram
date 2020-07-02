@@ -8,11 +8,13 @@
 
   &-default {
     border-radius: $border-radius;
-    border-color: $primary-color;
+    // border-color: $primary-color;
     border-width: 2px;
     border-style: solid;
-    color: $primary-color;
+    color: $text-color;
     background-color: white;
+    font-size: 36px;
+    transition: font-size 0.2s ease-out;
   }
 
   &-primary {
@@ -22,18 +24,26 @@
     // box-shadow: none !important;
 
     outline: none;
-    color: #999 !important;
-    background: linear-gradient(135deg, rgba(230, 230, 230, 1) 0%, rgba(246, 246, 246, 1) 100%);
-    box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1), 4px 4px 10px -8px rgba(0, 0, 0, 0.3);
+    color: $text-color-white !important;
+    border-radius: 50px !important;
+    background: linear-gradient(145deg, #ffe87f, #e6c36b);
+    box-shadow: 16px 16px 32px #c4a75c, -16px -16px 32px #ffff92;
   }
   &-primary:active {
-    box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1) inset,
-      4px 4px 10px -8px rgba(0, 0, 0, 0.3) inset;
+    background: #ffd977;
+    box-shadow: inset 16px 16px 32px #c4a75c, inset -16px -16px 32px #ffff92;
+    font-size: 0.9 * 36px;
   }
 
   &-danger {
     background-color: $danger-color;
     color: white;
+  }
+
+  &-disabled {
+    background: #fae3aa;
+    color: white;
+    box-shadow: inset 16px 16px 32px #c4a75c, inset -16px -16px 32px #ffff92;
   }
 }
 

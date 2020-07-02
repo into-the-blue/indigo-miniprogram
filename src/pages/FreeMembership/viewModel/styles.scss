@@ -1,18 +1,22 @@
+@import '@/styles/theme.scss';
+
 .free-membership__ {
   &container {
     padding: 30px;
     flex: 1;
     height: 100vh;
+    background-color: $primary-color;
   }
 
   &content {
     font-size: 40px;
     margin: 10px 0;
-    color: black;
+    color: $text-color-white;
   }
 
   &ps {
     font-size: 24px;
+    color: $text-color-white;
   }
 
   &button {
