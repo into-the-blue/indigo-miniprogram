@@ -36,7 +36,12 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   }
 
   render() {
-    const { showApartmentListModal, locationAuthorized } = this.props.feed!;
+    const {
+      showApartmentListModal,
+      locationAuthorized,
+      apartmentsNearby,
+      isQueryingAptsNearby,
+    } = this.props.feed!;
     const {
       currentCoordinate,
       setting,
@@ -100,7 +105,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
                 />
               </FlexView>
             )}
-            {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
+            {mapDragged && !showApartmentListModal && (
               <CoverImage
                 onClick={e => {
                   e.preventDefault();
@@ -110,6 +115,18 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               />
             )}
             {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
+            <FocusedLocationConsole
+              mMap={this.props.mMap}
+              // showApartmentList={showApartmentListModal}
+              onPressList={this.presenter.showApartmentList}
+              onPressSubscribe={this.presenter.goToSubscription}
+              isQueryingAptsNearby={isQueryingAptsNearby}
+              numOfApartmentsNearby={
+                apartmentsNearby ? apartmentsNearby.apartments.length : undefined
+              }
+              showAptsNearby={this.presenter.showAptsNearby}
+              queryAndShowAptsNearby={this.presenter.queryAndShowAptsNearby}
+            />
             {locationAuthorized && (
               <AvailableCities
                 availableCities={availableCities}
@@ -127,12 +144,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}
             />
           )} */}
-          <FocusedLocationConsole
-            mMap={this.props.mMap}
-            showApartmentList={showApartmentListModal && !cityActionSheetVisible}
-            onPressList={this.presenter.showApartmentList}
-            onPressSubscribe={this.presenter.goToSubscription}
-          />
         </FlexView>
         <AtMessage />
       </FlexView>

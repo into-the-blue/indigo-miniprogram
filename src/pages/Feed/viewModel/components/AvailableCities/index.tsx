@@ -38,6 +38,7 @@ export const AvailableCities = observer(
           onCancel={dismissActionSheet}
           onClose={dismissActionSheet}
           cancelText={'取消'}
+          customStyle={{ zIndex: 10000 }}
         >
           {availableCities.map(city => {
             return (

@@ -116,6 +116,7 @@ class FeedPresenter implements IPresenter {
     this.interactor.onDragMap();
     this.beginTimeStamp = e.timeStamp;
     this.interactor.cancelQueryStations();
+    this.interactor.cancelQueryApartmentsNearby();
     this.interactor.cancelQueryUserCurrentCity();
   };
 
@@ -165,6 +166,18 @@ class FeedPresenter implements IPresenter {
     Taro.navigateTo({
       url: Routes.Search,
     });
+  };
+
+  queryAndShowAptsNearby = () => {
+    if (!this.interactor.isLoggedIn()) return;
+    if (!this.interactor.isValidMember('此功能是会员专属哦, 快去领取免费会员吧~')) return;
+    this.interactor.queryApartmentsNearbyLocation(undefined, true);
+  };
+
+  showAptsNearby = () => {
+    if (!this.interactor.isLoggedIn()) return;
+    if (!this.interactor.isValidMember('此功能是会员专属哦, 快去领取免费会员吧~')) return;
+    this.interactor.showApartmentsNearby();
   };
 }
 export { FeedPresenter };

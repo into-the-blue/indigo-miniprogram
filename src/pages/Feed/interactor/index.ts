@@ -14,8 +14,8 @@ import { filter } from 'rxjs/operators';
 class FeedInteractor implements IInteractor {
   $queryStationsSub?: Subscription;
   $queryCurrentCitySub?: Subscription;
+  $queryApartmentsNearbySub?: Subscription;
   cleanNoticeTimer?: NodeJS.Timeout;
-
   constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
 
   queryUserInfo = async (onSuccess?: () => void) => {
@@ -168,6 +168,75 @@ class FeedInteractor implements IInteractor {
   showCityActionSheet = () => {
     this.mMap.showCityActionSheet();
   };
+
+  cleanAptsNearby = () => {
+    this.feed.cleanApartmentsNearby();
+  };
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * unsubscribe
+   */
+  cancelQueryApartmentsNearby = () => {
+    this.$queryApartmentsNearbySub && this.$queryApartmentsNearbySub.unsubscribe();
+    this.$queryApartmentsNearbySub = undefined;
+  };
+
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * add apartments markers
+   */
+  showApartmentsNearby = () => {
+    if (!this.feed.apartmentsNearby) return;
+    // this.setCurrentCoordinate(...this.feed.apartmentsNearby!.coordinates);
+    this.mMap.setApartmentMarkers(this.feed.apartmentsNearby!.apartments!);
+  };
+  /**
+   *
+   *
+   * @memberof FeedInteractor
+   * query apartments nearby coordiantes, for members only
+   *
+   * @param showImmediately if its true, use `isQueryingAptsNearby` to make sure invoke one query each time
+   */
+  queryApartmentsNearbyLocation = (coordinates?: [number, number], showImmediately?: boolean) => {
+    const _coordinates = coordinates || this.mMap.currentCoordinate;
+    if (!_coordinates) return;
+    if (showImmediately && this.feed.isQueryingAptsNearby) return;
+    this.cancelQueryApartmentsNearby();
+    if (showImmediately) this.feed.toggleIsQueryingAptsNearby();
+    this.$queryApartmentsNearbySub = from(
+      ApartmentClient.queryApartmentsNearbyCoordinates(_coordinates, 500, 50),
+    ).subscribe({
+      next: apartments => {
+        if (!apartments.length) {
+          if (showImmediately)
+            Taro.atMessage({
+              message: '这么偏僻的地点... 恐怕找不到房子呢',
+            });
+          return;
+        }
+        console.warn('[queryApartmentsNearbyLocation]', apartments.length);
+        if (showImmediately) {
+          Taro.atMessage({
+            message: `附近 500 米内, 找到${apartments.length}套房源`,
+          });
+          this.mMap.setApartmentMarkers(apartments);
+          return;
+        }
+        this.feed.setApartmentsNearby(_coordinates, apartments);
+      },
+      error: err => {
+        console.warn('[queryApartmentsNearbyLocation]', err);
+      },
+      complete: () => {
+        if (showImmediately) this.feed.toggleIsQueryingAptsNearby();
+      },
+    });
+  };
   /**
    *
    *
@@ -177,12 +246,17 @@ class FeedInteractor implements IInteractor {
   queryStationsNearby = (lng?: number, lat?: number) => {
     this.cancelQueryStations();
     if (!this.mMap.currentCoordinate && !(lng && lat)) return;
-    const args: [number, number, number] = [
-      ...(lng && lat ? [lng, lat] : this.mMap.currentCoordinate!),
-      1000,
-    ] as any;
+    const coordinates: [number, number] = lng && lat ? [lng, lat] : this.mMap.currentCoordinate!;
+    const args: [number, number, number] = [...coordinates, 1000] as any;
     this.$queryStationsSub = from(ApartmentClient.queryStationsNearby(...args)).subscribe({
-      next: stationsNearby => this.mMap.setMetroStationMarkers(stationsNearby),
+      next: stationsNearby => {
+        this.cleanAptsNearby();
+        if (stationsNearby.length === 0) {
+          // query apartments nearby coordinates, member only
+          this.queryApartmentsNearbyLocation(coordinates);
+        }
+        this.mMap.setMetroStationMarkers(stationsNearby);
+      },
       error: err => {
         console.warn(err.message);
       },
@@ -390,17 +464,17 @@ class FeedInteractor implements IInteractor {
     return true;
   };
 
-  isValidMember = () => {
+  isValidMember = (msg?: string, msg2?: string) => {
     if (!this.userStore.isMember) {
       Taro.atMessage({
-        message: '你还不是会员, 快去领取免费会员吧',
+        message: msg || '你还不是会员, 快去领取免费会员吧',
         type: 'warning',
       });
       return false;
     }
     if (this.userStore.isMembershipExpired) {
       Taro.atMessage({
-        message: '你的会员已过期',
+        message: msg2 || '你的会员已过期',
         type: 'warning',
       });
       return false;

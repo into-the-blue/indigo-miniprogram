@@ -38,4 +38,24 @@
     width: 70px;
     height: 70px;
   }
+
+  &icon-primary {
+    color: white;
+    font-weight: bold;
+    background-color: $primary-color;
+  }
+
+  &icon-animation {
+    animation: icon-ani infinite 0.8s linear;
+    animation-direction: alternate-reverse;
+  }
+}
+
+@keyframes icon-ani {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1.1);
+  }
 }
