@@ -6,6 +6,10 @@ class UserClient {
     const { data } = await apiClient.get('/users/info');
     return data.data;
   };
+
+  static grantWechatMessage = async () => {
+    return apiClient.post('/users/grant_wechat_message');
+  };
 }
 
 export { UserClient };

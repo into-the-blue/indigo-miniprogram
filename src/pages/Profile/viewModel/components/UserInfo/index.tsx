@@ -4,6 +4,7 @@ import { IUserInfo } from '@/types';
 import get from 'lodash.get';
 import { FlexView, Button, Text } from '@/components';
 import './styles.scss';
+import classNames from 'classnames';
 
 const UserInfo = ({
   userInfo,
@@ -20,14 +21,14 @@ const UserInfo = ({
         <AtAvatar image={get(userInfo, 'avatar')} size={'normal'} />
         <Text style={{ marginLeft: 10 }}>{get(userInfo, 'username')}</Text>
       </FlexView>
-      {!messageGranted && (
-        <Button
-          className={'user-info__message-button'}
-          onClick={onPressOpenNotification}
-        >
-          {'允许通知'}
-        </Button>
-      )}
+      <Button
+        className={classNames('user-info__message-button', {
+          'user-info__message-button-disable': messageGranted,
+        })}
+        onClick={messageGranted ? undefined : onPressOpenNotification}
+      >
+        {messageGranted ? '已开启通知' : '允许通知'}
+      </Button>
     </FlexView>
   );
 };

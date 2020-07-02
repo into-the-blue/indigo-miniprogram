@@ -14,4 +14,7 @@
     height: 90px;
     border-radius: 45px;
   }
+  &message-button-disable {
+    box-shadow: $shadow-inset;
+  }
 }

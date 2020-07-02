@@ -5,19 +5,28 @@ import { AuthClient } from '@/services/auth';
 import { UserClient } from '@/services/user';
 import { Cache } from '@/utils';
 import dayjs from 'dayjs';
+import get from 'lodash.get';
 
 class UserStore {
   @observable userInfo?: IUserInfo;
   @observable memberInfo: IMemberInfo | null = null;
-  @observable messageGranted: boolean = false;
   @observable messageDeined: boolean = false;
 
   @action setState: <K extends keyof UserStore>(next: nextState<UserStore, K>) => void = next => {
     Object.assign(this, next);
   };
 
+  @computed get messageGranted() {
+    return get(this.userInfo, 'wechatMessageEnable', false);
+  }
+
   @action grantMessage = () => {
-    this.messageGranted = true;
+    this.messageDeined = false;
+    if (!this.userInfo) return;
+    this.userInfo = {
+      ...this.userInfo,
+      wechatMessageEnable: true,
+    };
   };
   @action denyMessage = () => {
     this.messageDeined = true;

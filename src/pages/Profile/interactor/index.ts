@@ -5,6 +5,7 @@ import Taro from '@tarojs/taro';
 import { SubscriptionClient } from '@/services/subscription';
 import { ISubscriptionClient } from '@/types';
 import { WX_TEMPLATE_ID } from '@/utils/constants';
+import { UserClient } from '@/services/user';
 
 class ProfileInteractor implements IInteractor {
   constructor(public userStore: UserStore, public subscriptionStore: SubscriptionStore) {}
@@ -72,6 +73,10 @@ class ProfileInteractor implements IInteractor {
     };
   };
 
+  onGrantWechatMessage = () => {
+    return UserClient.grantWechatMessage().catch(err => {});
+  };
+
   requestAccessToSubscribeMessage = (callback?: () => void) => {
     if (!this.userStore.isLoggedIn) return;
     if (this.userStore.messageGranted) return true;
@@ -85,6 +90,7 @@ class ProfileInteractor implements IInteractor {
             type: 'success',
             message: '耐心等待房源通知吧~',
           });
+          this.onGrantWechatMessage()
           this.userStore.grantMessage();
 
           callback && setTimeout(callback, 0);
