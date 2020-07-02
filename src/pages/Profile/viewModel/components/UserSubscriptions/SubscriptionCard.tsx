@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from '@tarojs/components';
+import { Image, View } from '@tarojs/components';
 import { ISubscriptionClient } from '@/types';
 import Deletable from '@/components/Deletable';
 import { AtDivider } from 'taro-ui';
@@ -30,13 +30,24 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IPro
         insetWhenActive
         column
         className={'subscription-card__container'}
+        // style={{ backgroundColor: 'yellow' }}
         onClick={e => {
           e.preventDefault();
           e.stopPropagation();
+          // console.warn('bbbb');
           onPress();
         }}
       >
-        <FlexView alignItems={'center'} style={{ justifyContent: 'space-between' }}>
+        <FlexView
+          alignItems={'center'}
+          justifyContent={'space-between'}
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            // console.warn('aaaa');
+            onPressMore();
+          }}
+        >
           <Text
             className={classNames('subscription-card__address', {
               'subscription-card__address-long': subscription.address.length > 15,
@@ -44,29 +55,30 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IPro
           >
             {subscription.address}
           </Text>
-          <Image
-            src={Assets.More}
-            className={'subscription-card__more-button'}
-            onClick={e => {
-              e.stopPropagation();
-              onPressMore();
-            }}
-          />
+          <Image src={Assets.More} className={'subscription-card__more-button'} />
         </FlexView>
         <AtDivider height={20} />
-
-        <Info leftText={'条件'} rightText={subscription.conditions.length} />
-        <FlexView column style={{ position: 'relative' }}>
-          {!!subscription.numOfUnreadNotificationRecords && (
-            <FlexView className={'subscription-card__unread-container'}>
-              <Text className={'subscription-card__unread-text strong-danger'}>
-                {'New!  ' + subscription.numOfUnreadNotificationRecords}
-              </Text>
-            </FlexView>
-          )}
-          <Info leftText={'推送数量'} rightText={subscription.numOfNotificationRecords} />
+        <FlexView
+          column
+          style={{ backgroundColor: 'blue' }}
+          onClick={e => {
+            e.stopPropagation();
+            onPress();
+          }}
+        >
+          <Info leftText={'条件'} rightText={subscription.conditions.length} />
+          <FlexView column style={{ position: 'relative' }}>
+            {!!subscription.numOfUnreadNotificationRecords && (
+              <FlexView className={'subscription-card__unread-container'}>
+                <Text className={'subscription-card__unread-text strong-danger'}>
+                  {'New!  ' + subscription.numOfUnreadNotificationRecords}
+                </Text>
+              </FlexView>
+            )}
+            <Info leftText={'推送数量'} rightText={subscription.numOfNotificationRecords} />
+          </FlexView>
+          <Info leftText={'热度'} rightText={subscription.popuparity} />
         </FlexView>
-        <Info leftText={'热度'} rightText={subscription.popuparity} />
       </FlexView>
     </Deletable>
   );

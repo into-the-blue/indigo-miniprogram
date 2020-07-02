@@ -105,7 +105,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
                 />
               </FlexView>
             )}
-            {mapDragged && !showApartmentListModal && (
+            {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
               <CoverImage
                 onClick={e => {
                   e.preventDefault();

@@ -11,6 +11,7 @@ import Taro from '@tarojs/taro';
 import classNames from 'classnames';
 import { SubscriptionClient } from '@/services/subscription';
 import { Text } from '@/components';
+import { BaseEventOrig } from '@tarojs/components';
 
 interface IProps {
   apartment: IApartment;
@@ -24,7 +25,8 @@ export const ApartmentInfo = ({ apartment, additionalInfo, inset }: IProps) => {
       console.warn('[viewApartment]', err.message);
     });
   };
-  const copyUrl = () => {
+  const copyUrl = (e: BaseEventOrig<any>) => {
+    e.stopPropagation();
     Taro.setClipboardData({
       data: apartment.houseUrl,
     });

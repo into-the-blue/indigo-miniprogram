@@ -3,7 +3,7 @@ import { ISubscriptionNotificationRecordClient } from '@/types';
 import './styles.scss';
 import classNames from 'classnames';
 import { ApartmentDetail } from '@/components/ApartmentDetail';
-import { FlexView } from '@/components';
+import { FlexView, Text } from '@/components';
 
 interface IProps {
   record: ISubscriptionNotificationRecordClient;
@@ -25,6 +25,7 @@ export const RecordCard = ({ record, onPressRecord, isSelected }: IProps) => {
         apartment={apartment as any}
         additionalInfo={[{ title: '距离', content: distance.toFixed(0) + '米' }]}
       />
+      {!record.viewed && <Text className={'record-card__new strong-danger'}>{'New!'}</Text>}
     </FlexView>
   );
 };

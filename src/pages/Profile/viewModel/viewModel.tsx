@@ -35,7 +35,7 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
     const { userInfo, isLoggedIn, memberInfo, messageGranted } = this.props.userStore!;
     const { userSubscriptions } = this.props.subscriptionStore!;
     return (
-      <FlexView column style={{ flex: 1 }}>
+      <FlexView column style={{ flex: 1, height: '100vh' }}>
         {/* <AtMessage /> */}
         <ScrollView>
           {isLoggedIn && (

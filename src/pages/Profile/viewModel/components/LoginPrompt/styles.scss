@@ -1,0 +1,8 @@
+@import '@/styles/theme.scss';
+
+.login-prompt__ {
+  &container {
+    background-color: $primary-color;
+    height: 100vh;
+  }
+}

@@ -65,7 +65,7 @@ export const ApartmentList = ({
           />
         ))}
       </FlexView>
-      <FlexView wrap style={{ padding: '0 7.5px' }}>
+      <FlexView wrap style={{ padding: '0 7px' }}>
         {sortedApartments.map((apartment, idx) => (
           <ApartmentCard
             apartment={apartment}

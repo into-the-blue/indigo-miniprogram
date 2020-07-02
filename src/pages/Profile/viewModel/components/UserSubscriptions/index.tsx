@@ -6,7 +6,7 @@ import { ISubscriptionClient } from '@/types';
 import PlaceholderView from '@/components/PlaceholderView';
 import { AtActionSheet, AtActionSheetItem, AtModal } from 'taro-ui';
 import { findItemByKeyValue } from '@/utils';
-import { Text } from '@/components';
+import { Text, FlexView } from '@/components';
 
 interface IProps {
   onPressSubscription: (sub: ISubscriptionClient) => void;
@@ -66,11 +66,11 @@ const UserSubscriptions = ({
         showPlaceholder={!subscriptions.length}
         renderPlaceholder={() => {
           return (
-            <View className={'user-subscription__placeholder'}>
+            <FlexView neumorphism className={'user-subscription__placeholder'}>
               <Text className={'user-subscription__placeholder-text strong'}>
                 {'这里空空如也...'}
               </Text>
-            </View>
+            </FlexView>
           );
         }}
       >
