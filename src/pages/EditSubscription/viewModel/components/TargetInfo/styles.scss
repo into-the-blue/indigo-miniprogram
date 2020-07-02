@@ -1,7 +1,15 @@
+@import '@/styles/theme.scss';
+
 .target-info__ {
   &map {
     width: 100vw;
     height: 400px;
+  }
+  &button {
+    background: none;
+    background-color: $primary-color !important;
+    color: white !important;
+    margin: 30px 40px;
   }
 
   &title {

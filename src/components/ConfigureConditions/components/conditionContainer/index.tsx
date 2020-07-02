@@ -4,8 +4,10 @@ import { SwipeActionOption } from 'taro-ui/types/swipe-action';
 
 const Wrapper: <P extends object>(
   Comp: React.ComponentType<P>,
-) => (props: { onDeleteCondition: () => void } & P) => JSX.Element = Comp => props => {
-  const { onDeleteCondition, ...restProps } = props;
+) => (
+  props: { onDeleteCondition: () => void; className?: string } & P,
+) => JSX.Element = Comp => props => {
+  const { onDeleteCondition, className, ...restProps } = props;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [secConfirm, setSecConfirm] = useState<boolean>(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -33,6 +35,7 @@ const Wrapper: <P extends object>(
   };
   return (
     <AtSwipeAction
+      className={className}
       options={
         secConfirm
           ? [

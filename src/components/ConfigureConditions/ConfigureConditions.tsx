@@ -7,12 +7,13 @@ import RangeCondition from './components/RangeCondition';
 import './styles.scss';
 import { EditSubscriptionStore } from '@/stores';
 import { observer, inject } from 'mobx-react';
+import { FlexView } from '../FlexView';
 
 interface IProps {
   editSubscriptionStore?: EditSubscriptionStore;
 }
 
-const ConfigureConditions = ({ editSubscriptionStore, }: IProps) => {
+const ConfigureConditions = ({ editSubscriptionStore }: IProps) => {
   const {
     conditions,
     addCondition,
@@ -35,11 +36,12 @@ const ConfigureConditions = ({ editSubscriptionStore, }: IProps) => {
     updateSingleCondition(idx, condition);
   };
   return (
-    <View>
+    <FlexView column>
       {conditions.map((condition, idx) => {
         if (condition.type === 'boolean') {
           return (
             <BooleanCondition
+              className={'configure-condition__condition-container'}
               key={'cc' + idx}
               onEdit={onEdit}
               onDeleteCondition={() => deleteCondition(idx)}
@@ -52,6 +54,7 @@ const ConfigureConditions = ({ editSubscriptionStore, }: IProps) => {
         if (condition.type === 'range') {
           return (
             <RangeCondition
+              className={'configure-condition__condition-container'}
               key={'cc' + idx}
               onEdit={onEdit}
               onDeleteCondition={() => deleteCondition(idx)}
@@ -67,7 +70,7 @@ const ConfigureConditions = ({ editSubscriptionStore, }: IProps) => {
         onChooseCondition={onChooseCondition}
         configurableKeys={availableConfigKeys}
       />
-    </View>
+    </FlexView>
   );
 };
 

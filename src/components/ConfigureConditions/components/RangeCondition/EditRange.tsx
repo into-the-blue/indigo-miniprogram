@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View } from '@tarojs/components';
 import { EditThreshold } from './EditThreshold';
-import get from 'lodash.get'
+import get from 'lodash.get';
+import { FlexView } from '@/components/FlexView';
 
 export const EditRange = ({
   // range,
@@ -11,6 +11,8 @@ export const EditRange = ({
   defaultRange,
   onChangeThreshold,
   thresholdError,
+  className,
+  style,
 }: // reportError,
 {
   // range: [number, number];
@@ -20,6 +22,8 @@ export const EditRange = ({
   // onChange: (value: [number, number]) => void;
   onChangeThreshold: (type: 'min' | 'max') => (value: string) => string;
   thresholdError?: [boolean, boolean];
+  style?: React.CSSProperties;
+  className?: string;
   // reportError: (type: 'min' | 'max', isError: boolean) => void;
 }) => {
   const [lastMin, setLastMin] = useState<string>(min.toString());
@@ -32,7 +36,12 @@ export const EditRange = ({
   }, [max]);
 
   return (
-    <View className={'flex-row-center'} style={{ justifyContent: 'space-between' }}>
+    <FlexView
+      className={className}
+      style={style}
+      alignItems={'center'}
+      justifyContent={'space-between'}
+    >
       <EditThreshold
         value={min.toString()}
         onChange={onChangeThreshold('min')}
@@ -65,6 +74,6 @@ export const EditRange = ({
         value={`${max}`}
         onChange={onChangeThreshold('max')}
       /> */}
-    </View>
+    </FlexView>
   );
 };

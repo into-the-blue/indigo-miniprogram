@@ -1,7 +1,9 @@
 @import '@/styles/theme.scss';
 
-.config-condition__choose-condition {
-  padding: 30px 30px;
-  margin: 30px 0;
-  background-color: $light-grey-bk;
+.configure-condition__ {
+  &condition-container {
+    margin: 20px 40px;
+    box-shadow: $shadow;
+    border-radius: 20px;
+  }
 }

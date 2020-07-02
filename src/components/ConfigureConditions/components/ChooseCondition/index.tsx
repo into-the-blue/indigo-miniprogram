@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { View, Radio } from '@tarojs/components';
+import { Radio } from '@tarojs/components';
 import { TSubCondition, TConfigBoolean, TConfigRange } from '@/types';
 import Taro from '@tarojs/taro';
 import { EditBoolean } from '../BooleanCondition';
@@ -11,6 +11,8 @@ import {
   calNextThreshold,
   isInvalidThreshold,
 } from '../RangeCondition/helper';
+import './styles.scss';
+import { FlexView } from '@/components/FlexView';
 
 interface IProps {
   onChooseCondition: (condition: TSubCondition) => void;
@@ -72,9 +74,9 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
   };
   if (!hasKeyToConfigure) return null;
   return (
-    <View className={'config-condition__choose-condition'}>
+    <FlexView className={'choose-condition__container'} column>
       {!selectedKey && (
-        <View style={{ flexWrap: 'wrap', flexDirection: 'column', display: 'flex' }}>
+        <FlexView style={{ flexWrap: 'wrap', flexDirection: 'column', display: 'flex' }}>
           <Text>{'添加订阅条件'}</Text>
           {configurableKeys.map(item => (
             <Radio
@@ -83,25 +85,27 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
               onClick={_ => setSelectedKey(item.key)}
               checked={selectedKey === item.key}
               style={{ margin: '2px 0' }}
+              className={'choose-condition__radio'}
             >
               {item.title}
             </Radio>
           ))}
-        </View>
+        </FlexView>
       )}
       {selected && (
-        <View>
-          <View
-            className={'flex-row-center'}
-            style={{ justifyContent: 'space-between', marginBottom: '10px' }}
+        <FlexView column>
+          <FlexView
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            style={{ marginBottom: '10px' }}
           >
-            <View className={'flex-row-center'}>
+            <FlexView alignItems={'center'}>
               <Text style={{ marginRight: '6px' }}>{selected.title + ': '}</Text>
               {isRange && <Text>{cvtRangeToTitle(rangeThreshold)}</Text>}
               {isBoolean && <Text>{selected.value[+checked]}</Text>}
-            </View>
-            <Button onClick={onConfirmCondition}>{'确认'}</Button>
-          </View>
+            </FlexView>
+            <Button className={'choose-condition__button-confirm'} onClick={onConfirmCondition}>{'确认'}</Button>
+          </FlexView>
           {isBoolean && (
             <EditBoolean
               valueTitles={selected.value as [string, string]}
@@ -118,9 +122,9 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
               thresholdError={invalidThreshold}
             />
           )}
-        </View>
+        </FlexView>
       )}
-    </View>
+    </FlexView>
   );
 };
 

@@ -4,25 +4,28 @@ import { View, Image } from '@tarojs/components';
 import classNames from 'classnames';
 import './styles.scss';
 import { Text } from '@/components';
+import { FlexView } from '../FlexView';
 
 interface IProps {
   title?: string;
   renderHeader?: (collapse: boolean) => JSX.Element | null;
   children?: React.ReactChild | null;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-const Collapsable = ({ title, renderHeader, children }: IProps) => {
+const Collapsable = ({ title, renderHeader, children, className, style }: IProps) => {
   const [collapse, setCollapse] = useState<boolean>(true);
 
   const openCloseEditor = () => {
     setCollapse(!collapse);
   };
   return (
-    <View>
+    <FlexView column className={className} style={style}>
       {renderHeader ? (
         renderHeader(collapse)
       ) : (
-        <View
+        <FlexView
           onClick={openCloseEditor}
           className={classNames('collapse__header', {
             'collapse__header-collapsed': collapse,
@@ -37,10 +40,10 @@ const Collapsable = ({ title, renderHeader, children }: IProps) => {
               src={Assets.ArrowRight}
             />
           </React.Fragment>
-        </View>
+        </FlexView>
       )}
       {!collapse && children}
-    </View>
+    </FlexView>
   );
 };
 export default Collapsable;

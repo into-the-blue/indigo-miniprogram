@@ -53,6 +53,7 @@ const RangeCondition = ({ condition, onEdit, updateCondition, detail: { title } 
         <EditRange
           // range={rangeValue}
           // onChange={onChangeRange}
+          style={{ marginBottom: '10px' }}
           defaultRange={condition.value!}
           max={rangeThreshold![1]}
           min={rangeThreshold![0]}

@@ -28,7 +28,7 @@ const TargetInfo = ({ type, info, isUpdating, onPressSave }: IProps) => {
         >
           {info.address}
         </Text>
-        <Button onClick={onPressSave} type={'primary'}>
+        <Button className={'target-info__button'} onClick={onPressSave}>
           {isUpdating ? '更新' : '增加'}
         </Button>
       </View>

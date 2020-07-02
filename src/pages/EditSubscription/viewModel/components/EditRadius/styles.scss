@@ -1,8 +1,13 @@
+@import '@/styles/theme.scss';
+
 .edit-radius__ {
   &container {
-    display: flex;
-    flex-direction: row;
     align-items: center;
+    height: 80px;
+    margin: 0 40px;
+    padding-left: 30px;
+    margin-bottom: 40px;
+    margin-top: 30px;
   }
 
   &title {
@@ -11,7 +16,16 @@
   }
   &input {
     font-size: 40px;
-    border-width: 2px;
-    border-color: black;
+    box-shadow: $shadow-inset;
+    background-color: $bk-color;
+    height: 80px;
+    padding: 0 40px;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
+    flex: 1;
   }
 }

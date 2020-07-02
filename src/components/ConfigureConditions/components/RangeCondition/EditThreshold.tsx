@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View } from '@tarojs/components';
 import { Button } from '@/components';
 import { AtInput } from 'taro-ui';
 import './styles.scss';
 import classNames from 'classnames';
+import { FlexView } from '@/components/FlexView';
 
 interface IProps {
   value: string;
@@ -48,8 +48,6 @@ export const EditThreshold = ({
     <Button
       className={classNames({
         'edit-threshold__button': true,
-        'edit-threshold__no-limit-left': !reverse,
-        'edit-threshold__no-limit-right': reverse,
         'edit-threshold__no-limit-active': isNoLimit,
       })}
       key={'nolimit'}
@@ -58,8 +56,9 @@ export const EditThreshold = ({
       {'不限'}
     </Button>,
     isInput ? (
-      <View
+      <FlexView
         key={'ipt'}
+        inset
         className={classNames({
           'edit-threshold__input-container': true,
           'edit-threshold__input-container-error': showError,
@@ -74,13 +73,11 @@ export const EditThreshold = ({
           value={value}
           onChange={onChange}
         />
-      </View>
+      </FlexView>
     ) : (
       <Button
         className={classNames({
-          'edit-threshold__input': !reverse,
           'edit-threshold__button': true,
-          'edit-threshold__input-left': reverse,
         })}
         onClick={onPressInput}
         key={'input'}
@@ -90,5 +87,5 @@ export const EditThreshold = ({
     ),
   ];
   if (reverse) comp.reverse();
-  return <View className={'edit-threshold__container'}>{comp}</View>;
+  return <FlexView className={'edit-threshold__container'}>{comp}</FlexView>;
 };
