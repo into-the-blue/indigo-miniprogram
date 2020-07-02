@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FlexView } from '../FlexView';
-import { Text, Image } from '@tarojs/components';
+import { Image } from '@tarojs/components';
 import classNames from 'classnames';
 import './styles.scss';
 import Assets from '@/assets';
+import { Text } from '@/components';
 
 interface IProps {
   title: string;

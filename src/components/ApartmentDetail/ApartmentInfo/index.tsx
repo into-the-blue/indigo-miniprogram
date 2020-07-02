@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { IApartment } from '@/types';
 import { TextBar } from '../../TextBar';
 import { UNITS } from '@/utils/constants';
@@ -11,6 +11,7 @@ import { Button } from '../../';
 import Taro from '@tarojs/taro';
 import classNames from 'classnames';
 import { SubscriptionClient } from '@/services/subscription';
+import { Text } from '@/components';
 
 interface IProps {
   apartment: IApartment;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { IMemberInfo } from '@/types';
-import { FlexView, TextBar } from '@/components';
-import { Text } from '@tarojs/components';
+import { FlexView, TextBar, Text } from '@/components';
 import './styles.scss';
 import { mapMemberType } from './helper';
 import dayjs from 'dayjs';

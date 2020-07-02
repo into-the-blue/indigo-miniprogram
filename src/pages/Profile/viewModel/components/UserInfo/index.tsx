@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text } from '@tarojs/components';
 import { AtAvatar } from 'taro-ui';
 import { IUserInfo } from '@/types';
 import get from 'lodash.get';
-import { FlexView, Button } from '@/components';
+import { FlexView, Button, Text } from '@/components';
 import './styles.scss';
 
 const UserInfo = ({

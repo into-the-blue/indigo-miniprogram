@@ -4,9 +4,9 @@
   &container {
     margin: 30px;
     padding: 30px;
-    background-color: white;
+    // background-color: var(--bk-color);
     border-radius: 16px;
-    box-shadow: $shadow-light;
+    box-shadow: $shadow;
     justify-content: space-between;
   }
 

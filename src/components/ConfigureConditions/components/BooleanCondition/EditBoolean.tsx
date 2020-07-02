@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Switch, Text } from '@tarojs/components';
+import { View, Switch } from '@tarojs/components';
+import { Text } from '@/components';
 
 export const EditBoolean = ({
   valueTitles,

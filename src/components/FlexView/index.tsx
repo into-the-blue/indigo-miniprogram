@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, ITouchEvent } from '@tarojs/components';
+import './styles.scss';
+import classNames from 'classnames';
 
 type ReactText = string | number;
 type ReactChild = React.ReactElement<unknown> | ReactText;
@@ -16,7 +18,8 @@ export interface IFlexViewProps {
   justifyContent?: 'start' | 'end' | 'space-between' | 'space-evenly' | 'space-around';
   wrap?: boolean;
   onClick?: (e: ITouchEvent) => void;
-
+  concave?: boolean;
+  concaveWhenActive?: boolean;
   padding?: string;
   paddingLeft?: string | number;
   paddingRight?: string | number;
@@ -73,6 +76,8 @@ export const FlexView = ({
   justifyContent,
   wrap,
   onClick,
+  concave,
+  concaveWhenActive,
   ...paddingMargin
 }: IFlexViewProps) => {
   const getStyle = () => {
@@ -85,6 +90,7 @@ export const FlexView = ({
       flexWrap: wrap ? 'wrap' : undefined,
       alignItems,
       justifyContent,
+      // backgroundColor: '#eee',
     };
     return {
       ...basicStyle,
@@ -93,7 +99,20 @@ export const FlexView = ({
     };
   };
   return (
-    <View style={getStyle()} className={className} onClick={onClick}>
+    <View
+      style={getStyle()}
+      className={classNames(
+        {
+          'flex-view__default': true,
+        },
+        className,
+        {
+          'flex-view__concave-active': concaveWhenActive,
+          'flex-view__concave': concave,
+        },
+      )}
+      onClick={onClick}
+    >
       {children}
     </View>
   );

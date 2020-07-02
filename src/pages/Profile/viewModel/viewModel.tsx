@@ -4,7 +4,7 @@ import { View, ScrollView } from '@tarojs/components';
 import { AtMessage } from 'taro-ui';
 import { IViewModel, IViewModelProps } from '../types';
 import { ProfilePresenter } from '../presenter';
-import { Button } from '@/components';
+import { Button, FlexView } from '@/components';
 import { UserInfo } from './components/UserInfo';
 import UserSubscriptions from './components/UserSubscriptions';
 import { injectXeno } from '@/xeno';
@@ -35,8 +35,8 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
     const { userInfo, isLoggedIn, memberInfo, messageGranted } = this.props.userStore!;
     const { userSubscriptions } = this.props.subscriptionStore!;
     return (
-      <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
-        <AtMessage />
+      <FlexView column style={{ flex: 1 }}>
+        {/* <AtMessage /> */}
         <ScrollView>
           {isLoggedIn && (
             <React.Fragment>
@@ -56,7 +56,7 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
           )}
           {!isLoggedIn && <LoginPrompt onGrantWechatInfo={this.presenter.onGrantWechatInfo} />}
         </ScrollView>
-      </View>
+      </FlexView>
     );
   }
 }

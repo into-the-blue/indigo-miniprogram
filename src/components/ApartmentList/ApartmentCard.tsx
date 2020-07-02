@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { IApartment } from '@/types';
 import { FlexView } from '../FlexView';
 import { UNITS } from '@/utils/constants';
 import classNames from 'classnames';
 import './styles.scss';
+import { Text } from '@/components';
 
 export const ApartmentCard = ({
   apartment,

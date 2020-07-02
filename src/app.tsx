@@ -3,8 +3,11 @@ import { Provider } from 'mobx-react';
 import store from './stores';
 import { createXeno } from './utils/xeno';
 import { Provider as XenoProvider, Xeno } from './xeno';
+import { AtMessage } from 'taro-ui';
 import 'taro-ui/dist/style/index.scss';
+import './styles/theme.scss'
 import './app.scss';
+import { View } from '@tarojs/components';
 
 class App extends Component {
   xenoInstance: Xeno<any>;
@@ -25,7 +28,12 @@ class App extends Component {
   render() {
     return (
       <XenoProvider xeno={this.xenoInstance}>
-        <Provider {...store}>{this.props.children}</Provider>
+        <Provider {...store}>
+          <View>
+            <AtMessage />
+            {this.props.children}
+          </View>
+        </Provider>
       </XenoProvider>
     );
   }

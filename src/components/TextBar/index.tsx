@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import classNames from 'classnames';
 import './style.scss';
+import Text from '../Text';
 
 interface IProps {
   title: string;

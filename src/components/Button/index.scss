@@ -16,10 +16,19 @@
   }
 
   &-primary {
-    background-color: $primary-color;
-    color: white !important;
+    // background-color: $primary-color;
+    // color: white !important;
     border: none !important;
-    box-shadow: none !important;
+    // box-shadow: none !important;
+
+    outline: none;
+    color: #999 !important;
+    background: linear-gradient(135deg, rgba(230, 230, 230, 1) 0%, rgba(246, 246, 246, 1) 100%);
+    box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1), 4px 4px 10px -8px rgba(0, 0, 0, 0.3);
+  }
+  &-primary:active {
+    box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1) inset,
+      4px 4px 10px -8px rgba(0, 0, 0, 0.3) inset;
   }
 
   &-danger {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { AtInput } from 'taro-ui';
 import './styles.scss';
+import { Text } from '@/components';
 
 const EditRadius = ({
   radius,

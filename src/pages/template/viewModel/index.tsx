@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { View, ScrollView, Text } from '@tarojs/components';
+import { View, ScrollView } from '@tarojs/components';
 // import {} from 'taro-ui';
 import { IViewModel, IViewModelProps } from '../types';
 import { TemplatePresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
+import { Text } from '@/components';
 
 @inject('global')
 @observer

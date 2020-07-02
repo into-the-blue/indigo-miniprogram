@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlexView } from '../../FlexView';
-import { Text } from '@tarojs/components';
 import './styles.scss';
+import { Text } from '@/components';
 
 interface IProps {
   content: string | number;

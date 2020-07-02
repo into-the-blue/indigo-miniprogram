@@ -36,9 +36,12 @@
 
 .subscription-card__ {
   &wrapper {
-    margin: 15px $margin;
+    margin: 40px $margin;
     border-radius: 16px;
-    box-shadow: $shadow-light;
+    box-shadow: $shadow;
+  }
+  &wrapper:active {
+    box-shadow: none;
   }
   &container {
     padding-left: 30px;

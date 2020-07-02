@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Assets from '@/assets';
-import { View, Text, Image } from '@tarojs/components';
+import { View, Image } from '@tarojs/components';
 import classNames from 'classnames';
 import './styles.scss';
+import { Text } from '@/components';
 
 interface IProps {
   title?: string;

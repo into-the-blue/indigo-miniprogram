@@ -40,7 +40,7 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
         style={{ flex: 1, backgroundColor: '#f5f5f5' }}
         isLoading={!apartments.length && !selectedApartment}
       >
-        <AtMessage />
+        {/* <AtMessage /> */}
         <ApartmentDetail apartment={selectedApartment!} />
         <ScrollView style={{ marginTop: 15, height: '50vh' }} scrollY>
           <ApartmentList

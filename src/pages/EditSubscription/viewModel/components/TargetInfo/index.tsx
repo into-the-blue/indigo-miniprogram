@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Map } from '@tarojs/components';
+import { View, Map } from '@tarojs/components';
 import { MAP_SETTING } from '@/utils/constants';
 import Assets from '@/assets';
-import { Button } from '@/components';
+import { Button, Text } from '@/components';
 import './styles.scss';
 import classNames from 'classnames';
 

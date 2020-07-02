@@ -1,0 +1,14 @@
+@import '@styles/theme.scss';
+.flex-view__ {
+  &default {
+    background-color: $bk-color;
+  }
+
+  &concave {
+    box-shadow: $shadow-inset;
+  }
+
+  &concave-active:active {
+    box-shadow: $shadow-inset;
+  }
+}

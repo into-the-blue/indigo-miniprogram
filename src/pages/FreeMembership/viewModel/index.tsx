@@ -1,11 +1,10 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { Text } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { FreeMembershipPresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
-import { BaseView, Button, FlexView } from '@/components';
+import { BaseView, Button, FlexView, Text } from '@/components';
 import './styles.scss';
 import { injectXeno } from '@/xeno';
 import {} from 'taro-ui';

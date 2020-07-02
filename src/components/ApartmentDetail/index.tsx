@@ -1,9 +1,10 @@
 import React from 'react';
-import { Swiper, SwiperItem, Text } from '@tarojs/components';
+import { Swiper, SwiperItem } from '@tarojs/components';
 import { ApartmentInfo } from './ApartmentInfo';
 import { ComputedInfo } from './ComputedInfo';
 import { IApartment } from '@/types';
 import { FlexView } from '../FlexView';
+import { Text } from '@/components';
 
 interface IProps {
   apartment: IApartment | null;

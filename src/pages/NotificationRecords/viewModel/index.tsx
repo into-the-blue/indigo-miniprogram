@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import {  ScrollView, Text } from '@tarojs/components';
+import { ScrollView } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { NotificationRecordsPresenter } from '../presenter';
-import { BaseView, FlexView } from '@/components';
+import { BaseView, FlexView, Text } from '@/components';
 import { Records } from './components/Records';
 import { MapComp } from './components/MapComp';
 import { MAP_HEIGHT } from '../constants';
@@ -44,7 +44,7 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
     } = this.props.notificationRecordsStore!;
     return (
       <BaseView isError={isError} isLoading={isLoading} onPressRetry={this.presenter.initialQuerys}>
-        <AtMessage />
+        {/* <AtMessage /> */}
         {subscription && (
           <MapComp
             selectedRecords={selectedRecords}

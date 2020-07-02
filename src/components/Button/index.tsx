@@ -18,7 +18,6 @@ const MButton = (props: IProps) => {
     mbutton: true,
     [`mbutton-${_type}`]: true,
   });
-
   return <AtButton {...props} type={undefined} className={classNames(styles, _className)} />;
 };
 

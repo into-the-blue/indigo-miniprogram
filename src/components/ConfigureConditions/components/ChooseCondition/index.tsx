@@ -1,10 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { View, Radio, Text } from '@tarojs/components';
+import { View, Radio } from '@tarojs/components';
 import { TSubCondition, TConfigBoolean, TConfigRange } from '@/types';
 import Taro from '@tarojs/taro';
 import { EditBoolean } from '../BooleanCondition';
 import { EditRange } from '../RangeCondition';
-import { Button } from '@/components';
+import { Button, Text } from '@/components';
 import {
   convertStringToNumber,
   cvtRangeToTitle,
@@ -56,7 +56,7 @@ const Comp = ({ onChooseCondition, configurableKeys }: IProps) => {
 
   const onConfirmCondition = () => {
     if (invalidThreshold.filter(o => o).length) {
-      return  Taro.atMessage({
+      return Taro.atMessage({
         message: '无效条件',
         type: 'warning',
       });

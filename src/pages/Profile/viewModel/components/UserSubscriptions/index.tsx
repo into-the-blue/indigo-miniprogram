@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text } from '@tarojs/components';
-import {} from 'mobx-react';
+import { View } from '@tarojs/components';
 import SubscriptionCard from './SubscriptionCard';
 import './styles.scss';
 import { ISubscriptionClient } from '@/types';
 import PlaceholderView from '@/components/PlaceholderView';
 import { AtActionSheet, AtActionSheetItem, AtModal } from 'taro-ui';
 import { findItemByKeyValue } from '@/utils';
+import { Text } from '@/components';
 
 interface IProps {
   onPressSubscription: (sub: ISubscriptionClient) => void;
@@ -67,7 +67,9 @@ const UserSubscriptions = ({
         renderPlaceholder={() => {
           return (
             <View className={'user-subscription__placeholder'}>
-              <Text className={'user-subscription__placeholder-text strong'}>{'这里空空如也...'}</Text>
+              <Text className={'user-subscription__placeholder-text strong'}>
+                {'这里空空如也...'}
+              </Text>
             </View>
           );
         }}

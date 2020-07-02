@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { TApartmentComputed } from '@/types';
 import { UNITS } from '@/utils/constants';
 import { Unit } from './Unit';
 import './styles.scss';
 import { FlexView } from '../../FlexView';
+import { Text } from '@/components';
 
 export const ComputedInfo = ({ computed }: { computed?: TApartmentComputed }) => {
   if (!computed) return <Text>{'对比信息正在努力计算中 ~'}</Text>;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Map, CoverImage, Text, Button, CoverView } from '@tarojs/components';
+import { Map, CoverImage, Button } from '@tarojs/components';
 import { IViewModel, IViewModelProps } from '../types';
 import { FeedPresenter } from '../presenter';
 import FocusedLocationConsole from './components/FocusedLocationConsole';
@@ -11,7 +11,7 @@ import { AtMessage } from 'taro-ui';
 import './index.scss';
 import { injectXeno } from '@/xeno';
 import { AvailableCities } from './components/AvailableCities';
-import { FlexView } from '@/components';
+import { FlexView, Text } from '@/components';
 
 @inject('global', 'feed', 'mMap', 'userStore')
 @observer

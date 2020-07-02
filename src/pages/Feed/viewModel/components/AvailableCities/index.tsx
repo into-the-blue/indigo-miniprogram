@@ -2,8 +2,7 @@ import React from 'react';
 import { AtActionSheet, AtActionSheetItem } from 'taro-ui';
 import { IAvailableCity } from '@/types';
 import { observer } from 'mobx-react';
-import { FlexView } from '@/components';
-import { Text } from '@tarojs/components';
+import { FlexView, Text } from '@/components';
 import './styles.scss';
 import classNames from 'classnames';
 

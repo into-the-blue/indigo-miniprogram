@@ -1,13 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { ScrollView, Text } from '@tarojs/components';
+import { ScrollView } from '@tarojs/components';
 // import {} from 'taro-ui';
 import { IViewModel, IViewModelProps } from '../types';
 import { SearchPresenter } from '../presenter';
 import {} from '../interactor';
 import {} from '../stores';
 import { AtInput, AtActivityIndicator } from 'taro-ui';
-import { FlexView } from '@/components';
+import { FlexView, Text } from '@/components';
 import { injectXeno } from '@/xeno';
 import { SearchResultCard } from './components/SearchResultCard';
 import './styles.scss';

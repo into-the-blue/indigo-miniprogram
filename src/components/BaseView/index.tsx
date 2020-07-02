@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import Button from '../Button';
 import { AtActivityIndicator } from 'taro-ui';
 import { FlexView, IFlexViewProps } from '../FlexView';
+import { Text } from '@/components';
 
 interface IProps extends IFlexViewProps {
   isLoading?: boolean;
