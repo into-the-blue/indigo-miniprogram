@@ -60,7 +60,6 @@ const SubscriptionCard = ({ subscription, onDelete, onPressMore, onPress }: IPro
         <AtDivider height={20} />
         <FlexView
           column
-          style={{ backgroundColor: 'blue' }}
           onClick={e => {
             e.stopPropagation();
             onPress();

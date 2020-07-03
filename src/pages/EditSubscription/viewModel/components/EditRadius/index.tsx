@@ -19,7 +19,7 @@ const EditRadius = ({
         value={radius.toString()}
         onChange={setRadius}
         type={'number'}
-        maxLength={5}
+        maxlength={5}
 
       />
     </FlexView>

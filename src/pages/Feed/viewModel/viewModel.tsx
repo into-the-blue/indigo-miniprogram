@@ -118,7 +118,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               />
             )}
             {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
-            {!locationAuthorized && (
+            {!cityActionSheetVisible && (
               <FocusedLocationConsole
                 mMap={this.props.mMap}
                 // showApartmentList={showApartmentListModal}

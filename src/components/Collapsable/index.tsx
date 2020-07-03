@@ -21,7 +21,7 @@ const Collapsable = ({ title, renderHeader, children, className, style }: IProps
     setCollapse(!collapse);
   };
   return (
-    <FlexView column className={className} style={style}>
+    <FlexView column className={className} style={{ backgroundColor: '#eee', ...style }}>
       {renderHeader ? (
         renderHeader(collapse)
       ) : (

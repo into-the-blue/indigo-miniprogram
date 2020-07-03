@@ -44,7 +44,7 @@ class EditSubscriptionViewModel extends React.Component<IViewModelProps> impleme
       target,
     } = this.props.editSubscriptionStore!;
     return (
-      <BaseView isLoading={!target}>
+      <BaseView isLoading={!target} style={{ backgroundColor: '#eee' }}>
         <AtMessage />
         <ScrollView style={{ flex: 1 }}>
           <TargetInfo

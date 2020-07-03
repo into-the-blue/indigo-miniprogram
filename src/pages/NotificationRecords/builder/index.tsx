@@ -5,6 +5,7 @@ import { NotificationRecordsPresenter } from '../presenter';
 import { NotificationRecordsInteractor } from '../interactor';
 import { getStores } from '@/stores';
 import Taro from '@tarojs/taro';
+import { Routes } from '@/utils/constants';
 
 class Builder extends React.Component<IProps> {
   presenter: NotificationRecordsPresenter;
@@ -23,6 +24,14 @@ class Builder extends React.Component<IProps> {
   componentDidHide() {
     // Taro.eventCenter.off('atMessage');
   }
+
+  onShareAppMessage() {
+    return {
+      title: '该挑哪一个呢...',
+      path: Routes.Feed,
+    };
+  }
+
   buildInteractor = () => {
     const { notificationRecordsStore, subscriptionStore } = getStores(
       'notificationRecordsStore',

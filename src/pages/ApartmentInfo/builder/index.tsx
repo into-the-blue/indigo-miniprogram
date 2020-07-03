@@ -5,6 +5,7 @@ import { ApartmentInfoPresenter } from '../presenter';
 import { ApartmentInfoInteractor } from '../interactor';
 import { getStores } from '@/stores';
 import Taro from '@tarojs/taro';
+import { Routes } from '@/utils/constants';
 
 class Builder extends React.Component<IProps> {
   presenter: ApartmentInfoPresenter;
@@ -24,6 +25,13 @@ class Builder extends React.Component<IProps> {
 
   componentDidHide() {
     // Taro.eventCenter.off('atMessage');
+  }
+
+  onShareAppMessage() {
+    return {
+      title: '我在看这套房... 好像...',
+      path: Routes.Feed,
+    };
   }
 
   buildInteractor = () => {

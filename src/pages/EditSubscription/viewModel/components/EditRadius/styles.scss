@@ -13,6 +13,7 @@
   &title {
     font-size: 40px;
     color: black;
+    flex: 1;
   }
   &input {
     font-size: 40px;
@@ -25,7 +26,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-left: 30px;
+    text-align: center;
+    // margin-left: auto;
     flex: 1;
   }
 }

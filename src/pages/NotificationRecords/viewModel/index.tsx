@@ -43,7 +43,12 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
       mapCentralCoordinates,
     } = this.props.notificationRecordsStore!;
     return (
-      <BaseView isError={isError} isLoading={isLoading} onPressRetry={this.presenter.initialQuerys}>
+      <BaseView
+        isError={isError}
+        isLoading={isLoading}
+        style={{ backgroundColor: '#eee' }}
+        onPressRetry={this.presenter.initialQuerys}
+      >
         <AtMessage />
         {subscription && (
           <MapComp

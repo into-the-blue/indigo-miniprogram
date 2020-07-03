@@ -26,6 +26,7 @@ export const ApartmentDetail = ({ apartment, additionalInfo, style, className, i
           justifyContent: 'center',
           borderRadius: '25px',
           margin: '20px 15px',
+          backgroundColor: '#eee',
         }}
         neumorphism
       >
