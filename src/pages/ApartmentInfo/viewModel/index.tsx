@@ -8,7 +8,7 @@ import {} from '../interactor';
 import {} from '../stores';
 import { injectXeno } from '@/xeno';
 import { ApartmentDetail } from '@/components/ApartmentDetail';
-import { BaseView, FlexView, } from '@/components';
+import { BaseView, FlexView } from '@/components';
 import { ApartmentList } from '@/components/ApartmentList';
 import get from 'lodash.get';
 import './styles.scss';
@@ -38,7 +38,7 @@ class ApartmentInfoViewModel extends React.Component<IViewModalProps> implements
     const { selectedApartment, apartments } = this.props.apartmentInfoStore!;
     return (
       <BaseView style={{ flex: 1 }} isLoading={!apartments.length && !selectedApartment}>
-        {/* <AtMessage /> */}
+        <AtMessage />
         <FlexView style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1 }} column>
           <ApartmentDetail apartment={selectedApartment!} />
         </FlexView>

@@ -4,6 +4,7 @@ import ViewModel from '../viewModel';
 import { NotificationRecordsPresenter } from '../presenter';
 import { NotificationRecordsInteractor } from '../interactor';
 import { getStores } from '@/stores';
+import Taro from '@tarojs/taro';
 
 class Builder extends React.Component<IProps> {
   presenter: NotificationRecordsPresenter;
@@ -16,6 +17,12 @@ class Builder extends React.Component<IProps> {
     this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
+  componentDidShow() {
+    getStores('global').global.setCurrentRoute('notificationRecords');
+  }
+  componentDidHide() {
+    // Taro.eventCenter.off('atMessage');
+  }
   buildInteractor = () => {
     const { notificationRecordsStore, subscriptionStore } = getStores(
       'notificationRecordsStore',

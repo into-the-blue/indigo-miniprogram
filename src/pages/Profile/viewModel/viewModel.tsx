@@ -27,6 +27,10 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
   }
   componentWillUnmount() {}
 
+  onTabItemTap(opt: any) {
+    console.warn('tab tap', opt);
+  }
+
   get getProps() {
     return this.props;
   }
@@ -34,9 +38,10 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
   render() {
     const { userInfo, isLoggedIn, memberInfo, messageGranted } = this.props.userStore!;
     const { userSubscriptions } = this.props.subscriptionStore!;
+    const { isRouteFocused } = this.props.global!;
     return (
       <FlexView column style={{ flex: 1, height: '100vh' }}>
-        {/* <AtMessage /> */}
+        {isRouteFocused('profile') && <AtMessage />}
         <ScrollView style={{ backgroundColor: '#eee' }}>
           {isLoggedIn && (
             <React.Fragment>

@@ -4,6 +4,7 @@ import ViewModel from '../viewModel';
 import { EditSubscriptionPresenter } from '../presenter';
 import { EditSubscriptionInteractor } from '../interactor';
 import { getStores } from '@/stores';
+import Taro from '@tarojs/taro';
 
 class Builder extends React.Component<IProps> {
   presenter: EditSubscriptionPresenter;
@@ -16,6 +17,12 @@ class Builder extends React.Component<IProps> {
     this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
+  componentDidShow() {
+    getStores('global').global.setCurrentRoute('editSubscription');
+  }
+  componentDidHide() {
+    // Taro.eventCenter.off('atMessage');
+  }
   buildInteractor = () => {
     const { userStore, editSubscriptionStore, mMap } = getStores(
       'userStore',

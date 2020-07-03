@@ -4,6 +4,7 @@ import ViewModel from '../viewModel';
 import { ApartmentInfoPresenter } from '../presenter';
 import { ApartmentInfoInteractor } from '../interactor';
 import { getStores } from '@/stores';
+import Taro from '@tarojs/taro';
 
 class Builder extends React.Component<IProps> {
   presenter: ApartmentInfoPresenter;
@@ -16,6 +17,15 @@ class Builder extends React.Component<IProps> {
     this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
+
+  componentDidShow() {
+    getStores('global').global.setCurrentRoute('apartmentInfo');
+  }
+
+  componentDidHide() {
+    // Taro.eventCenter.off('atMessage');
+  }
+
   buildInteractor = () => {
     const { apartmentInfoStore } = getStores('apartmentInfoStore');
     return new ApartmentInfoInteractor(apartmentInfoStore);

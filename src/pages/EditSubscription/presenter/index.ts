@@ -12,7 +12,7 @@ class EditSubscriptionPresenter implements IPresenter {
     this.getInitialProps();
   }
   componentWillUnmount() {
-    this.interactor.resetState()
+    this.interactor.resetState();
   }
 
   getInitialProps = () => {

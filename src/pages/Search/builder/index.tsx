@@ -4,6 +4,7 @@ import ViewModel from '../viewModel';
 import { SearchPresenter } from '../presenter';
 import { SearchInteractor } from '../interactor';
 import { getStores } from '@/stores';
+import Taro from '@tarojs/taro';
 
 class Builder extends React.Component<IProps> {
   presenter: SearchPresenter;
@@ -16,6 +17,13 @@ class Builder extends React.Component<IProps> {
     this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
+
+  componentDidShow() {
+    getStores('global').global.setCurrentRoute('search');
+  }
+  componentDidHide() {
+    // Taro.eventCenter.off('atMessage');
+  }
   buildInteractor = () => {
     const { searchStore } = getStores('searchStore');
     return new SearchInteractor(searchStore);

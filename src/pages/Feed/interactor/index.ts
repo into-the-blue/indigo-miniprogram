@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IInteractor } from '../types';
 import { FeedStore } from '../stores';
-import { MapStore, UserStore } from '@/stores';
+import { MapStore, UserStore, GlobalStore } from '@/stores';
 import { ApartmentClient } from '@/services/apartment';
 import { Subscription, from } from 'rxjs';
 import get from 'lodash.get';
@@ -16,7 +16,12 @@ class FeedInteractor implements IInteractor {
   $queryCurrentCitySub?: Subscription;
   $queryApartmentsNearbySub?: Subscription;
   cleanNoticeTimer?: NodeJS.Timeout;
-  constructor(public feed: FeedStore, public mMap: MapStore, public userStore: UserStore) {}
+  constructor(
+    public feed: FeedStore,
+    public mMap: MapStore,
+    public userStore: UserStore,
+    public global: GlobalStore,
+  ) {}
 
   queryUserInfo = async (onSuccess?: () => void) => {
     try {
@@ -99,9 +104,9 @@ class FeedInteractor implements IInteractor {
     if (!this.userStore.isLoggedIn) return;
     this.cancelQueryUserCurrentCity();
     this.$queryCurrentCitySub = from(this.queryAndSetUserCurrentCity([lng, lat]))
-      .pipe(filter(_ => !!_))
+      .pipe(filter((_) => !!_))
       .subscribe({
-        next: city => this.mMap.setCurrentCity(city!),
+        next: (city) => this.mMap.setCurrentCity(city!),
       });
   };
 
@@ -127,19 +132,20 @@ class FeedInteractor implements IInteractor {
       const availableCitys = await LocationClient.getAvailableCities();
       this.mMap.setAvailableCities(availableCitys);
       this.showNotice(
-        '24小时内新增: ' + availableCitys.map(o => `${o.name}新增: ${o.count}套`).join(', '),
+        '24小时内新增: ' + availableCitys.map((o) => `${o.name}新增: ${o.count}套`).join(', '),
       );
       if (city) {
         this.mMap.setCurrentCity(city);
         if (!this.mMap.inAvailableCities(city)) {
           const pages = Taro.getCurrentPages();
           console.warn('[checkAvailableCitys]', pages[pages.length - 1].route);
+          if (!this.global.isRouteFocused('feed')) return;
           Taro.showModal({
             title: '当前位置不在服务区',
             content: '选择一个提供服务的城市?',
             confirmText: '好的',
             cancelText: '算了',
-            success: res => {
+            success: (res) => {
               if (res.confirm) {
                 this.showCityActionSheet();
               }
@@ -211,7 +217,7 @@ class FeedInteractor implements IInteractor {
     this.$queryApartmentsNearbySub = from(
       ApartmentClient.queryApartmentsNearbyCoordinates(_coordinates, 500, 50),
     ).subscribe({
-      next: apartments => {
+      next: (apartments) => {
         if (!apartments.length) {
           if (showImmediately)
             Taro.atMessage({
@@ -229,7 +235,7 @@ class FeedInteractor implements IInteractor {
         }
         this.feed.setApartmentsNearby(_coordinates, apartments);
       },
-      error: err => {
+      error: (err) => {
         console.warn('[queryApartmentsNearbyLocation]', err);
       },
       complete: () => {
@@ -249,7 +255,7 @@ class FeedInteractor implements IInteractor {
     const coordinates: [number, number] = lng && lat ? [lng, lat] : this.mMap.currentCoordinate!;
     const args: [number, number, number] = [...coordinates, 1000] as any;
     this.$queryStationsSub = from(ApartmentClient.queryStationsNearby(...args)).subscribe({
-      next: stationsNearby => {
+      next: (stationsNearby) => {
         this.cleanAptsNearby();
         if (stationsNearby.length === 0) {
           // query apartments nearby coordinates, member only
@@ -257,7 +263,7 @@ class FeedInteractor implements IInteractor {
         }
         this.mMap.setMetroStationMarkers(stationsNearby);
       },
-      error: err => {
+      error: (err) => {
         console.warn(err.message);
       },
     });
@@ -410,7 +416,7 @@ class FeedInteractor implements IInteractor {
    */
   getApartmentInfoData = (houseId: string | undefined) => {
     const apartment = houseId
-      ? this.mMap.currentApartments.find(o => o.houseId === houseId)
+      ? this.mMap.currentApartments.find((o) => o.houseId === houseId)
       : undefined;
 
     return {

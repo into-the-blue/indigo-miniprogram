@@ -44,7 +44,7 @@ class NotificationRecordsViewModel extends React.Component<IViewModelProps> impl
     } = this.props.notificationRecordsStore!;
     return (
       <BaseView isError={isError} isLoading={isLoading} onPressRetry={this.presenter.initialQuerys}>
-        {/* <AtMessage /> */}
+        <AtMessage />
         {subscription && (
           <MapComp
             selectedRecords={selectedRecords}

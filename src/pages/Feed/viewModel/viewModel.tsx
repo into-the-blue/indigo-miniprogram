@@ -31,12 +31,6 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
   componentWillUnmount() {
     this.presenter.componentWillUnmount();
   }
-  onShareAppMessage() {
-    return {
-      title: '我在用安隅找房, 不来看看嘛?',
-      path: Routes.Feed,
-    };
-  }
 
   get getProps() {
     return this.props;
@@ -60,8 +54,10 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
       availableCities,
       currentCity,
     } = this.props.mMap;
+    const { isRouteFocused } = this.props.global;
     return (
       <FlexView column style={{ height: '100vh', width: '100%' }}>
+        {isRouteFocused('feed') && <AtMessage />}
         <FlexView column style={{ flex: 1, position: 'relative' }}>
           {/* <FlexView
             className={classNames({
@@ -114,7 +110,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
             )}
             {mapDragged && !showApartmentListModal && !cityActionSheetVisible && (
               <CoverImage
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
                 }}
                 className={'map-pin'}
@@ -122,18 +118,20 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               />
             )}
             {locationAuthorized && <SearchBar onPress={this.presenter.onPressSearch} />}
-            <FocusedLocationConsole
-              mMap={this.props.mMap}
-              // showApartmentList={showApartmentListModal}
-              onPressList={this.presenter.showApartmentList}
-              onPressSubscribe={this.presenter.goToSubscription}
-              isQueryingAptsNearby={isQueryingAptsNearby}
-              numOfApartmentsNearby={
-                apartmentsNearby ? apartmentsNearby.apartments.length : undefined
-              }
-              showAptsNearby={this.presenter.showAptsNearby}
-              queryAndShowAptsNearby={this.presenter.queryAndShowAptsNearby}
-            />
+            {!locationAuthorized && (
+              <FocusedLocationConsole
+                mMap={this.props.mMap}
+                // showApartmentList={showApartmentListModal}
+                onPressList={this.presenter.showApartmentList}
+                onPressSubscribe={this.presenter.goToSubscription}
+                isQueryingAptsNearby={isQueryingAptsNearby}
+                numOfApartmentsNearby={
+                  apartmentsNearby ? apartmentsNearby.apartments.length : undefined
+                }
+                showAptsNearby={this.presenter.showAptsNearby}
+                queryAndShowAptsNearby={this.presenter.queryAndShowAptsNearby}
+              />
+            )}
             {locationAuthorized && (
               <AvailableCities
                 availableCities={availableCities}
@@ -145,14 +143,7 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
               />
             )}
           </FlexView>
-          {/* {showApartmentListModal && (
-            <FlexView
-              onClick={this.presenter.showApartmentList}
-              style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}
-            />
-          )} */}
         </FlexView>
-        <AtMessage />
       </FlexView>
     );
   }

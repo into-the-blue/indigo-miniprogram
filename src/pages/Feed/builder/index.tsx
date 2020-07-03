@@ -1,10 +1,11 @@
 import React from 'react';
-import {} from '@tarojs/taro';
 import { IProps, IViewModel } from '../types';
 import ViewModel from '../viewModel/viewModel';
 import { FeedPresenter } from '../presenter';
 import { FeedInteractor } from '../interactor';
 import { getStores } from '@/stores';
+import { Routes } from '@/utils/constants';
+import Taro from '@tarojs/taro';
 
 class Builder extends React.Component<IProps> {
   presenter: FeedPresenter;
@@ -16,9 +17,25 @@ class Builder extends React.Component<IProps> {
     this.VM = this.buildViewModel(buildPresenter);
   }
   componentDidMount() {}
+  componentWillUnmount() {}
+  componentDidShow() {
+    getStores('global').global.setCurrentRoute('feed');
+  }
+
+  componentDidHide() {
+    // Taro.eventCenter.off('atMessage');
+  }
+
+  onShareAppMessage() {
+    return {
+      title: '我在用安隅找房, 不来看看嘛?',
+      path: Routes.Feed,
+    };
+  }
+
   buildInteractor = () => {
-    const { feed, mMap, userStore } = getStores('feed', 'mMap', 'userStore');
-    return new FeedInteractor(feed, mMap, userStore);
+    const { feed, mMap, userStore, global } = getStores('feed', 'mMap', 'userStore', 'global');
+    return new FeedInteractor(feed, mMap, userStore, global);
   };
   buildPresenter = (interactor: FeedInteractor) => (viewModel: IViewModel) => {
     return new FeedPresenter(interactor, viewModel);

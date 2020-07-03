@@ -24,9 +24,9 @@ class NotificationRecordsInteractor implements IInteractor {
     });
   };
 
-  resetState=()=>{
-    this.notificationRecordsStore.resetStore()
-  }
+  resetState = () => {
+    this.notificationRecordsStore.resetStore();
+  };
 
   queryNotificationRecords = async () => {
     try {
@@ -39,7 +39,7 @@ class NotificationRecordsInteractor implements IInteractor {
       this.notificationRecordsStore.setState({
         isLoading: false,
       });
-      const unread = records.filter(o => !o.viewed).map(o => o.id);
+      const unread = records.filter((o) => !o.viewed).map((o) => o.id);
       if (unread.length) {
         this.viewNotifications(unread);
       }
@@ -53,16 +53,16 @@ class NotificationRecordsInteractor implements IInteractor {
     from(records)
       .pipe(
         bufferCount(10),
-        concatMap(rs => {
+        concatMap((rs) => {
           this.notificationRecordsStore.setNotificationRecords(rs, true);
-          return timer(300);
+          return timer(100);
         }),
       )
       .subscribe();
   };
 
   viewNotifications = (ids: string[]) => {
-    SubscriptionClient.viewtNotifications(ids).catch(err => {
+    SubscriptionClient.viewtNotifications(ids).catch((err) => {
       console.warn('[viewNotifications]', err.message);
     });
     this.subscriptionStore.readNotifications(this.notificationRecordsStore.subscriptionId!);
@@ -86,9 +86,9 @@ class NotificationRecordsInteractor implements IInteractor {
       setRecordAsMapCentral(recordId);
     } else {
       if (selectedRecordIds.length) {
-        setRecordAsMapCentral(selectedRecordIds[selectedRecordIds.length - 1]);
+        setTimeout(() => setRecordAsMapCentral(selectedRecordIds[selectedRecordIds.length - 1]));
       } else {
-        setMapCentral(subscription!.coordinates);
+        setTimeout(() => setMapCentral(subscription!.coordinates));
       }
     }
   };

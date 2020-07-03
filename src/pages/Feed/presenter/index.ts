@@ -86,6 +86,7 @@ class FeedPresenter implements IPresenter {
     const data = this.interactor.getApartmentInfoData(
       typeof arg === 'string' ? arg : get(arg, 'houseId'),
     );
+    console.log(Taro.Current.router)
     if (!data) return;
     this.viewModel.getProps.next('ApartmentInfo_init', {
       guaranteed: true,

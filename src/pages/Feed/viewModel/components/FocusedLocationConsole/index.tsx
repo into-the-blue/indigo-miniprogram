@@ -46,7 +46,7 @@ const FocusedLocationConsole = ({
                 'location-console__icon-animation': hasAptsNearby,
               },
             )}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
               if (isQueryingAptsNearby) return;
               hasAptsNearby && showAptsNearby();
@@ -56,14 +56,14 @@ const FocusedLocationConsole = ({
             {isQueryingAptsNearby ? (
               <AtActivityIndicator color={'white'} />
             ) : (
-              <Text>{hasAptsNearby ? numOfApartmentsNearby : '查'}</Text>
+              <Text>{hasAptsNearby ? numOfApartmentsNearby : '猹'}</Text>
             )}
           </FlexView>
         )}
         {focusedLocation && (
           <FlexView
             className={'location-console__icon-container'}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
               onPressList();
             }}
@@ -74,7 +74,7 @@ const FocusedLocationConsole = ({
         {focusedLocation && (
           <FlexView
             className={'location-console__icon-container'}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
               onPressSubscribe();
             }}

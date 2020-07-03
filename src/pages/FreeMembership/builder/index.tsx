@@ -4,6 +4,7 @@ import ViewModel from '../viewModel';
 import { FreeMembershipPresenter } from '../presenter';
 import { FreeMembershipInteractor } from '../interactor';
 import { getStores } from '@/stores';
+import Taro from '@tarojs/taro';
 
 class Builder extends React.Component<IProps> {
   presenter: FreeMembershipPresenter;
@@ -16,6 +17,12 @@ class Builder extends React.Component<IProps> {
     this.VM = this.buildViewModel(presenterBuilder);
   }
   componentDidMount() {}
+  componentDidShow() {
+    getStores('global').global.setCurrentRoute('freeMembership');
+  }
+  componentDidHide() {
+    // Taro.eventCenter.off('atMessage');
+  }
   buildInteractor = () => {
     const { freeMembershipStore, userStore } = getStores('freeMembershipStore', 'userStore');
     return new FreeMembershipInteractor(freeMembershipStore, userStore);

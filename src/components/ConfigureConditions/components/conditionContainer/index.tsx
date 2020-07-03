@@ -13,7 +13,7 @@ const Wrapper: <P extends object>(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const onClickOption = (item: SwipeActionOption, index: number) => {
-    console.warn('index', index);
+    // console.warn('index', index);
     if (item.text === '删除') {
       setSecConfirm(true);
       return;
