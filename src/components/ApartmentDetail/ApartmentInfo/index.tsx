@@ -21,7 +21,7 @@ interface IProps {
 
 export const ApartmentInfo = ({ apartment, additionalInfo, inset }: IProps) => {
   const viewApartment = (id: string) => {
-    SubscriptionClient.viewApartment(id).catch(err => {
+    SubscriptionClient.viewApartment(id).catch((err) => {
       console.warn('[viewApartment]', err.message);
     });
   };
@@ -76,11 +76,11 @@ export const ApartmentInfo = ({ apartment, additionalInfo, inset }: IProps) => {
       <TextBar title={'户型'} content={apartment.houseType} />
       <TextBar title={'水电'} content={apartment.water + '/' + apartment.electricity} />
       {additionalInfo &&
-        additionalInfo.map(item => (
+        additionalInfo.map((item) => (
           <TextBar title={item.title} content={item.content} key={item.title} />
         ))}
 
-      <FlexView>
+      <FlexView style={{ alignSelf: 'center' }}>
         <Button onClick={copyUrl}>{'复制链接'}</Button>
       </FlexView>
     </FlexView>

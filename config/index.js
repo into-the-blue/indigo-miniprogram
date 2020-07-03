@@ -4,7 +4,7 @@ const envs = require('../constants/appEnv');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 // NOTE 在 sass 中通过别名（@ 或 ~）引用需要指定路径
-const sassImporter = function(url) {
+const sassImporter = function (url) {
   if (url[0] === '~' && url[1] !== '/') {
     return {
       file: path.resolve(__dirname, '..', 'node_modules', url.substr(1)),
@@ -19,7 +19,7 @@ const sassImporter = function(url) {
 const dirs = fs.readdirSync(SRC_DIR);
 const _alias = {};
 
-dirs.forEach(dirname => {
+dirs.forEach((dirname) => {
   _alias['@/' + dirname] = path.resolve(__dirname, '..', 'src', dirname);
 });
 
@@ -42,11 +42,7 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: {
-    sass: {
-      importer: sassImporter,
-    },
-  },
+  // plugins: [sassImporter],
 
   defineConstants: {},
   alias: {
@@ -105,7 +101,7 @@ const config = {
   },
 };
 
-module.exports = function(merge) {
+module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'));
   }

@@ -37,7 +37,7 @@ class ProfileViewModel extends React.Component<IViewModelProps> implements IView
     return (
       <FlexView column style={{ flex: 1, height: '100vh' }}>
         {/* <AtMessage /> */}
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: '#eee' }}>
           {isLoggedIn && (
             <React.Fragment>
               <UserInfo
