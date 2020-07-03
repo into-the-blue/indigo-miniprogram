@@ -7,8 +7,8 @@
 这是一个全栈项目, 使用到的技术有且不限于
 
 - 基于 Taro 的小程序
-- node 后端
-- python 爬虫
+- [node 后端](https://github.com/into-the-blue/indigo-node-server)
+- [python 爬虫](https://github.com/into-the-blue/indigo_crawler)
 - mongoDb
 - docker/docker-compose
 - nginx
