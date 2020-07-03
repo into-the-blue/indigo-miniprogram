@@ -39,6 +39,13 @@ text {
   border: none;
 }
 
+.input-base {
+  border: none;
+}
+.input-base::after {
+  border: none;
+}
+
 .strong {
   text-decoration: none;
   color: inherit;

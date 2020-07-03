@@ -34,13 +34,21 @@ class SearchViewModel extends React.Component<IViewModelProps> implements IViewM
   render() {
     const { inputValue, isSearching, searchResults } = this.props.searchStore!;
     return (
-      <FlexView column style={{ flex: 1, height: searchResults.length ? undefined : '100vh' }}>
+      <FlexView
+        column
+        style={{
+          flex: 1,
+          height: searchResults.length ? undefined : '100vh',
+          backgroundColor: '#eee',
+        }}
+      >
         <FlexView column className={'search__input'}>
           <AtInput
-            style={{ backgroundColor: 'transparent' }}
+            style={{ backgroundColor: 'transparent', border: 'none' }}
             customStyle={{ backgroundColor: 'transparent' }}
             // placeholderStyle={{ backgroundColor: 'transparent' }}
             value={inputValue}
+            className={'input-base'}
             placeholder={'搜索: ...'}
             name={'search-bar'}
             onChange={this.presenter.onChange}
