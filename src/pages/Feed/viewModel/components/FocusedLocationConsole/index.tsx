@@ -56,7 +56,7 @@ const FocusedLocationConsole = ({
             {isQueryingAptsNearby ? (
               <AtActivityIndicator color={'white'} />
             ) : (
-              <Text>{hasAptsNearby ? numOfApartmentsNearby : '猹'}</Text>
+              <Text>{hasAptsNearby ? numOfApartmentsNearby : '查'}</Text>
             )}
           </FlexView>
         )}

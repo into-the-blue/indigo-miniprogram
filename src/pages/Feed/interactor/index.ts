@@ -228,7 +228,7 @@ class FeedInteractor implements IInteractor {
         console.warn('[queryApartmentsNearbyLocation]', apartments.length);
         if (showImmediately) {
           Taro.atMessage({
-            message: `附近 500 米内, 找到${apartments.length}套房源`,
+            message: `附近 500 米内, 找到${apartments.length}条信息`,
           });
           this.mMap.setApartmentMarkers(apartments);
           return;

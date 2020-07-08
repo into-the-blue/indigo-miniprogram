@@ -44,7 +44,7 @@ export const AvailableCities = observer(
             return (
               <AtActionSheetItem key={city.name} onClick={() => onSelectCity(city)}>
                 {city.name}
-                <Text style={{ fontSize: 13 }}>{` (新增${city.count}套房源)`}</Text>
+                <Text style={{ fontSize: 13 }}>{` (新增${city.count}条)`}</Text>
               </AtActionSheetItem>
             );
           })}

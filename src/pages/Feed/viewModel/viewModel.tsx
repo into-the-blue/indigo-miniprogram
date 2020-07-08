@@ -100,6 +100,24 @@ class FeedViewModel extends Component<IViewModelProps> implements IViewModel {
                   latitude={currentCoordinate[1]}
                   setting={setting}
                   scale={scale}
+                  circles={[
+                    {
+                      longitude: currentCoordinate[0],
+                      latitude: currentCoordinate[1],
+                      radius: 500,
+                      color: '#ffb74d',
+                      strokeWidth: 1,
+                      fillColor:'#00000000'
+                    },
+                    {
+                      longitude: currentCoordinate[0],
+                      latitude: currentCoordinate[1],
+                      radius: 1000,
+                      color: '#f57c00',
+                      strokeWidth: 2,
+                      fillColor:'#00000000'
+                    },
+                  ]}
                   // @ts-ignore
                   markers={markers}
                   onMarkerTap={this.presenter.onPressMarker}
